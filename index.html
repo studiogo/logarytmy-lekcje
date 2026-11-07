@@ -888,7 +888,8 @@
       "strony": "Przykłady 1–5, Ćwiczenia 1–7, Zadania 1–9",
       "kolejki": [
         1,
-        2
+        2,
+        3
       ]
     }
   ],
@@ -901,7 +902,11 @@
     "$a^{-n} = ~f{1}{a^{n}}$: minus w wykładniku daje ułamek, nie liczbę ujemną. $2^{-3} = ~f{1}{8}$.",
     "Logarytm z ułamka: zapisz liczbę jako potęgę z minusem. $log_{2} ~f{1}{8} = -3$, $log 0,01 = -2$.",
     "Pierwiastek to ułamek w wykładniku: $~r{n}{a^{m}} = a^{~f{m}{n}}$. $log_{2} ~r{}{8} = ~f{3}{2}$.",
-    "Liczba razy pierwiastek: dodajesz wykładniki. $log_{3} 3~r{}{3} = 1 + ~f{1}{2} = ~f{3}{2}$."
+    "Liczba razy pierwiastek: dodajesz wykładniki. $log_{3} 3~r{}{3} = 1 + ~f{1}{2} = ~f{3}{2}$.",
+    "Podstawa ułamkowa: minus odwraca ułamek. $~p{~f{1}{3}}^{-3} = 27$, więc $log_{~f{1}{3}} 27 = -3$.",
+    "Podstawa $~r{}{2}$: para $~r{}{2} * ~r{}{2} = 2$. $log_{~r{}{2}} 4 = 4$.",
+    "Szukasz $b$: liczysz potęgę. $log_{2} b = 5$, więc $b = 2^{5} = 32$.",
+    "Szukasz $a$: $log_{a} 16 = 4$, więc $a^{4} = 16$ i $a = 2$ (podstawa dodatnia)."
   ],
   "sesje": [
     {
@@ -1474,6 +1479,262 @@
           "a": "-3/2",
           "py": "math.log(1/math.sqrt(125), 5)",
           "sol": "$125 = 5^{3}$, $~r{}{125} = 5^{~f{3}{2}}$, więc wynik to $-~f{3}{2}$."
+        }
+      ]
+    },
+    {
+      "nr": 3,
+      "tytul": "Podstawa ułamkowa, szukanie podstawy i liczby",
+      "karty": "1.10, Zad. 3, 4 i 9",
+      "rozgrzewka": [
+        {
+          "t": "Powtórka z lekcji 2: oblicz $log_{2} ~f{1}{8}$.",
+          "a": "-3",
+          "py": "math.log(1/8, 2)",
+          "hint": "$~f{1}{8} = ~f{1}{2^{3}} = 2^{?}$",
+          "sol": "$~f{1}{8} = 2^{-3}$, więc wynik to $-3$."
+        },
+        {
+          "t": "Powtórka z potęg: oblicz $~p{~f{1}{3}}^{-2}$.",
+          "a": "9",
+          "py": "(1/3)**-2",
+          "hint": "Minus w wykładniku odwraca ułamek: $~p{~f{1}{3}}^{-2} = 3^{2}$.",
+          "sol": "$~p{~f{1}{3}}^{-2} = 3^{2} = 9$."
+        }
+      ],
+      "bloki": [
+        {
+          "tytul": "Podstawa ułamkowa",
+          "sceny": [
+            "L3_odwroc",
+            "L3_trzecia"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{~f{1}{2}} 2$.",
+              "a": "-1",
+              "py": "math.log(2, 0.5)",
+              "hint": "Jak zapisać 2 jako potęgę $~f{1}{2}$? Odwróć ułamek: $~p{~f{1}{2}}^{-1} = 2$.",
+              "sol": "$~p{~f{1}{2}}^{-1} = 2$, więc wynik to $-1$."
+            },
+            {
+              "t": "Oblicz $log_{~f{1}{2}} ~f{1}{4}$.",
+              "a": "2",
+              "py": "math.log(0.25, 0.5)",
+              "hint": "Tu liczba też jest ułamkiem: $~p{~f{1}{2}}^{2} = ~f{1}{4}$. Minus niepotrzebny.",
+              "sol": "$~p{~f{1}{2}}^{2} = ~f{1}{4}$, więc wynik to 2. Ułamkowa podstawa nie zawsze daje minus."
+            },
+            {
+              "t": "Oblicz $log_{~f{1}{3}} 9$.",
+              "a": "-2",
+              "py": "math.log(9, 1/3)",
+              "hint": "$9 = 3^{2}$, a 3 to odwrócone $~f{1}{3}$, więc wykładnik dostaje minus.",
+              "sol": "$~p{~f{1}{3}}^{-2} = 3^{2} = 9$, więc wynik to $-2$."
+            },
+            {
+              "t": "Dlaczego $log_{~f{1}{3}} 27$ to nie 3?",
+              "opts": [
+                "bo podstawa nie może być ułamkiem",
+                "bo $~p{~f{1}{3}}^{3} = ~f{1}{27}$, a nie 27",
+                "bo 27 jest za duże"
+              ],
+              "ok": 1,
+              "py": "abs((1/3)**3 - 1/27) < 1e-12",
+              "hint": "Przepisz $log_{~f{1}{3}} 27 = 3$ na potęgę i policz ją.",
+              "sol": "$~p{~f{1}{3}}^{3} = ~f{1}{27}$. Dobry wynik to $-3$."
+            }
+          ]
+        },
+        {
+          "tytul": "Podstawa z pierwiastkiem",
+          "sceny": [
+            "L3_para"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{~r{}{2}} 2$.",
+              "a": "2",
+              "py": "math.log(2, math.sqrt(2))",
+              "hint": "Ile kafelków $~r{}{2}$ daje razem 2?",
+              "sol": "$~r{}{2} * ~r{}{2} = 2$, czyli $(~r{}{2})^{2} = 2$. Wynik to 2."
+            },
+            {
+              "t": "Oblicz $log_{~r{}{2}} 8$.",
+              "a": "6",
+              "py": "math.log(8, math.sqrt(2))",
+              "hint": "$8 = 2 * 2 * 2$, czyli trzy pary kafelków $~r{}{2}$.",
+              "sol": "Trzy pary to 6 kafelków: $(~r{}{2})^{6} = 8$. Wynik to 6."
+            },
+            {
+              "t": "Oblicz $log_{~r{}{3}} 9$.",
+              "a": "4",
+              "py": "math.log(9, math.sqrt(3))",
+              "hint": "$~r{}{3} * ~r{}{3} = 3$. A $9 = 3 * 3$, czyli ile par?",
+              "sol": "Dwie pary, cztery kafelki: $(~r{}{3})^{4} = 9$. Wynik to 4."
+            }
+          ]
+        },
+        {
+          "tytul": "Szukasz liczby za logarytmem",
+          "sceny": [
+            "L3_b",
+            "L3_b27"
+          ],
+          "pytania": [
+            {
+              "t": "Znajdź $b$: $log_{3} b = 4$.",
+              "a": "81",
+              "py": "3**4",
+              "hint": "Przepisz: $3^{4} = b$. Policz potęgę.",
+              "sol": "$b = 3^{4} = 81$."
+            },
+            {
+              "t": "Znajdź $b$: $log_{5} b = -2$.",
+              "a": "1/25",
+              "py": "5**-2",
+              "hint": "$b = 5^{-2}$. Minus w wykładniku daje ułamek.",
+              "sol": "$b = 5^{-2} = ~f{1}{25}$."
+            },
+            {
+              "t": "Znajdź $b$: $log_{8} b = ~f{2}{3}$.",
+              "a": "4",
+              "py": "8**(2/3)",
+              "hint": "$b = 8^{~f{2}{3}}$. Rozbij 8 na trzy równe czynniki, weź dwa.",
+              "sol": "$8 = 2 * 2 * 2$, więc $8^{~f{2}{3}} = 2 * 2 = 4$."
+            },
+            {
+              "t": "Znajdź $b$: $log_{~r{}{2}} b = -6$.",
+              "a": "1/8",
+              "py": "math.sqrt(2)**-6",
+              "hint": "Najpierw bez minusa: 6 kafelków $~r{}{2}$ to 3 pary, czyli $2 * 2 * 2$. Potem minus odwraca wynik.",
+              "sol": "$(~r{}{2})^{6} = 8$, więc $(~r{}{2})^{-6} = ~f{1}{8}$."
+            }
+          ]
+        },
+        {
+          "tytul": "Szukasz podstawy",
+          "sceny": [
+            "L3_a",
+            "L3_a_minus"
+          ],
+          "pytania": [
+            {
+              "t": "Znajdź podstawę $a$: $log_{a} 9 = 2$.",
+              "a": "3",
+              "py": "9**0.5",
+              "hint": "$a^{2} = 9$. Jaka dodatnia liczba razy ona sama daje 9?",
+              "sol": "$3 * 3 = 9$, więc $a = 3$."
+            },
+            {
+              "t": "Znajdź podstawę $a$: $log_{a} 8 = 3$.",
+              "a": "2",
+              "py": "8**(1/3)",
+              "hint": "$a^{3} = 8$.",
+              "sol": "$2 * 2 * 2 = 8$, więc $a = 2$."
+            },
+            {
+              "t": "Znajdź podstawę $a$: $log_{a} 16 = 1$.",
+              "a": "16",
+              "py": "16**1",
+              "hint": "$a^{1} = 16$. Potęga pierwsza nic nie zmienia.",
+              "sol": "$a^{1} = a$, więc $a = 16$. Jak w lekcji 1: $log_{16} 16 = 1$."
+            },
+            {
+              "t": "Znajdź podstawę $a$: $log_{a} 5 = -1$.",
+              "a": "1/5",
+              "py": "5**-1",
+              "hint": "$a^{-1} = ~f{1}{a} = 5$. Która liczba odwrócona daje 5?",
+              "sol": "$a = ~f{1}{5}$, bo $~p{~f{1}{5}}^{-1} = 5$."
+            }
+          ]
+        }
+      ],
+      "trening": [
+        {
+          "t": "Oblicz $log_{~f{1}{2}} 8$.",
+          "a": "-3",
+          "py": "math.log(8, 0.5)",
+          "hint": "$8 = 2^{3} = ~p{~f{1}{2}}^{?}$",
+          "sol": "$~p{~f{1}{2}}^{-3} = 8$."
+        },
+        {
+          "t": "Oblicz $log_{~f{1}{4}} ~f{1}{16}$.",
+          "a": "2",
+          "py": "math.log(1/16, 0.25)",
+          "hint": "$~p{~f{1}{4}}^{2} = ?$",
+          "sol": "$~p{~f{1}{4}}^{2} = ~f{1}{16}$."
+        },
+        {
+          "t": "Oblicz $log_{~r{}{5}} 25$.",
+          "a": "4",
+          "py": "math.log(25, math.sqrt(5))",
+          "hint": "Para kafelków $~r{}{5}$ daje 5. $25 = 5 * 5$.",
+          "sol": "Dwie pary, cztery kafelki: $(~r{}{5})^{4} = 25$."
+        },
+        {
+          "t": "Znajdź $b$: $log_{7} b = 0$.",
+          "a": "1",
+          "py": "7**0",
+          "hint": "$b = 7^{0}$.",
+          "sol": "$7^{0} = 1$."
+        },
+        {
+          "t": "Znajdź podstawę $a$: $log_{a} 81 = 4$.",
+          "a": "3",
+          "py": "81**0.25",
+          "hint": "$a^{4} = 81$.",
+          "sol": "$3 * 3 * 3 * 3 = 81$, więc $a = 3$."
+        },
+        {
+          "t": "Znajdź $b$: $log_{~f{1}{16}} b = -~f{3}{4}$. (Zadanie z podręcznika.)",
+          "a": "8",
+          "py": "(1/16)**(-3/4)",
+          "hint": "$b = ~p{~f{1}{16}}^{-~f{3}{4}}$. Minus odwraca ułamek: $16^{~f{3}{4}}$. Potem rozbij 16 na cztery równe czynniki i weź trzy.",
+          "sol": "$16^{~f{3}{4}} = 2 * 2 * 2 = 8$."
+        }
+      ],
+      "test": [
+        {
+          "t": "Oblicz $log_{~f{1}{3}} 81$.",
+          "a": "-4",
+          "py": "math.log(81, 1/3)",
+          "sol": "$81 = 3^{4} = ~p{~f{1}{3}}^{-4}$."
+        },
+        {
+          "t": "Oblicz $log_{~f{1}{5}} ~f{1}{25}$.",
+          "a": "2",
+          "py": "math.log(1/25, 0.2)",
+          "sol": "$~p{~f{1}{5}}^{2} = ~f{1}{25}$."
+        },
+        {
+          "t": "Oblicz $log_{~r{}{3}} 27$.",
+          "a": "6",
+          "py": "math.log(27, math.sqrt(3))",
+          "sol": "$27 = 3 * 3 * 3$, trzy pary kafelków $~r{}{3}$, razem 6."
+        },
+        {
+          "t": "Znajdź $b$: $log_{4} b = 3$.",
+          "a": "64",
+          "py": "4**3",
+          "sol": "$b = 4^{3} = 64$."
+        },
+        {
+          "t": "Znajdź $b$: $log_{9} b = ~f{1}{2}$.",
+          "a": "3",
+          "py": "9**0.5",
+          "sol": "$b = 9^{~f{1}{2}} = ~r{}{9} = 3$."
+        },
+        {
+          "t": "Znajdź podstawę $a$: $log_{a} 25 = 2$.",
+          "a": "5",
+          "py": "25**0.5",
+          "sol": "$a^{2} = 25$, a podstawa jest dodatnia, więc $a = 5$."
+        },
+        {
+          "t": "Znajdź podstawę $a$: $log_{a} 4 = -1$.",
+          "a": "1/4",
+          "py": "4**-1",
+          "sol": "$a^{-1} = ~f{1}{a} = 4$, więc $a = ~f{1}{4}$."
         }
       ]
     }
@@ -2328,6 +2589,211 @@ S.L2_odwr = rows(
     [
       "$log_{3} ~f{1}{~r{}{27}} = -~f{3}{2}$. Trzy ruchy: rozpisz liczbę pod pierwiastkiem, zamień pierwiastek na ułamek w wykładniku, a jedynkę przez potęgę zamień na minus.",
     ],
+  ],
+);
+
+/* Obrazki do lekcji 3 z logarytmów: podstawa ułamkowa i z pierwiastkiem, szukanie liczby b i podstawy a (korzysta z MIX, KOL, LG z sceny_log_1.js). */
+
+/* odwracanie ułamka, które uczeń już umie, prowadzi do podstawy 1/2 */
+S.L3_odwroc = rows(
+  [
+    "$~p{~f{1}{3}}^{-2} = 3^{2} = 9$",
+    MIX("minus w wykładniku: odwracasz ułamek i minus znika"),
+    "$~p{~f{1}{2}}^{-1} = 2^{1} = 2$",
+    "$~p{~f{1}{2}}^{-2} = 2^{2} = 4$",
+    "$~p{~f{1}{2}}^{-3} = 2^{3} = 8$",
+    MIX("przy podstawie $~f{1}{2}$ liczby większe od 1 mają ujemny wykładnik"),
+  ],
+  [
+    [
+      "W diagnozie dobrze policzyłeś $~p{~f{1}{3}}^{-2} = 9$. Na tym opiera się cała ta część.",
+      "Jak to działa",
+    ],
+    [
+      "Minus w wykładniku odwraca ułamek: $~f{1}{3}$ zamienia się w 3, a minus znika. Zostaje $3^{2} = 9$.",
+      "Podstawa 1/2",
+    ],
+    [
+      "Tak samo z podstawą $~f{1}{2}$: $~p{~f{1}{2}}^{-1} = 2^{1} = 2$.",
+      "Dalej",
+    ],
+    ["$~p{~f{1}{2}}^{-2} = 2^{2} = 4$", "Dalej"],
+    ["$~p{~f{1}{2}}^{-3} = 2^{3} = 8$", "Wniosek"],
+    [
+      "Podnosisz $~f{1}{2}$ do dodatniej potęgi i wynik maleje: $~f{1}{4}$, $~f{1}{8}$. Liczby 2, 4, 8 dostajesz tylko przy minusie w wykładniku. Dlatego $log_{~f{1}{2}} 8 = -3$.",
+    ],
+  ],
+);
+
+/* log o podstawie 1/3 z 27: wynik ujemny i sprawdzenie, dlaczego nie 3 */
+S.L3_trzecia = rows(
+  [
+    "$log_{~f{1}{3}} 27 = ?$",
+    "$~p{~f{1}{3}}^{?} = 27$",
+    "$27 = 3^{3} = ~p{~f{1}{3}}^{-3}$",
+    "$log_{~f{1}{3}} 27 = -3$",
+    MIX("nie 3, bo $~p{~f{1}{3}}^{3} = ~f{1}{27}$"),
+  ],
+  [
+    ["Policz $log_{~f{1}{3}} 27$.", "Przepisz"],
+    ["Przepisz na potęgę: szukasz $~p{~f{1}{3}}^{?} = 27$.", "Zapisz 27"],
+    [
+      "Zapisz 27 jako potęgę $~f{1}{3}$. Najpierw $27 = 3^{3}$. Z poprzedniego obrazka: $3^{3} = ~p{~f{1}{3}}^{-3}$, bo minus odwraca $~f{1}{3}$ w 3.",
+      "Wynik",
+    ],
+    ["Wykładnik to wynik: $log_{~f{1}{3}} 27 = -3$.", "Sprawdź"],
+    [
+      "Wynik 3 byłby błędem: $~p{~f{1}{3}}^{3} = ~f{1}{27}$, a nie 27. Jak w lekcji 1: przepisz wynik z powrotem na potęgę i sprawdź, czy wychodzi ta liczba.",
+    ],
+  ],
+);
+
+/* podstawa √2: dwa kafelki √2 dają razem 2 */
+S.L3_para = {
+  steps: [
+    ["Policz $log_{~r{}{2}} 4$. Szukasz $(~r{}{2})^{?} = 4$.", "Para"],
+    [
+      "Z lekcji potęg: $~r{}{2} * ~r{}{2} = 2$. Dwa kafelki $~r{}{2}$ dają razem 2.",
+      "Ile par",
+    ],
+    [
+      "$4 = 2 * 2$, czyli dwie takie pary. Dwie pary to cztery kafelki $~r{}{2}$.",
+      "Wynik",
+    ],
+    [
+      "Cztery kafelki: $(~r{}{2})^{4} = 4$, więc $log_{~r{}{2}} 4 = 4$. Każda dwójka w liczbie to para kafelków $~r{}{2}$.",
+    ],
+  ],
+  build: function (s) {
+    var q = LG(s, 170, 42, "√2", "4", " = ?", 32),
+      xs = [44, 104, 236, 296],
+      t = xs.map(function () {
+        return TILE(s, "√2", 46, 46);
+      }),
+      d = [74, 170, 266].map(function (x) {
+        return TX(s, x, 104, "·", "big2");
+      }),
+      b1 = E(
+        "path",
+        { d: "M18 126 L18 134 L130 134 L130 126", class: "brk" },
+        s,
+      ),
+      b2 = E(
+        "path",
+        { d: "M210 126 L210 134 L322 134 L322 126", class: "brk" },
+        s,
+      ),
+      l1 = TX(s, 74, 156, "= 2", "val"),
+      l2 = TX(s, 266, 156, "= 2", "val"),
+      mid = TX(s, 170, 186, "2 · 2 = 4", "expb"),
+      r = LG(s, 170, 214, "√2", "4", " = 4", 26);
+    r.setAttribute("class", "res");
+    return function (k) {
+      t.forEach(function (x, i) {
+        var widac = k === 1 ? i < 2 : k >= 2;
+        at(x, xs[i], 98, 1, widac ? 1 : 0);
+      });
+      op(d[0], k >= 1 ? 1 : 0);
+      op(d[1], k >= 2 ? 1 : 0);
+      op(d[2], k >= 2 ? 1 : 0);
+      op(b1, k >= 1 ? 1 : 0);
+      op(l1, k >= 1 ? 1 : 0);
+      op(b2, k >= 2 ? 1 : 0);
+      op(l2, k >= 2 ? 1 : 0);
+      op(mid, k >= 2 ? 1 : 0);
+      op(r, k >= 3 ? 1 : 0);
+      op(q, 1);
+    };
+  },
+};
+
+/* szukasz liczby b: to zwykłe liczenie potęgi */
+S.L3_b = rows(
+  [
+    KOL("log<sub>" + kB("2") + "</sub> " + kZ("b") + " = " + kG("5")),
+    KOL(kB("2") + "<sup>" + kG("5") + "</sup> = " + kZ("b")),
+    "$b = 2^{5} = 32$",
+    MIX("$log_{8} b = -1$, więc $b = 8^{-1} = ~f{1}{8}$"),
+  ],
+  [
+    [
+      "Teraz brakuje liczby za logarytmem: $log_{2} b = 5$. Kolory jak w lekcji 1.",
+      "Przepisz",
+    ],
+    ["Przepisz na potęgę: $2^{5} = b$. Liczba $b$ to wynik potęgi.", "Policz"],
+    [
+      "Tu nie szukasz wykładnika, bo go znasz. Liczysz potęgę: $2^{5} = 32$, więc $b = 32$.",
+      "Inny przykład",
+    ],
+    [
+      "Tak samo $log_{8} b = -1$: $b = 8^{-1} = ~f{1}{8}$, minus w wykładniku z lekcji 2. Szukanie $b$ to zawsze liczenie potęgi.",
+    ],
+  ],
+);
+
+/* szukasz b, gdy wynik logarytmu jest ułamkiem */
+S.L3_b27 = rows(
+  [
+    "$log_{27} b = ~f{2}{3}$",
+    "$b = 27^{~f{2}{3}}$",
+    "$27 = 3 * 3 * 3$",
+    "$27^{~f{1}{3}} = 3$",
+    "$27^{~f{2}{3}} = 3 * 3 = 9$",
+  ],
+  [
+    ["Trudniejszy przypadek: $log_{27} b = ~f{2}{3}$.", "Przepisz"],
+    ["Przepisz na potęgę: $b = 27^{~f{2}{3}}$.", "Rozbij 27"],
+    [
+      "Z lekcji potęg: mianownik 3 mówi, na ile równych czynników rozbijasz 27. $27 = 3 * 3 * 3$.",
+      "Jeden czynnik",
+    ],
+    ["Jeden czynnik to $27^{~f{1}{3}} = 3$.", "Licznik 2"],
+    ["Licznik 2 mówi, ile czynników mnożysz: $3 * 3 = 9$. Więc $b = 9$."],
+  ],
+);
+
+/* szukasz podstawy a */
+S.L3_a = rows(
+  [
+    "$log_{a} 16 = 4$",
+    "$a^{4} = 16$",
+    MIX("$2 * 2 * 2 * 2 = 16$, więc $a = 2$"),
+    MIX("$(-2)^{4} = 16$ też, ale podstawa musi być dodatnia"),
+  ],
+  [
+    ["Brakuje podstawy: $log_{a} 16 = 4$.", "Przepisz"],
+    [
+      "Przepisz na potęgę: $a^{4} = 16$. Szukasz liczby, która cztery razy pomnożona przez siebie daje 16.",
+      "Szukaj",
+    ],
+    ["$2 * 2 * 2 * 2 = 16$, więc $a = 2$.", "Uwaga"],
+    [
+      "$(-2)^{4}$ też daje 16, bo cztery minusy dają plus. Ale z lekcji 1 wiesz, że podstawa logarytmu musi być dodatnia. Zostaje $a = 2$.",
+    ],
+  ],
+);
+
+/* szukasz podstawy a, gdy wynik jest ujemny */
+S.L3_a_minus = rows(
+  [
+    "$log_{a} 16 = -1$",
+    "$a^{-1} = 16$",
+    MIX("$a^{-1} = ~f{1}{a}$, więc $~f{1}{a} = 16$"),
+    "$a = ~f{1}{16}$",
+    MIX("sprawdzenie: $~p{~f{1}{16}}^{-1} = 16$"),
+  ],
+  [
+    ["Teraz z minusem: $log_{a} 16 = -1$.", "Przepisz"],
+    ["Przepisz na potęgę: $a^{-1} = 16$.", "Minus"],
+    [
+      "Z lekcji 2: wykładnik $-1$ odwraca liczbę. $a^{-1} = ~f{1}{a}$, więc jedynka przez $a$ ma dać 16.",
+      "Wynik",
+    ],
+    [
+      "Odwrócone $~f{1}{16}$ daje 16, więc $a = ~f{1}{16}$. Nie $-16$: minus w wykładniku nie robi liczby ujemnej.",
+      "Sprawdź",
+    ],
+    ["Sprawdzenie: $~p{~f{1}{16}}^{-1} = 16$. Zgadza się."],
   ],
 );
 
