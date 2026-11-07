@@ -887,7 +887,8 @@
       "temat": "1.10 Logarytm i jego własności",
       "strony": "Przykłady 1–5, Ćwiczenia 1–7, Zadania 1–9",
       "kolejki": [
-        1
+        1,
+        2
       ]
     }
   ],
@@ -896,7 +897,11 @@
     "Liczysz logarytm, wypisując potęgi podstawy, aż wyjdzie liczba. Wynik to wykładnik z tego wiersza.",
     "$log_{a} a = 1$, bo $a^{1} = a$. $log_{a} 1 = 0$, bo $a^{0} = 1$.",
     "$log b$ bez liczby na dole to $log_{10} b$, logarytm dziesiętny.",
-    "Logarytm $log_{a} b$ istnieje, gdy $a > 0$, $a ≠ 1$, $b > 0$."
+    "Logarytm $log_{a} b$ istnieje, gdy $a > 0$, $a ≠ 1$, $b > 0$.",
+    "$a^{-n} = ~f{1}{a^{n}}$: minus w wykładniku daje ułamek, nie liczbę ujemną. $2^{-3} = ~f{1}{8}$.",
+    "Logarytm z ułamka: zapisz liczbę jako potęgę z minusem. $log_{2} ~f{1}{8} = -3$, $log 0,01 = -2$.",
+    "Pierwiastek to ułamek w wykładniku: $~r{n}{a^{m}} = a^{~f{m}{n}}$. $log_{2} ~r{}{8} = ~f{3}{2}$.",
+    "Liczba razy pierwiastek: dodajesz wykładniki. $log_{3} 3~r{}{3} = 1 + ~f{1}{2} = ~f{3}{2}$."
   ],
   "sesje": [
     {
@@ -1194,6 +1199,281 @@
           "ok": 1,
           "py": "True",
           "sol": "$3^{?} = 0$ nie ma rozwiązania. Pozostałe: $log_{3} 3 = 1$, $log_{3} 1 = 0$."
+        }
+      ]
+    },
+    {
+      "nr": 2,
+      "tytul": "Wynik ujemny albo ułamek",
+      "karty": "1.10, Ćw. 1–3, Zad. 1–2",
+      "rozgrzewka": [
+        {
+          "t": "Powtórka z lekcji 1: oblicz $log_{2} 32$.",
+          "a": "5",
+          "py": "math.log(32, 2)",
+          "hint": "Wypisuj potęgi dwójki: $2^{1} = 2$, $2^{2} = 4$, i dalej, aż wyjdzie 32.",
+          "sol": "$2^{5} = 32$, więc $log_{2} 32 = 5$."
+        },
+        {
+          "t": "Powtórka z lekcji 1: oblicz $log_{5} 1$.",
+          "a": "0",
+          "py": "F(0) if 5**0 == 1 else None",
+          "hint": "Do jakiej potęgi podnieść 5, żeby dostać 1?",
+          "sol": "$5^{0} = 1$, więc $log_{5} 1 = 0$."
+        }
+      ],
+      "bloki": [
+        {
+          "tytul": "Minus w wykładniku",
+          "sceny": [
+            "L2_minus"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $2^{-3}$.",
+              "a": "1/8",
+              "py": "2**-3",
+              "hint": "Minus w wykładniku daje ułamek: $2^{-3} = ~f{1}{2^{3}}$.",
+              "sol": "$2^{-3} = ~f{1}{2^{3}} = ~f{1}{8}$."
+            },
+            {
+              "t": "Oblicz $3^{-2}$.",
+              "a": "1/9",
+              "py": "3**-2",
+              "hint": "$3^{-2} = ~f{1}{3^{2}}$.",
+              "sol": "$3^{-2} = ~f{1}{9}$."
+            },
+            {
+              "t": "Który zapis jest równy $~f{1}{16}$?",
+              "opts": [
+                "$-2^{4}$",
+                "$2^{~f{1}{4}}$",
+                "$2^{-4}$"
+              ],
+              "ok": 2,
+              "py": "2**-4 == 1/16 and -2**4 != 1/16",
+              "hint": "$16 = 2^{4}$. Jedynka przez potęgę to potęga z minusem w wykładniku.",
+              "sol": "$~f{1}{16} = ~f{1}{2^{4}} = 2^{-4}$. Zapis $-2^{4}$ to $-16$, liczba ujemna."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm z ułamka",
+          "sceny": [
+            "L2_ulamek",
+            "L2_dziesietny"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{2} ~f{1}{16}$.",
+              "a": "-4",
+              "py": "math.log(1/16, 2)",
+              "hint": "Zapisz $~f{1}{16}$ jako potęgę dwójki: $16 = 2^{4}$, więc $~f{1}{16} = 2^{?}$",
+              "sol": "$~f{1}{16} = 2^{-4}$, więc $log_{2} ~f{1}{16} = -4$."
+            },
+            {
+              "t": "Oblicz $log_{3} ~f{1}{9}$.",
+              "a": "-2",
+              "py": "math.log(1/9, 3)",
+              "hint": "$9 = 3^{2}$, więc $~f{1}{9} = 3^{?}$",
+              "sol": "$~f{1}{9} = 3^{-2}$, więc $log_{3} ~f{1}{9} = -2$."
+            },
+            {
+              "t": "Oblicz $log 0,1$.",
+              "a": "-1",
+              "py": "math.log10(0.1)",
+              "hint": "$0,1 = ~f{1}{10}$, a $10 = 10^{1}$.",
+              "sol": "$0,1 = ~f{1}{10} = 10^{-1}$, więc $log 0,1 = -1$."
+            },
+            {
+              "t": "Oblicz $log 0,001$.",
+              "a": "-3",
+              "py": "math.log10(0.001)",
+              "hint": "$0,001 = ~f{1}{1000}$. Policz cyfry po przecinku.",
+              "sol": "$0,001 = ~f{1}{10^{3}} = 10^{-3}$, więc $log 0,001 = -3$."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm z pierwiastka",
+          "sceny": [
+            "L2_pierw"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{3} ~r{}{3}$.",
+              "a": "1/2",
+              "py": "math.log(math.sqrt(3), 3)",
+              "hint": "Pierwiastek kwadratowy to wykładnik $~f{1}{2}$.",
+              "sol": "$~r{}{3} = 3^{~f{1}{2}}$, więc $log_{3} ~r{}{3} = ~f{1}{2}$."
+            },
+            {
+              "t": "Oblicz $log_{2} ~r{3}{2}$.",
+              "a": "1/3",
+              "py": "math.log(2**(1/3), 2)",
+              "hint": "Mała liczba 3 przy pierwiastku idzie do mianownika.",
+              "sol": "$~r{3}{2} = 2^{~f{1}{3}}$, więc $log_{2} ~r{3}{2} = ~f{1}{3}$."
+            },
+            {
+              "t": "Oblicz $log ~r{}{10}$.",
+              "a": "1/2",
+              "py": "math.log10(math.sqrt(10))",
+              "hint": "Podstawa to 10, a $~r{}{10} = 10^{?}$",
+              "sol": "$~r{}{10} = 10^{~f{1}{2}}$, więc $log ~r{}{10} = ~f{1}{2}$."
+            }
+          ]
+        },
+        {
+          "tytul": "Liczba i pierwiastek razem",
+          "sceny": [
+            "L2_razy",
+            "L2_pod"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{2} 2~r{}{2}$.",
+              "a": "3/2",
+              "py": "math.log(2*math.sqrt(2), 2)",
+              "hint": "$2 = 2^{1}$ i $~r{}{2} = 2^{~f{1}{2}}$. Mnożysz, więc dodajesz wykładniki.",
+              "sol": "$2^{1 + ~f{1}{2}} = 2^{~f{3}{2}}$, więc wynik to $~f{3}{2}$."
+            },
+            {
+              "t": "Oblicz $log_{2} 4~r{}{2}$.",
+              "a": "5/2",
+              "py": "math.log(4*math.sqrt(2), 2)",
+              "hint": "Najpierw $4 = 2^{2}$, potem $~r{}{2} = 2^{~f{1}{2}}$. Dodaj wykładniki.",
+              "sol": "$4~r{}{2} = 2^{2} * 2^{~f{1}{2}} = 2^{~f{5}{2}}$, więc wynik to $~f{5}{2}$."
+            },
+            {
+              "t": "Oblicz $log_{3} ~r{}{27}$.",
+              "a": "3/2",
+              "py": "math.log(math.sqrt(27), 3)",
+              "hint": "Jak na obrazku z $~r{}{8}$: najpierw $27 = 3^{3}$.",
+              "sol": "$~r{}{27} = ~r{}{3^{3}} = 3^{~f{3}{2}}$, więc wynik to $~f{3}{2}$."
+            }
+          ]
+        },
+        {
+          "tytul": "Jedynka przez pierwiastek",
+          "sceny": [
+            "L2_odwr"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{2} ~f{1}{~r{}{2}}$.",
+              "a": "-1/2",
+              "py": "math.log(1/math.sqrt(2), 2)",
+              "hint": "$~r{}{2} = 2^{~f{1}{2}}$. Jedynka przez potęgę to minus w wykładniku.",
+              "sol": "$~f{1}{2^{~f{1}{2}}} = 2^{-~f{1}{2}}$, więc wynik to $-~f{1}{2}$."
+            },
+            {
+              "t": "Oblicz $log_{3} ~f{1}{~r{}{3}}$.",
+              "a": "-1/2",
+              "py": "math.log(1/math.sqrt(3), 3)",
+              "hint": "$~r{}{3} = 3^{~f{1}{2}}$, a potem minus za jedynkę przez potęgę.",
+              "sol": "$~f{1}{~r{}{3}} = 3^{-~f{1}{2}}$, więc wynik to $-~f{1}{2}$."
+            },
+            {
+              "t": "Oblicz $log_{2} ~f{1}{~r{}{8}}$.",
+              "a": "-3/2",
+              "py": "math.log(1/math.sqrt(8), 2)",
+              "hint": "Trzy ruchy z obrazka: $8 = 2^{3}$, $~r{}{8} = 2^{~f{3}{2}}$, potem minus.",
+              "sol": "$~f{1}{~r{}{8}} = ~f{1}{2^{~f{3}{2}}} = 2^{-~f{3}{2}}$, więc wynik to $-~f{3}{2}$."
+            }
+          ]
+        }
+      ],
+      "trening": [
+        {
+          "t": "Oblicz $log_{5} ~f{1}{25}$.",
+          "a": "-2",
+          "py": "math.log(1/25, 5)",
+          "hint": "$25 = 5^{2}$.",
+          "sol": "$~f{1}{25} = 5^{-2}$, więc wynik to $-2$."
+        },
+        {
+          "t": "Oblicz $log 0,0001$.",
+          "a": "-4",
+          "py": "math.log10(0.0001)",
+          "hint": "Policz cyfry po przecinku.",
+          "sol": "$0,0001 = 10^{-4}$, więc wynik to $-4$."
+        },
+        {
+          "t": "Oblicz $log_{7} ~r{3}{7}$.",
+          "a": "1/3",
+          "py": "math.log(7**(1/3), 7)",
+          "hint": "Mała liczba przy pierwiastku idzie do mianownika.",
+          "sol": "$~r{3}{7} = 7^{~f{1}{3}}$."
+        },
+        {
+          "t": "Oblicz $log_{2} 8~r{}{2}$.",
+          "a": "7/2",
+          "py": "math.log(8*math.sqrt(2), 2)",
+          "hint": "$8 = 2^{3}$ i $~r{}{2} = 2^{~f{1}{2}}$. Dodaj wykładniki.",
+          "sol": "$2^{3 + ~f{1}{2}} = 2^{~f{7}{2}}$."
+        },
+        {
+          "t": "Oblicz $log_{3} 9~r{}{3}$.",
+          "a": "5/2",
+          "py": "math.log(9*math.sqrt(3), 3)",
+          "hint": "$9 = 3^{2}$.",
+          "sol": "$3^{2 + ~f{1}{2}} = 3^{~f{5}{2}}$."
+        },
+        {
+          "t": "Oblicz $log_{5} ~f{1}{~r{}{5}}$.",
+          "a": "-1/2",
+          "py": "math.log(1/math.sqrt(5), 5)",
+          "hint": "$~r{}{5} = 5^{~f{1}{2}}$, potem minus za jedynkę przez potęgę.",
+          "sol": "$5^{-~f{1}{2}}$."
+        }
+      ],
+      "test": [
+        {
+          "t": "Ile to $5^{-2}$?",
+          "opts": [
+            "$-25$",
+            "$~f{1}{25}$",
+            "$-10$"
+          ],
+          "ok": 1,
+          "py": "5**-2 == 1/25",
+          "sol": "$5^{-2} = ~f{1}{5^{2}} = ~f{1}{25}$."
+        },
+        {
+          "t": "Oblicz $log_{2} ~f{1}{32}$.",
+          "a": "-5",
+          "py": "math.log(1/32, 2)",
+          "sol": "$~f{1}{32} = 2^{-5}$."
+        },
+        {
+          "t": "Oblicz $log 0,00001$.",
+          "a": "-5",
+          "py": "math.log10(0.00001)",
+          "sol": "Pięć cyfr po przecinku: $10^{-5}$."
+        },
+        {
+          "t": "Oblicz $log_{5} ~r{3}{5}$.",
+          "a": "1/3",
+          "py": "math.log(5**(1/3), 5)",
+          "sol": "$~r{3}{5} = 5^{~f{1}{3}}$."
+        },
+        {
+          "t": "Oblicz $log_{5} 5~r{}{5}$.",
+          "a": "3/2",
+          "py": "math.log(5*math.sqrt(5), 5)",
+          "sol": "$5^{1 + ~f{1}{2}} = 5^{~f{3}{2}}$."
+        },
+        {
+          "t": "Oblicz $log_{2} ~r{}{32}$.",
+          "a": "5/2",
+          "py": "math.log(math.sqrt(32), 2)",
+          "sol": "$32 = 2^{5}$, więc $~r{}{32} = 2^{~f{5}{2}}$."
+        },
+        {
+          "t": "Oblicz $log_{5} ~f{1}{~r{}{125}}$.",
+          "a": "-3/2",
+          "py": "math.log(1/math.sqrt(125), 5)",
+          "sol": "$125 = 5^{3}$, $~r{}{125} = 5^{~f{3}{2}}$, więc wynik to $-~f{3}{2}$."
         }
       ]
     }
@@ -1869,6 +2149,184 @@ S.L1_nie_ma = rows(
     ],
     [
       "Logarytm $log_{a} b$ istnieje, gdy podstawa $a$ jest dodatnia i różna od 1, a liczba $b$ jest dodatnia.",
+    ],
+  ],
+);
+
+/* Obrazki do lekcji 2 z logarytmów: wyniki ujemne i ułamkowe (korzysta z MIX z sceny_log_1.js). */
+
+/* minus w wykładniku: tabela, w której każdy wiersz w dół to dzielenie przez 2 */
+S.L2_minus = rows(
+  [
+    "$2^{2} = 4$",
+    "$2^{1} = 2$",
+    "$2^{0} = 1$",
+    "$2^{-1} = ~f{1}{2}$",
+    "$2^{-2} = ~f{1}{4}$",
+    "$2^{-3} = ~f{1}{8}$",
+    MIX("minus w wykładniku daje ułamek, nie liczbę ujemną"),
+  ],
+  [
+    [
+      "Z lekcji potęg: wiersz niżej ma wykładnik mniejszy o 1, a wynik dzielisz przez 2.",
+      "Dalej",
+    ],
+    ["$2^{1} = 4 : 2 = 2$", "Dalej"],
+    ["$2^{0} = 2 : 2 = 1$", "Poniżej zera"],
+    ["Tabela idzie dalej poniżej zera: $2^{-1} = 1 : 2 = ~f{1}{2}$.", "Dalej"],
+    ["$2^{-2} = ~f{1}{2} : 2 = ~f{1}{4}$", "Dalej"],
+    [
+      "$2^{-3} = ~f{1}{4} : 2 = ~f{1}{8}$. Wynik jest mały, ale dodatni.",
+      "Zasada",
+    ],
+    [
+      "$2^{-3} = ~f{1}{2^{3}} = ~f{1}{8}$, a nie $-8$. Dzielisz cały czas liczby dodatnie przez 2, więc nie możesz dostać liczby ujemnej.",
+    ],
+  ],
+);
+
+/* logarytm z ułamka: zapisujesz liczbę jako potęgę podstawy */
+S.L2_ulamek = rows(
+  [
+    "$log_{2} ~f{1}{8} = ?$",
+    "$2^{?} = ~f{1}{8}$",
+    "$~f{1}{8} = ~f{1}{2^{3}} = 2^{-3}$",
+    "$log_{2} ~f{1}{8} = -3$",
+    MIX("liczba mniejsza od 1 daje tu wynik ujemny"),
+  ],
+  [
+    ["Policz $log_{2} ~f{1}{8}$.", "Przepisz"],
+    [
+      "Przepisz na potęgę: szukasz $2^{?} = ~f{1}{8}$. Lista 2, 4, 8, 16 z lekcji 1 tu nie pomoże, bo te liczby rosną, a $~f{1}{8}$ jest mniejsza od 1.",
+      "Zapisz jako potęgę",
+    ],
+    [
+      "Zapisz $~f{1}{8}$ jako potęgę dwójki. Z poprzedniego obrazka: $~f{1}{8} = 2^{-3}$.",
+      "Wynik",
+    ],
+    ["Wykładnik to wynik: $log_{2} ~f{1}{8} = -3$.", "Zasada"],
+    [
+      "Gdy podstawa jest większa od 1, a liczba mniejsza od 1, wynik jest ujemny. Sposób jest ten sam co zawsze: zapisz liczbę jako potęgę podstawy i odczytaj wykładnik.",
+    ],
+  ],
+);
+
+/* logarytm dziesiętny z ułamka dziesiętnego */
+S.L2_dziesietny = rows(
+  [
+    "$log 0,01 = ?$",
+    "$0,01 = ~f{1}{100}$",
+    "$~f{1}{100} = ~f{1}{10^{2}} = 10^{-2}$",
+    "$log 0,01 = -2$",
+  ],
+  [
+    ["Policz $log 0,01$. Podstawa to 10.", "Zamień na ułamek"],
+    ["0,01 to jedna setna: $0,01 = ~f{1}{100}$.", "Zapisz jako potęgę"],
+    [
+      "$100 = 10^{2}$, więc $~f{1}{100} = 10^{-2}$, jak $~f{1}{8} = 2^{-3}$ na poprzednim obrazku.",
+      "Wynik",
+    ],
+    [
+      "$log 0,01 = -2$. Przy liczbach 0,1, 0,01, 0,001 wynik to minus liczba cyfr po przecinku.",
+    ],
+  ],
+);
+
+/* logarytm z pierwiastka: wynik to ułamek */
+S.L2_pierw = rows(
+  [
+    "$log_{2} ~r{}{2} = ?$",
+    "$~r{}{2} = 2^{~f{1}{2}}$",
+    "$log_{2} ~r{}{2} = ~f{1}{2}$",
+    "$log_{3} ~r{3}{3} = ~f{1}{3}$",
+  ],
+  [
+    [
+      "Policz $log_{2} ~r{}{2}$. Szukasz $2^{?} = ~r{}{2}$.",
+      "Zapisz jako potęgę",
+    ],
+    [
+      "Z lekcji potęg: pierwiastek kwadratowy to wykładnik $~f{1}{2}$. Sprawdzenie: $2^{~f{1}{2}} * 2^{~f{1}{2}} = 2^{1} = 2$, tak samo jak $~r{}{2} * ~r{}{2} = 2$.",
+      "Wynik",
+    ],
+    ["Wykładnik to wynik: $log_{2} ~r{}{2} = ~f{1}{2}$.", "Inny pierwiastek"],
+    [
+      "Pierwiastek trzeciego stopnia to wykładnik $~f{1}{3}$: $~r{3}{3} = 3^{~f{1}{3}}$, więc $log_{3} ~r{3}{3} = ~f{1}{3}$. Mała liczba przy pierwiastku idzie do mianownika.",
+    ],
+  ],
+);
+
+/* liczba razy pierwiastek: dodajesz wykładniki */
+S.L2_razy = rows(
+  [
+    "$log_{3} 3~r{}{3} = ?$",
+    MIX("$3 = 3^{1}$ i $~r{}{3} = 3^{~f{1}{2}}$"),
+    "$3~r{}{3} = 3^{1} * 3^{~f{1}{2}}$",
+    "$3^{1} * 3^{~f{1}{2}} = 3^{1 + ~f{1}{2}} = 3^{~f{3}{2}}$",
+    "$log_{3} 3~r{}{3} = ~f{3}{2}$",
+  ],
+  [
+    ["Policz $log_{3} 3~r{}{3}$. Szukasz $3^{?} = 3~r{}{3}$.", "Rozłóż"],
+    [
+      "Zapisz oba czynniki jako potęgi trójki: $3 = 3^{1}$ i $~r{}{3} = 3^{~f{1}{2}}$.",
+      "Połącz",
+    ],
+    [
+      "$3~r{}{3}$ znaczy $3 * ~r{}{3}$. Między trójką a pierwiastkiem stoi mnożenie.",
+      "Dodaj wykładniki",
+    ],
+    [
+      "Mnożysz potęgi o tej samej podstawie, więc dodajesz wykładniki (lekcja potęg): $1 + ~f{1}{2} = ~f{3}{2}$.",
+      "Wynik",
+    ],
+    [
+      "$log_{3} 3~r{}{3} = ~f{3}{2}$. Nie gub trójki przed pierwiastkiem: bez niej wyszłoby tylko $~f{1}{2}$.",
+    ],
+  ],
+);
+
+/* pierwiastek z potęgi: wykładnik do licznika, stopień do mianownika */
+S.L2_pod = rows(
+  [
+    "$log_{2} ~r{}{8} = ?$",
+    "$8 = 2^{3}$",
+    "$~r{}{8} = ~r{}{2^{3}} = 2^{~f{3}{2}}$",
+    "$log_{2} ~r{}{8} = ~f{3}{2}$",
+  ],
+  [
+    ["Policz $log_{2} ~r{}{8}$. Szukasz $2^{?} = ~r{}{8}$.", "Rozpisz 8"],
+    ["Najpierw liczba pod pierwiastkiem: $8 = 2^{3}$.", "Zamień pierwiastek"],
+    [
+      "Z lekcji potęg: wykładnik spod pierwiastka idzie do licznika, stopień pierwiastka do mianownika. Pierwiastek kwadratowy ma stopień 2: $~r{}{2^{3}} = 2^{~f{3}{2}}$.",
+      "Wynik",
+    ],
+    ["$log_{2} ~r{}{8} = ~f{3}{2}$."],
+  ],
+);
+
+/* jedynka przez pierwiastek: wszystko naraz */
+S.L2_odwr = rows(
+  [
+    "$log_{3} ~f{1}{~r{}{27}} = ?$",
+    MIX("$27 = 3^{3}$, więc $~r{}{27} = 3^{~f{3}{2}}$"),
+    "$~f{1}{3^{~f{3}{2}}} = 3^{-~f{3}{2}}$",
+    "$log_{3} ~f{1}{~r{}{27}} = -~f{3}{2}$",
+  ],
+  [
+    [
+      "Ostatni przypadek: jedynka przez pierwiastek. Policz $log_{3} ~f{1}{~r{}{27}}$.",
+      "Mianownik",
+    ],
+    [
+      "Najpierw mianownik, jak na poprzednim obrazku: $27 = 3^{3}$, więc $~r{}{27} = 3^{~f{3}{2}}$.",
+      "Odwróć",
+    ],
+    [
+      "Jedynka przez potęgę to ta sama potęga z minusem w wykładniku (pierwszy obrazek tej lekcji): $~f{1}{3^{~f{3}{2}}} = 3^{-~f{3}{2}}$.",
+      "Wynik",
+    ],
+    [
+      "$log_{3} ~f{1}{~r{}{27}} = -~f{3}{2}$. Trzy ruchy: rozpisz liczbę pod pierwiastkiem, zamień pierwiastek na ułamek w wykładniku, a jedynkę przez potęgę zamień na minus.",
     ],
   ],
 );
