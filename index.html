@@ -3563,7 +3563,590 @@ S.L4_rozne = rows(
   })(window.RYS);
 </script>
 
+<script type="application/json" id="sprawdzian">
+{
+  "tytul": "Test końcowy: logarytmy",
+  "zakres": "lekcje 1–4",
+  "czas_min": 45,
+  "zadania": [
+    {
+      "nr": 1,
+      "pkt": 2,
+      "lekcje": [
+        1
+      ],
+      "t": "Zapisz każdą równość jako logarytm: a) $5^{4} = 625$, b) $10^{-3} = 0,001$."
+    },
+    {
+      "nr": 2,
+      "pkt": 3,
+      "lekcje": [
+        3
+      ],
+      "t": "Znajdź liczbę $b$: a) $log_{6} b = 2$, b) $log_{4} b = -~f{1}{2}$, c) $log_{8} b = ~f{4}{3}$."
+    },
+    {
+      "nr": 3,
+      "pkt": 2,
+      "lekcje": [
+        2
+      ],
+      "t": "Oblicz: a) $log_{2} ~f{1}{64}$, b) $log 0,000001$."
+    },
+    {
+      "nr": 4,
+      "pkt": 2,
+      "lekcje": [
+        4
+      ],
+      "t": "Oblicz, korzystając ze wzorów: a) $log_{2} (16 * 128)$, b) $log_{3} ~f{729}{~r{}{3}}$."
+    },
+    {
+      "nr": 5,
+      "pkt": 2,
+      "lekcje": [
+        3
+      ],
+      "t": "Oblicz: a) $log_{~f{1}{2}} 16$, b) $log_{~f{1}{3}} ~f{1}{27}$."
+    },
+    {
+      "nr": 6,
+      "pkt": 3,
+      "lekcje": [
+        1
+      ],
+      "t": "Oblicz: a) $log_{7} 7$, b) $log_{12} 1$, c) $log 100000$."
+    },
+    {
+      "nr": 7,
+      "pkt": 2,
+      "lekcje": [
+        4
+      ],
+      "t": "Oblicz: a) $log_{5} 25^{6}$, b) $log_{2} 8^{-5}$."
+    },
+    {
+      "nr": 8,
+      "pkt": 2,
+      "lekcje": [
+        2
+      ],
+      "t": "Oblicz: a) $log_{7} ~r{}{7}$, b) $log_{2} ~r{5}{4}$."
+    },
+    {
+      "nr": 9,
+      "pkt": 2,
+      "lekcje": [
+        3
+      ],
+      "t": "Znajdź podstawę $a$: a) $log_{a} 125 = 3$, b) $log_{a} 9 = -2$."
+    },
+    {
+      "nr": 10,
+      "pkt": 2,
+      "lekcje": [
+        4
+      ],
+      "t": "Oblicz: a) $log 4 + log 25$, b) $log 500 - log 5$."
+    },
+    {
+      "nr": 11,
+      "pkt": 2,
+      "lekcje": [
+        1
+      ],
+      "t": "Oblicz: a) $log_{3} 243$, b) $log_{6} 216$."
+    },
+    {
+      "nr": 12,
+      "pkt": 2,
+      "lekcje": [
+        2
+      ],
+      "t": "Oblicz: a) $log_{3} 27~r{}{3}$, b) $log_{2} ~f{1}{~r{}{32}}$."
+    },
+    {
+      "nr": 13,
+      "pkt": 2,
+      "lekcje": [
+        4
+      ],
+      "t": "Oblicz: a) $log_{8} 4 + log_{25} 5$, b) $log_{2} ~f{1}{4} - log_{~f{1}{2}} 8$."
+    },
+    {
+      "nr": 14,
+      "pkt": 1,
+      "lekcje": [
+        3
+      ],
+      "t": "Oblicz $log_{~r{}{3}} 81$."
+    },
+    {
+      "nr": 15,
+      "pkt": 4,
+      "lekcje": [
+        1
+      ],
+      "t": "Które z tych logarytmów nie istnieją? Przy każdym napisz krótko dlaczego: a) $log_{3} (-9)$, b) $log_{1} 4$, c) $log_{4} ~f{1}{2}$, d) $log_{5} 0$."
+    },
+    {
+      "nr": 16,
+      "pkt": 4,
+      "lekcje": [
+        3,
+        4
+      ],
+      "t": "Znajdź błąd i podaj dobry wynik. a) Kolega napisał: $log_{~f{1}{2}} 8 = 3$. b) Kolega napisał: $log_{2} (8 + 8) = log_{2} 8 + log_{2} 8 = 6$."
+    }
+  ]
+}
+</script>
+<style>
+  /* Sprawdzian: pola na obliczenia, przyciski znaków, tekst do wysłania */
+  .spr-kl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .spr-kl button {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--math);
+    font-size: 19px;
+  }
+  .spr-pole {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 92px;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.4;
+    resize: vertical;
+  }
+  .spr-pole:focus {
+    outline: none;
+    border-color: var(--pitch);
+  }
+  .spr-pole::placeholder {
+    color: var(--muted);
+  }
+  .spr-tekst {
+    margin-top: 12px;
+    padding: 10px 12px;
+    max-height: 320px;
+    overflow: auto;
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 14px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .spr-info {
+    margin-top: 10px;
+    color: var(--muted);
+  }
+</style>
+<script>
+  /* Sprawdzian ze wszystkich lekcji: zadania otwarte bez sprawdzania na stronie; odpowiedzi idą do taty, a sprawdza je AI z kluczem spoza strony. */
+  window.SPR = (function () {
+    var D = JSON.parse(document.getElementById("sprawdzian").textContent),
+      MIEJSCE = "logarytmy-test-v1",
+      ZNAKI = ["log_", "^", "/", "√", "·", "(", ")", "−"],
+      app = document.getElementById("app"),
+      S = load(),
+      clockT = null,
+      pytaj = false,
+      wysylam = false,
+      komunikat = "";
 
+    function load() {
+      try {
+        var r = JSON.parse(localStorage.getItem(MIEJSCE) || "null");
+        if (r && r.odp) return r;
+      } catch (e) {}
+      return { odp: {} };
+    }
+    function save() {
+      try {
+        localStorage.setItem(MIEJSCE, JSON.stringify(S));
+      } catch (e) {}
+    }
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+    function sumaPkt() {
+      return D.zadania.reduce(function (a, z) {
+        return a + z.pkt;
+      }, 0);
+    }
+    function pusta(z) {
+      return !(S.odp[z.nr] || "").trim();
+    }
+
+    /* zapis matematyki ze strony na zwykły tekst dla AI: ~f{a}{b} → a/b, ~r{n}{x} → n√(x), ~p{x} → (x), ^{x} → ^x */
+    function plain(s) {
+      var i = 0;
+      function nawias(x) {
+        return /^[0-9a-z?]+$/i.test(x) ? x : "(" + x + ")";
+      }
+      function grp() {
+        if (s[i] === "{") {
+          i++;
+          var o = seq("}");
+          i++;
+          return o;
+        }
+        return s[i++] || "";
+      }
+      function seq(end) {
+        var o = "";
+        while (i < s.length && !(end && s[i] === end)) {
+          var c = s[i];
+          if (c === "$") i++;
+          else if (c === "^") {
+            i++;
+            o += "^" + nawias(grp());
+          } else if (c === "_") {
+            i++;
+            o += "_" + nawias(grp());
+          } else if (c === "~" && "frp".indexOf(s[i + 1]) >= 0) {
+            var k = s[i + 1];
+            i += 2;
+            if (k === "f") {
+              var a = grp();
+              o += nawias(a) + "/" + nawias(grp());
+            } else if (k === "r") {
+              var n = grp();
+              o += ({ "": "√", 3: "∛", 4: "∜", 5: "⁵√" }[n] || n + "√") + nawias(grp());
+            } else o += "(" + grp() + ")";
+          } else if (c === "*") {
+            o += "·";
+            i++;
+          } else if (c === "-") {
+            o += "−";
+            i++;
+          } else {
+            o += c;
+            i++;
+          }
+        }
+        return o;
+      }
+      return seq(null);
+    }
+
+    function czas() {
+      var s = Math.max(
+        0,
+        Math.floor(((S.koniec || Date.now()) - S.start) / 1000),
+      );
+      return (
+        String(Math.floor(s / 60)).padStart(2, "0") +
+        ":" +
+        String(s % 60).padStart(2, "0")
+      );
+    }
+    function tick() {
+      var el = document.getElementById("sprClock");
+      if (el && S.start) el.textContent = czas();
+    }
+    function pokaz(h) {
+      clearInterval(clockT);
+      app.innerHTML = h;
+      window.scrollTo(0, 0);
+    }
+
+    function wejscie() {
+      return (
+        '<section><h2>Sprawdzian</h2><div class="card"><b>' +
+        esc(D.tytul) +
+        "</b>" +
+        '<p class="spr-info">' +
+        D.zadania.length +
+        " zadań z lekcji 1–4, " +
+        sumaPkt() +
+        " punktów, około " +
+        D.czas_min +
+        " minut. Bez podpowiedzi. Na końcu wysyłasz odpowiedzi tacie.</p>" +
+        '<button class="next" data-spr="wstep">' +
+        (S.start ? "Wróć do sprawdzianu" : "Otwórz sprawdzian") +
+        "</button></div></section>"
+      );
+    }
+
+    function wstep() {
+      pokaz(
+        '<div class="top"><div class="wrap"><span class="ttl">' +
+          esc(D.tytul) +
+          '</span><button class="x" data-spr="dom" aria-label="Wróć do listy lekcji">×</button></div></div>' +
+          '<main class="wrap"><div class="stage">Zanim zaczniesz</div><div class="card">' +
+          "<p>" +
+          D.zadania.length +
+          " zadań ze wszystkich lekcji, razem " +
+          sumaPkt() +
+          " punktów. Masz około " +
+          D.czas_min +
+          " minut.</p>" +
+          "<p>Wpisz obliczenia i wynik. Punkty dostajesz też za dobre obliczenia, nawet gdy wynik wyjdzie zły. Strona nie sprawdza odpowiedzi: na końcu wyślesz je tacie.</p>" +
+          '<div class="hintbox"><b>Jak pisać:</b> logarytm log_2 8, potęga 2^3, ułamek 3/4, pierwiastek √2. Przy każdym zadaniu zapisz, jak liczysz, na przykład przepisanie na potęgę. Te znaki są też na przyciskach nad polem.</div>' +
+          '<button class="next" data-spr="zadania">' +
+          (S.start ? "Wróć do zadań" : "Zacznij sprawdzian") +
+          "</button></div></main>",
+      );
+    }
+
+    function zadania() {
+      if (!S.start) {
+        S.start = Date.now();
+        save();
+      }
+      S.koniec = null;
+      var h =
+        '<div class="top"><div class="wrap"><span class="ttl">' +
+        esc(D.tytul) +
+        '</span><span class="clock" id="sprClock">00:00</span><button class="x" data-spr="dom" aria-label="Wróć do listy lekcji">×</button></div></div><main class="wrap">';
+      D.zadania.forEach(function (z) {
+        h +=
+          '<div class="stage">Zadanie ' +
+          z.nr +
+          " · " +
+          z.pkt +
+          " pkt</div>" +
+          '<div class="card"><div class="prompt">' +
+          window.MT(z.t) +
+          "</div>" +
+          (z.rys ? window.RYS(z.rys) : "") +
+          '<div class="spr-kl">' +
+          ZNAKI.map(function (c) {
+            return (
+              '<button data-wstaw="' +
+              esc(c) +
+              '" data-z="' +
+              z.nr +
+              '" aria-label="Wstaw znak ' +
+              esc(c) +
+              '">' +
+              esc(c) +
+              "</button>"
+            );
+          }).join("") +
+          "</div>" +
+          '<textarea class="spr-pole" id="spr' +
+          z.nr +
+          '" data-z="' +
+          z.nr +
+          '" rows="3" placeholder="obliczenia i wynik" aria-label="Odpowiedź do zadania ' +
+          z.nr +
+          '">' +
+          esc(S.odp[z.nr] || "") +
+          "</textarea></div>";
+      });
+      h +=
+        '<button class="next" data-spr="koniec">Zakończ i wyślij</button></main>';
+      pokaz(h);
+      tick();
+      clockT = setInterval(tick, 1000);
+    }
+
+    function tekst() {
+      var t =
+        D.tytul +
+        " (" +
+        D.zakres +
+        ")\nOddane: " +
+        new Date(S.koniec).toLocaleString("pl-PL") +
+        "\nCzas: " +
+        czas() +
+        "\n";
+      D.zadania.forEach(function (z) {
+        t +=
+          "\nZadanie " +
+          z.nr +
+          " (" +
+          z.pkt +
+          " pkt): " +
+          plain(z.t) +
+          "\nOdpowiedź: " +
+          (pusta(z) ? "(brak)" : S.odp[z.nr].trim()) +
+          "\n";
+      });
+      return t;
+    }
+
+    function koniec() {
+      var puste = D.zadania.filter(pusta).map(function (z) {
+          return z.nr;
+        }),
+        h =
+          '<div class="top"><div class="wrap"><span class="ttl">' +
+          esc(D.tytul) +
+          '</span><button class="x" data-spr="dom" aria-label="Wróć do listy lekcji">×</button></div></div>' +
+          '<main class="wrap"><div class="stage">Wyślij odpowiedzi</div><div class="card">' +
+          "<p>Odpowiedzi w " +
+          (D.zadania.length - puste.length) +
+          " z " +
+          D.zadania.length +
+          " zadań. Czas: " +
+          czas() +
+          ".</p>";
+      if (puste.length)
+        h +=
+          '<div class="hintbox">Puste zadania: ' +
+          puste.join(", ") +
+          '. <button class="linkbtn" data-spr="zadania">Wróć do zadań</button></div>';
+      h +=
+        '<button class="next" data-spr="wyslij">Wyślij odpowiedzi tacie</button>' +
+        '<button class="next ghost" data-spr="kopiuj">Kopiuj tekst</button>' +
+        (komunikat
+          ? '<p class="spr-info" aria-live="polite">' + esc(komunikat) + "</p>"
+          : "") +
+        '<div class="spr-tekst" id="sprTekst">' +
+        esc(tekst()) +
+        "</div></div>" +
+        '<div class="reset">' +
+        (pytaj
+          ? 'Na pewno zacząć od nowa? Odpowiedzi znikną. <button class="linkbtn" data-spr="zeruj">Tak, od nowa</button><button class="linkbtn" data-spr="niezeruj">Nie</button>'
+          : '<button class="linkbtn" data-spr="pytaj">Zacznij sprawdzian od nowa</button>') +
+        ' <button class="linkbtn" data-spr="zadania">Wróć do zadań</button></div></main>';
+      komunikat = "";
+      pokaz(h);
+    }
+
+    /* kopiuje tekst do schowka; obietnica daje true, gdy kopiowanie się udało */
+    function kopiuj(t) {
+      function stary() {
+        var el = document.createElement("textarea"),
+          ok = false;
+        el.value = t;
+        document.body.appendChild(el);
+        el.select();
+        try {
+          ok = document.execCommand("copy");
+        } catch (e) {}
+        document.body.removeChild(el);
+        return ok;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText)
+        return navigator.clipboard.writeText(t).then(function () {
+          return true;
+        }, stary);
+      return Promise.resolve(stary());
+    }
+    function poKopii(ok, przed) {
+      komunikat =
+        przed +
+        (ok
+          ? "Tekst skopiowany. Wklej go w wiadomości do taty."
+          : "Nie udało się skopiować. Zaznacz tekst poniżej, skopiuj go i wklej w wiadomości do taty.");
+      koniec();
+    }
+
+    var AKCJE = {
+      wstep: wstep,
+      zadania: zadania,
+      koniec: function () {
+        S.koniec = Date.now();
+        save();
+        koniec();
+      },
+      dom: function () {
+        clearInterval(clockT);
+        window.HOME();
+      },
+      wyslij: function () {
+        if (wysylam) return;
+        var t = tekst();
+        if (!navigator.share) {
+          kopiuj(t).then(function (ok) {
+            poKopii(ok, "");
+          });
+          return;
+        }
+        wysylam = true;
+        navigator.share({ title: D.tytul, text: t }).then(
+          function () {
+            wysylam = false;
+          },
+          function (e) {
+            wysylam = false;
+            if (e && e.name === "AbortError") return;
+            kopiuj(t).then(function (ok) {
+              poKopii(ok, "Nie udało się otworzyć wysyłania. ");
+            });
+          },
+        );
+      },
+      kopiuj: function () {
+        kopiuj(tekst()).then(function (ok) {
+          poKopii(ok, "");
+        });
+      },
+      pytaj: function () {
+        pytaj = true;
+        koniec();
+      },
+      niezeruj: function () {
+        pytaj = false;
+        koniec();
+      },
+      zeruj: function () {
+        pytaj = false;
+        S = { odp: {} };
+        save();
+        wstep();
+      },
+    };
+
+    /* przycisk znaku nie zabiera kursora z pola, a wstawia znak w miejscu kursora */
+    document.addEventListener("mousedown", function (e) {
+      if (e.target.closest && e.target.closest("[data-wstaw]"))
+        e.preventDefault();
+    });
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("[data-spr], [data-wstaw]");
+      if (!b) return;
+      if (b.hasAttribute("data-spr")) {
+        var f = AKCJE[b.getAttribute("data-spr")];
+        if (f) f();
+        return;
+      }
+      var p = document.getElementById("spr" + b.getAttribute("data-z")),
+        c = b.getAttribute("data-wstaw"),
+        // pole bez kursora (np. po powrocie do zadań) dostaje znak na końcu, nie na początku
+        aktywne = document.activeElement === p && p.selectionStart != null,
+        a = aktywne ? p.selectionStart : p.value.length,
+        z = aktywne ? p.selectionEnd : a;
+      p.value = p.value.slice(0, a) + c + p.value.slice(z);
+      p.focus();
+      p.selectionStart = p.selectionEnd = a + c.length;
+      S.odp[p.getAttribute("data-z")] = p.value;
+      save();
+    });
+    document.addEventListener("input", function (e) {
+      if (e.target.classList && e.target.classList.contains("spr-pole")) {
+        S.odp[e.target.getAttribute("data-z")] = e.target.value;
+        save();
+      }
+    });
+
+    return { wejscie: wejscie, plain: plain };
+  })();
+</script>
 
 <script>
   (function () {
