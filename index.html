@@ -1,0 +1,2952 @@
+<meta charset="utf-8" />
+<title>Logarytmy w 4 lekcjach</title>
+<meta name="claude:viewport-fit-sides" content="cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Saira+Condensed:wght@600;800&family=STIX+Two+Text:wght@400;600&display=swap"
+/>
+<style>
+  /* Układ: jedna kolumna jak zeszyt; zielony pasek u góry, lista lekcji, potem lekcja: wyprowadzenie zasady obrazkiem, przykład, ćwiczenia z klawiaturą liczb, test. */
+  :root {
+    --bg: #f1f5f1;
+    --surface: #ffffff;
+    --ink: #13241b;
+    --muted: #56685d;
+    --line: #d3ddd6;
+    --pitch: #1d7543;
+    --pitch-ink: #ffffff;
+    --pitch-soft: #e0efe5;
+    --yellow: #e9b21c;
+    --yellow-soft: #fcf2d2;
+    --on-yellow: #231b02;
+    --red: #c23a3a;
+    --red-soft: #f8e0df;
+    --blue: #2c67b0;
+    --display: "Saira Condensed", "Arial Narrow", sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+    --math: "STIX Two Text", "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1611;
+      --surface: #15221a;
+      --ink: #e5eee8;
+      --muted: #9bb0a3;
+      --line: #293a30;
+      --pitch: #37b06a;
+      --pitch-ink: #07130b;
+      --pitch-soft: #1a3424;
+      --yellow: #f0c23e;
+      --yellow-soft: #382f14;
+      --on-yellow: #231b02;
+      --red: #ff7c72;
+      --red-soft: #3b1d1b;
+      --blue: #6fa8e8;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1611;
+    --surface: #15221a;
+    --ink: #e5eee8;
+    --muted: #9bb0a3;
+    --line: #293a30;
+    --pitch: #37b06a;
+    --pitch-ink: #07130b;
+    --pitch-soft: #1a3424;
+    --yellow: #f0c23e;
+    --yellow-soft: #382f14;
+    --on-yellow: #231b02;
+    --red: #ff7c72;
+    --red-soft: #3b1d1b;
+    --blue: #6fa8e8;
+    color-scheme: dark;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 40px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--display);
+    line-height: 1.1;
+    text-wrap: balance;
+    margin: 0;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .m {
+    font-family: var(--math);
+    font-size: 1.12em;
+    white-space: nowrap;
+  }
+  .m sup {
+    font-size: 0.68em;
+    line-height: 0;
+  }
+  .fr {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.86em;
+    line-height: 1.15;
+    margin: 0 0.08em;
+  }
+  .fr > span:first-child {
+    border-bottom: 1.5px solid currentColor;
+    padding: 0 0.2em;
+  }
+  .fr > span:last-child {
+    padding: 0 0.2em;
+  }
+  sup .fr {
+    font-size: 0.95em;
+  }
+  .pa {
+    font-size: 1.45em;
+    font-weight: 400;
+    vertical-align: -0.14em;
+    line-height: 0;
+  }
+  .rt {
+    white-space: nowrap;
+  }
+  .rs {
+    margin-right: -0.05em;
+  }
+  .rx {
+    border-top: 1.5px solid currentColor;
+    padding: 0 0.12em;
+  }
+  .ri {
+    font-size: 0.6em;
+    vertical-align: 0.95em;
+    margin-right: -0.35em;
+  }
+
+  .band {
+    background: var(--pitch);
+    color: var(--pitch-ink);
+  }
+  .band .wrap {
+    padding-block: 22px 22px;
+  }
+  .kicker {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .band h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-top: 4px;
+  }
+  .band p {
+    margin: 8px 0 0;
+    max-width: 36ch;
+  }
+  .xpbar {
+    display: flex;
+    gap: 16px;
+    margin-top: 14px;
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .xpbar b {
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  section {
+    margin-top: 26px;
+  }
+  section > h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .flow span {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    padding: 4px 12px;
+  }
+  .flow i {
+    font-style: normal;
+    color: var(--muted);
+  }
+  .note {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 8px 0 0;
+  }
+  .table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+    border-top: 1px solid var(--line);
+    text-align: left;
+    background: none;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    width: 100%;
+  }
+  .row:first-child {
+    border-top: 0;
+  }
+  .row .nr {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--pitch);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .row .tt {
+    min-width: 0;
+  }
+  .row .tt b {
+    display: block;
+    font-size: 17px;
+  }
+  .row .tt small {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .row.biezaca {
+    background: var(--pitch-soft);
+  }
+  .chip {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .chip.done {
+    background: var(--pitch);
+    color: var(--pitch-ink);
+    border-color: var(--pitch);
+  }
+  .chip.go {
+    border-color: var(--pitch);
+    color: var(--pitch);
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .topic {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .topic b {
+    display: block;
+  }
+  .topic small {
+    color: var(--muted);
+  }
+  details.sciaga {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  details.sciaga summary {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  details.sciaga ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+  }
+  details.sciaga li {
+    margin: 6px 0;
+  }
+  .reset {
+    margin-top: 26px;
+    color: var(--muted);
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .linkbtn {
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    color: var(--muted);
+    padding: 4px 0;
+  }
+
+  .top {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    background: var(--pitch);
+    color: var(--pitch-ink);
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: var(--pitch);
+  }
+  .top .wrap {
+    padding-block: 10px 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .top .ttl {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clock {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+  .x {
+    background: none;
+    border: 1.5px solid currentColor;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-weight: 700;
+  }
+  .prog {
+    height: 6px;
+    background: var(--pitch-soft);
+  }
+  .prog i {
+    display: block;
+    height: 100%;
+    background: var(--yellow);
+    transition: width 0.3s;
+  }
+  .stage {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--pitch);
+    font-size: 15px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  .prompt {
+    font-size: 19px;
+  }
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--bg);
+  }
+  .steps li span.n {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--pitch);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .steps li div {
+    min-width: 0;
+  }
+  .hintbox {
+    margin-top: 12px;
+    background: var(--yellow-soft);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .ans {
+    margin-top: 14px;
+    min-height: 56px;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: var(--math);
+    font-size: 28px;
+    font-variant-numeric: tabular-nums;
+    overflow-x: auto;
+  }
+  .ans:empty::before {
+    content: "wpisz wynik";
+    color: var(--muted);
+    font-family: var(--body);
+    font-size: 17px;
+  }
+  .ans.ok {
+    border-color: var(--pitch);
+  }
+  .ans.bad {
+    border-color: var(--red);
+  }
+  .pad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .pad button {
+    min-height: 52px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    font-family: var(--math);
+    font-size: 24px;
+  }
+  .pad button.fn {
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .pad button.go {
+    background: var(--pitch);
+    color: var(--pitch-ink);
+    border-color: var(--pitch);
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 800;
+  }
+  .padnote {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .opts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .opts button {
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    font-size: 17px;
+  }
+  .opts button[disabled] {
+    opacity: 0.45;
+    cursor: default;
+  }
+  .opts button.right {
+    border-color: var(--pitch);
+    background: var(--pitch-soft);
+    opacity: 1;
+  }
+  .opts button.wrong {
+    border-color: var(--red);
+    background: var(--red-soft);
+  }
+  .fb {
+    margin-top: 12px;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .fb.ok {
+    background: var(--pitch-soft);
+  }
+  .fb.warn {
+    background: var(--yellow-soft);
+  }
+  .fb.bad {
+    background: var(--red-soft);
+  }
+  .next {
+    margin-top: 14px;
+    width: 100%;
+    min-height: 52px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--pitch);
+    color: var(--pitch-ink);
+    font-family: var(--display);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+  .next.ghost {
+    background: none;
+    border: 2px solid var(--pitch);
+    color: var(--pitch);
+  }
+  .score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin: 10px 0;
+    font-family: var(--display);
+    font-weight: 800;
+  }
+  .score div {
+    text-align: center;
+  }
+  .score b {
+    display: block;
+    font-size: 64px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .score small {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .score .colon {
+    font-size: 48px;
+    color: var(--muted);
+  }
+
+  /* obrazek z wyprowadzeniem */
+  .scene {
+    padding: 12px 12px 14px;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+  .dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .dots i.d {
+    background: var(--pitch);
+  }
+  .dots i.c {
+    background: var(--yellow);
+  }
+  .viz {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .vizh {
+    min-height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    font-size: 24px;
+    padding: 8px 0;
+  }
+  .vizh > div {
+    transition: opacity 0.45s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .vizh > .t {
+    font-size: 18px;
+    color: var(--muted);
+  }
+  .mini .dot {
+    fill: var(--pitch);
+  }
+  .mini .hl {
+    fill: var(--yellow);
+  }
+  .mini text {
+    fill: var(--ink);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .cap {
+    min-height: 4.6em;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  .sbtns {
+    display: flex;
+    gap: 10px;
+  }
+  .sbtns .next {
+    flex: 1;
+    margin-top: 8px;
+  }
+  .sbtns .lektor { width: auto; padding: 0 12px; font-size: 16px; white-space: nowrap; }
+  .sbtns .lektor.on { border-color: var(--yellow); }
+  .again {
+    margin-top: 8px;
+    width: 56px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    font-size: 22px;
+  }
+  .viz .mv,
+  .viz text {
+    transition:
+      transform 0.6s cubic-bezier(0.25, 0.8, 0.3, 1),
+      opacity 0.45s;
+  }
+  .viz .tx {
+    fill: var(--ink);
+    font-family: var(--math);
+  }
+  .viz .big2 {
+    fill: var(--ink);
+    font-family: var(--math);
+    font-size: 40px;
+  }
+  .viz .expb {
+    fill: var(--ink);
+    font-family: var(--math);
+    font-size: 26px;
+  }
+  .viz .neg {
+    fill: var(--red);
+  }
+  .viz .lb {
+    fill: var(--muted);
+    font-family: var(--body);
+    font-size: 13px;
+  }
+  .viz .lb2 {
+    fill: var(--pitch);
+    font-family: var(--math);
+    font-size: 17px;
+  }
+  .viz .val {
+    fill: var(--ink);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .viz .res {
+    fill: var(--pitch);
+    font-family: var(--math);
+    font-size: 30px;
+  }
+  .viz .res2 {
+    fill: var(--pitch);
+    font-family: var(--math);
+    font-size: 24px;
+  }
+  .viz .tile {
+    fill: var(--pitch);
+  }
+  .viz .tl {
+    fill: var(--pitch-ink);
+    font-family: var(--math);
+  }
+  .viz .b .tile {
+    fill: var(--blue);
+  }
+  .viz .y .tile {
+    fill: var(--yellow);
+  }
+  .viz .y .tl {
+    fill: var(--on-yellow);
+  }
+  .viz .r .tile {
+    fill: var(--red);
+  }
+  .viz .d .tile {
+    fill: var(--surface);
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+  .viz .d .tl {
+    fill: var(--ink);
+  }
+  .viz .pl {
+    stroke: var(--pitch);
+    stroke-width: 2;
+    fill: none;
+  }
+  .viz .arcp {
+    fill: none;
+    stroke: var(--pitch);
+    stroke-width: 2.5;
+  }
+  .viz .brk {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 2;
+  }
+  .viz .box {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 2;
+    stroke-dasharray: 5 4;
+  }
+  .viz .mcirc {
+    fill: var(--red);
+  }
+  .viz .mtxt {
+    fill: var(--pitch-ink);
+    font-family: var(--math);
+    font-size: 24px;
+  }
+  .viz .fl {
+    stroke: var(--ink);
+    stroke-width: 2.5;
+  }
+  .viz .cut {
+    stroke: var(--red);
+    stroke-width: 3;
+  }
+  .viz .bar {
+    fill: var(--pitch);
+  }
+  .viz .y .bar {
+    fill: var(--yellow);
+  }
+  .viz .r .bar {
+    fill: var(--red);
+  }
+  .viz .barlab {
+    fill: var(--pitch-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .viz .y .barlab {
+    fill: var(--on-yellow);
+  }
+  .viz .comma {
+    fill: var(--yellow);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .viz .zone {
+    fill: var(--pitch-soft);
+  }
+  .viz .mk {
+    fill: var(--muted);
+  }
+  .viz .ok .mk {
+    fill: var(--pitch);
+  }
+  .viz .no .mk {
+    fill: var(--red);
+  }
+  .viz .hl {
+    fill: var(--yellow);
+  }
+  .viz.rys {
+    margin: 12px auto 4px;
+    max-width: 400px;
+  }
+  .viz .ln {
+    stroke: var(--pitch);
+    stroke-width: 2;
+    fill: none;
+  }
+  .viz .siat {
+    stroke: var(--pitch);
+    stroke-width: 1;
+    opacity: 0.3;
+  }
+  .viz .srf {
+    fill: var(--surface);
+  }
+  .viz .zone2 {
+    fill: var(--line);
+  }
+  .vizh .mix {
+    color: var(--muted);
+    font-size: 18px;
+    text-align: center;
+  }
+  .viz .valm {
+    fill: var(--ink);
+    font-family: var(--math);
+    font-size: 19px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prog i {
+      transition: none;
+    }
+    .viz *,
+    .vizh > div {
+      transition: none !important;
+    }
+  }
+
+  /* logarytmy: indeks dolny i kolory części zapisu */
+  .m sub { font-size: 0.68em; line-height: 0; }
+  .kol { font-size: 1.15em; }
+  .kb { color: var(--blue); font-weight: 600; }
+  .kg { color: var(--pitch); font-weight: 600; }
+  .kz { background: var(--yellow-soft); color: var(--ink); border-radius: 4px; padding: 0 3px; font-weight: 600; }
+  .kol .mix { font-size: 0.7em; }
+</style>
+
+<div id="app"></div>
+
+<script type="application/json" id="dane">
+{
+  "karty": [
+    {
+      "temat": "1.10 Logarytm i jego własności",
+      "strony": "Przykłady 1–5, Ćwiczenia 1–7, Zadania 1–9",
+      "kolejki": [
+        1
+      ]
+    }
+  ],
+  "sciaga": [
+    "$log_{a} b = x$ znaczy $a^{x} = b$. Podstawa logarytmu zostaje podstawą potęgi.",
+    "Liczysz logarytm, wypisując potęgi podstawy, aż wyjdzie liczba. Wynik to wykładnik z tego wiersza.",
+    "$log_{a} a = 1$, bo $a^{1} = a$. $log_{a} 1 = 0$, bo $a^{0} = 1$.",
+    "$log b$ bez liczby na dole to $log_{10} b$, logarytm dziesiętny.",
+    "Logarytm $log_{a} b$ istnieje, gdy $a > 0$, $a ≠ 1$, $b > 0$."
+  ],
+  "sesje": [
+    {
+      "nr": 1,
+      "tytul": "Co to jest logarytm i jak go policzyć",
+      "karty": "1.10, Przykłady 1–3, Ćw. 1–4",
+      "rozgrzewka": [
+        {
+          "t": "Powtórka z potęg. Uzupełnij wykładnik: $2^{?} = 16$.",
+          "a": "4",
+          "py": "math.log(16, 2)",
+          "hint": "Mnóż dwójki: 2, 4, 8, 16. Policz, ile dwójek pomnożyłeś.",
+          "sol": "$2 * 2 * 2 * 2 = 16$, cztery dwójki, więc $2^{4} = 16$."
+        },
+        {
+          "t": "Uzupełnij wykładnik: $3^{?} = 27$.",
+          "a": "3",
+          "py": "math.log(27, 3)",
+          "hint": "Mnóż trójki: 3, 9, 27.",
+          "sol": "$3 * 3 * 3 = 27$, więc $3^{3} = 27$."
+        }
+      ],
+      "bloki": [
+        {
+          "tytul": "Logarytm to brakujący wykładnik",
+          "sceny": [
+            "L1_pytanie",
+            "L1_mapa",
+            "L1_zamiana"
+          ],
+          "pytania": [
+            {
+              "t": "Zapis $log_{3} 81 = 4$ znaczy to samo co:",
+              "opts": [
+                "$3^{4} = 81$",
+                "$4^{3} = 81$",
+                "$81^{4} = 3$"
+              ],
+              "ok": 0,
+              "py": "3**4 == 81 and 4**3 != 81",
+              "hint": "Podstawa logarytmu zostaje podstawą potęgi. Wynik logarytmu idzie do wykładnika, jak na obrazku z kolorami.",
+              "sol": "$log_{3} 81 = 4$, bo $3^{4} = 81$."
+            },
+            {
+              "t": "Równość $5^{3} = 125$ zapisz logarytmem.",
+              "opts": [
+                "$log_{3} 125 = 5$",
+                "$log_{125} 5 = 3$",
+                "$log_{5} 125 = 3$"
+              ],
+              "ok": 2,
+              "py": "5**3 == 125 and 3**5 != 125",
+              "hint": "Podstawą potęgi jest 5, więc na dole logarytmu stoi 5. Wykładnik 3 to wynik logarytmu.",
+              "sol": "$5^{3} = 125$, więc $log_{5} 125 = 3$."
+            },
+            {
+              "t": "Policz $log_{2} 32$. Najpierw przepisz: $2^{?} = 32$.",
+              "a": "5",
+              "py": "math.log(32, 2)",
+              "hint": "Mnóż dwójki i licz je: 2, 4, 8, 16, 32.",
+              "sol": "$2^{5} = 32$, więc $log_{2} 32 = 5$."
+            }
+          ]
+        },
+        {
+          "tytul": "Jak policzyć logarytm",
+          "sceny": [
+            "L1_tabela",
+            "L1_25"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{3} 27$.",
+              "a": "3",
+              "py": "math.log(27, 3)",
+              "hint": "Wypisuj potęgi trójki: $3^{1} = 3$, $3^{2} = 9$, i dalej, aż wyjdzie 27.",
+              "sol": "$3^{3} = 27$, więc $log_{3} 27 = 3$."
+            },
+            {
+              "t": "Oblicz $log_{2} 64$.",
+              "a": "6",
+              "py": "math.log(64, 2)",
+              "hint": "Wypisuj potęgi dwójki jak na obrazku: $2^{5} = 32$, a następna?",
+              "sol": "$2^{6} = 64$, więc $log_{2} 64 = 6$."
+            },
+            {
+              "t": "Oblicz $log_{4} 64$.",
+              "a": "3",
+              "py": "math.log(64, 4)",
+              "hint": "Teraz podstawa to 4. Wypisuj potęgi czwórki: $4^{1} = 4$, $4^{2} = 16$, i dalej.",
+              "sol": "$4^{3} = 64$, więc $log_{4} 64 = 3$. Ta sama liczba 64, inna podstawa i inny wynik niż $log_{2} 64 = 6$."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm z podstawy i z jedynki",
+          "sceny": [
+            "L1_jeden_zero"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{7} 7$.",
+              "a": "1",
+              "py": "math.log(7, 7)",
+              "hint": "Do jakiej potęgi podnieść 7, żeby dostać 7?",
+              "sol": "$7^{1} = 7$, więc $log_{7} 7 = 1$."
+            },
+            {
+              "t": "Oblicz $log_{5} 1$.",
+              "a": "0",
+              "py": "F(0) if 5**0 == 1 else None",
+              "hint": "Każda liczba różna od zera do potęgi 0 daje 1.",
+              "sol": "$5^{0} = 1$, więc $log_{5} 1 = 0$."
+            },
+            {
+              "t": "Dlaczego $log_{9} 1 = 0$?",
+              "opts": [
+                "bo $9 - 9 = 0$",
+                "bo $9^{0} = 1$",
+                "bo $1 * 9 = 9$"
+              ],
+              "ok": 1,
+              "py": "9**0 == 1",
+              "hint": "Przepisz $log_{9} 1 = 0$ na potęgę, jak na obrazku z kolorami.",
+              "sol": "$log_{9} 1 = 0$ znaczy $9^{0} = 1$, a to prawda."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm dziesiętny",
+          "sceny": [
+            "L1_dziesiec"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log 100$.",
+              "a": "2",
+              "py": "math.log10(100)",
+              "hint": "Bez liczby na dole podstawa to 10. $10^{?} = 100$.",
+              "sol": "$10^{2} = 100$, więc $log 100 = 2$."
+            },
+            {
+              "t": "Oblicz $log 100000$.",
+              "a": "5",
+              "py": "math.log10(100000)",
+              "hint": "Policz zera w 100000.",
+              "sol": "Pięć zer: $10^{5} = 100000$, więc $log 100000 = 5$."
+            },
+            {
+              "t": "Oblicz $log 10$.",
+              "a": "1",
+              "py": "math.log10(10)",
+              "hint": "To $log_{10} 10$, logarytm z samej podstawy.",
+              "sol": "$10^{1} = 10$, więc $log 10 = 1$."
+            }
+          ]
+        },
+        {
+          "tytul": "Kiedy logarytmu nie ma",
+          "sceny": [
+            "L1_nie_ma"
+          ],
+          "pytania": [
+            {
+              "t": "Który logarytm nie istnieje?",
+              "opts": [
+                "$log_{5} 1$",
+                "$log_{5} (-25)$",
+                "$log_{10} 10$"
+              ],
+              "ok": 1,
+              "py": "True",
+              "hint": "Liczba za logarytmem musi być dodatnia.",
+              "sol": "$5^{?} = -25$ nie ma rozwiązania: każda potęga piątki jest dodatnia."
+            },
+            {
+              "t": "Który logarytm istnieje?",
+              "opts": [
+                "$log_{3} 0$",
+                "$log_{1} 7$",
+                "$log_{2} ~f{1}{4}$"
+              ],
+              "ok": 2,
+              "py": "2**-2 == 0.25",
+              "hint": "Sprawdź warunki: podstawa dodatnia i różna od 1, liczba dodatnia. $~f{1}{4}$ jest dodatnia.",
+              "sol": "$log_{2} ~f{1}{4}$ istnieje, bo $2^{-2} = ~f{1}{4}$. Policzysz go w lekcji 2."
+            }
+          ]
+        }
+      ],
+      "trening": [
+        {
+          "t": "Oblicz $log_{6} 36$.",
+          "a": "2",
+          "py": "math.log(36, 6)",
+          "hint": "Wypisuj potęgi szóstki: $6^{1} = 6$, $6^{2} = ?$",
+          "sol": "$6^{2} = 36$, więc $log_{6} 36 = 2$."
+        },
+        {
+          "t": "Oblicz $log_{5} 625$.",
+          "a": "4",
+          "py": "math.log(625, 5)",
+          "hint": "Wypisuj potęgi piątki: 5, 25, 125, i dalej.",
+          "sol": "$5^{4} = 625$, więc $log_{5} 625 = 4$."
+        },
+        {
+          "t": "Równość $10^{2} = 100$ zapisana logarytmem to:",
+          "opts": [
+            "$log_{2} 100 = 10$",
+            "$log 100 = 2$",
+            "$log_{100} 10 = 2$"
+          ],
+          "ok": 1,
+          "py": "10**2 == 100",
+          "hint": "Podstawa 10 zostaje na dole. Przy podstawie 10 dolnej liczby nie piszesz.",
+          "sol": "$log 100 = 2$, czyli $log_{10} 100 = 2$."
+        },
+        {
+          "t": "Oblicz $log 10000$.",
+          "a": "4",
+          "py": "math.log10(10000)",
+          "hint": "Policz zera.",
+          "sol": "$10^{4} = 10000$, więc $log 10000 = 4$."
+        },
+        {
+          "t": "Oblicz $log_{8} 8$.",
+          "a": "1",
+          "py": "math.log(8, 8)",
+          "hint": "Logarytm z samej podstawy.",
+          "sol": "$8^{1} = 8$, więc $log_{8} 8 = 1$."
+        },
+        {
+          "t": "Oblicz $log_{4} 1$.",
+          "a": "0",
+          "py": "F(0) if 4**0 == 1 else None",
+          "hint": "Do jakiej potęgi podnieść 4, żeby dostać 1?",
+          "sol": "$4^{0} = 1$, więc $log_{4} 1 = 0$."
+        }
+      ],
+      "test": [
+        {
+          "t": "Oblicz $log_{2} 128$.",
+          "a": "7",
+          "py": "math.log(128, 2)",
+          "sol": "$2^{7} = 128$."
+        },
+        {
+          "t": "Oblicz $log_{9} 81$.",
+          "a": "2",
+          "py": "math.log(81, 9)",
+          "sol": "$9^{2} = 81$. Podstawa to 9, więc liczysz potęgi dziewiątki."
+        },
+        {
+          "t": "Oblicz $log_{3} 243$.",
+          "a": "5",
+          "py": "math.log(243, 3)",
+          "sol": "$3^{5} = 243$."
+        },
+        {
+          "t": "Oblicz $log_{6} 6$.",
+          "a": "1",
+          "py": "math.log(6, 6)",
+          "sol": "$6^{1} = 6$."
+        },
+        {
+          "t": "Oblicz $log_{7} 1$.",
+          "a": "0",
+          "py": "F(0) if 7**0 == 1 else None",
+          "sol": "$7^{0} = 1$."
+        },
+        {
+          "t": "Oblicz $log 1000$.",
+          "a": "3",
+          "py": "math.log10(1000)",
+          "sol": "$10^{3} = 1000$."
+        },
+        {
+          "t": "Równość $2^{6} = 64$ zapisana logarytmem to:",
+          "opts": [
+            "$log_{6} 64 = 2$",
+            "$log_{64} 2 = 6$",
+            "$log_{2} 64 = 6$"
+          ],
+          "ok": 2,
+          "py": "2**6 == 64",
+          "sol": "Podstawa 2 zostaje na dole, wykładnik 6 to wynik: $log_{2} 64 = 6$."
+        },
+        {
+          "t": "Który logarytm nie istnieje?",
+          "opts": [
+            "$log_{3} 3$",
+            "$log_{3} 0$",
+            "$log_{3} 1$"
+          ],
+          "ok": 1,
+          "py": "True",
+          "sol": "$3^{?} = 0$ nie ma rozwiązania. Pozostałe: $log_{3} 3 = 1$, $log_{3} 1 = 0$."
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* Obrazki: każdy ma listę kroków [podpis, napis na przycisku] i funkcję, która rysuje wyprowadzenie zasady i zwraca funkcję ustawiającą krok k. */
+  var SC = (function () {
+    var NS = "http://www.w3.org/2000/svg";
+    function E(tag, a, p) {
+      var e = document.createElementNS(NS, tag);
+      if (a) for (var k in a) e.setAttribute(k, a[k]);
+      if (p) p.appendChild(e);
+      return e;
+    }
+    function G(p, cls) {
+      return E("g", cls ? { class: cls } : null, p);
+    }
+    function at(e, x, y, s, o) {
+      e.style.transform =
+        "translate(" + x + "px," + y + "px) scale(" + (s == null ? 1 : s) + ")";
+      if (o != null) e.style.opacity = o;
+      return e;
+    }
+    function op(e, o) {
+      e.style.opacity = o;
+      return e;
+    }
+    function TX(p, x, y, s, cls) {
+      var t = E(
+        "text",
+        { x: x, y: y, class: cls || "tx", "text-anchor": "middle" },
+        p,
+      );
+      t.textContent = s;
+      return t;
+    }
+    function PW(p, x, y, base, exp, tail, z) {
+      z = z || 28;
+      var t = E(
+        "text",
+        { x: x, y: y, class: "tx", "text-anchor": "middle" },
+        p,
+      );
+      t.style.fontSize = z + "px";
+      var b = E("tspan", null, t);
+      b.textContent = base;
+      var s = E("tspan", { dy: String(-z * 0.42) }, t);
+      s.style.fontSize = z * 0.62 + "px";
+      s.textContent = exp;
+      var r = E("tspan", { dy: String(z * 0.42) }, t);
+      r.textContent = tail || "";
+      t.s = s;
+      t.tail = r;
+      return t;
+    }
+    function FR(p, x, y, a, b, z) {
+      var g = G(p, "mv");
+      var t = TX(g, x, y - 8, a);
+      t.style.fontSize = z + "px";
+      var w = Math.max(a.length, b.length) * z * 0.32 + 6;
+      E("line", { x1: x - w, y1: y, x2: x + w, y2: y, class: "fl" }, g);
+      var u = TX(g, x, y + z * 0.85, b);
+      u.style.fontSize = z + "px";
+      return g;
+    }
+    function TILE(p, lab, w, h, v) {
+      var g = G(p, "mv" + (v ? " " + v : ""));
+      E(
+        "rect",
+        {
+          x: -w / 2,
+          y: -h / 2,
+          width: w,
+          height: h,
+          rx: Math.min(9, w / 5),
+          class: "tile",
+        },
+        g,
+      );
+      var t = TX(g, 0, h * 0.17, lab, "tl");
+      t.style.fontSize = Math.round(h * 0.5) + "px";
+      g.lab = t;
+      return g;
+    }
+    function BAR(p, len, U, lab, v) {
+      var g = G(p, "mv" + (v ? " " + v : ""));
+      E(
+        "rect",
+        { x: 0, y: -14, width: len * U, height: 28, rx: 5, class: "bar" },
+        g,
+      );
+      g.t = TX(g, (len * U) / 2, 6, lab, "barlab");
+      return g;
+    }
+    function axis(p, X0, U, max, y) {
+      E(
+        "line",
+        { x1: X0 - 8, y1: y, x2: X0 + max * U + 8, y2: y, class: "pl" },
+        p,
+      );
+      for (var v = 0; v <= max; v += 0.5) {
+        var big = v % 1 === 0;
+        E(
+          "line",
+          {
+            x1: X0 + v * U,
+            y1: y - (big ? 7 : 4),
+            x2: X0 + v * U,
+            y2: y + (big ? 7 : 4),
+            class: "pl",
+          },
+          p,
+        );
+        if (big) TX(p, X0 + v * U, y + 24, String(v), "lb");
+      }
+    }
+    var TIM = [];
+    function clearT() {
+      TIM.forEach(clearTimeout);
+      TIM = [];
+    }
+
+    /* ułamek z czynników: góra nT, dół nB, wspólne pary się skracają */
+    function cancel(nT, nB, lab, head, res, extra, caps) {
+      return {
+        steps: caps,
+        build: function (s) {
+          var st = 32,
+            top = [],
+            bot = [],
+            sl = [],
+            i,
+            xT = 170 - ((nT - 1) * st) / 2,
+            xB = 170 - ((nB - 1) * st) / 2,
+            m = Math.min(nT, nB),
+            rT = nT - m,
+            rB = nB - m;
+          TX(s, 170, 28, head, "expb");
+          for (i = 0; i < nT; i++) top.push(TILE(s, lab, 28, 34));
+          for (i = 0; i < nB; i++) bot.push(TILE(s, lab, 28, 34, "b"));
+          var ln = E(
+            "line",
+            {
+              x1: Math.min(xT, xB) - 24,
+              y1: 100,
+              x2: 340 - Math.min(xT, xB) + 24,
+              y2: 100,
+              class: "fl",
+            },
+            s,
+          );
+          for (i = 0; i < m; i++) {
+            sl.push(
+              E(
+                "path",
+                {
+                  d:
+                    "M" +
+                    (xT + i * st - 12) +
+                    " 80 L" +
+                    (xT + i * st + 12) +
+                    " 52",
+                  class: "cut",
+                },
+                s,
+              ),
+            );
+            sl.push(
+              E(
+                "path",
+                {
+                  d:
+                    "M" +
+                    (xB + i * st - 12) +
+                    " 148 L" +
+                    (xB + i * st + 12) +
+                    " 120",
+                  class: "cut",
+                },
+                s,
+              ),
+            );
+          }
+          var one = TX(s, 170, 84, "1", "big2"),
+            r = TX(s, 170, 206, res, "res"),
+            x = TX(s, 170, 206, extra || "", "res");
+          return function (k) {
+            top.forEach(function (t, i) {
+              var g = i < m;
+              if (k < 2) at(t, xT + i * st, 66, 1, k >= 1 && g ? 0.25 : 1);
+              else
+                at(
+                  t,
+                  170 - ((rT - 1) * st) / 2 + (i - m) * st,
+                  rB ? 66 : 100,
+                  1,
+                  g ? 0 : 1,
+                );
+            });
+            bot.forEach(function (t, i) {
+              var g = i < m;
+              if (k < 2) at(t, xB + i * st, 134, 1, k >= 1 && g ? 0.25 : 1);
+              else
+                at(
+                  t,
+                  170 - ((rB - 1) * st) / 2 + (i - m) * st,
+                  134,
+                  1,
+                  g ? 0 : 1,
+                );
+            });
+            sl.forEach(function (c) {
+              op(c, k === 1 ? 1 : 0);
+            });
+            op(ln, k >= 2 && rB === 0 ? 0 : 1);
+            op(one, k >= 2 && rT === 0 ? 1 : 0);
+            op(r, k >= 2 && !(extra && k >= 3) ? 1 : 0);
+            op(x, extra && k >= 3 ? 1 : 0);
+          };
+        },
+      };
+    }
+
+    /* tabela potęg: wiersz niżej = wykładnik o 1 mniejszy = wynik podzielony przez 2 */
+    function table(ex, vals, tiles, first, caps) {
+      return {
+        steps: caps,
+        build: function (s) {
+          var rows = [];
+          ex.forEach(function (e, i) {
+            var y = 34 + i * 41,
+              g = G(s, "mv");
+            PW(g, 40, y + 8, "2", e, "", 22);
+            var n = tiles ? Number(e) : 0;
+            for (var j = 0; j < n; j++)
+              at(TILE(g, "2", 26, 26), 84 + j * 30, y);
+            if (tiles && n === 0) TX(g, 130, y + 6, "(zero dwójek)", "lb");
+            TX(g, tiles ? 250 : 190, y + 8, "= " + vals[i], "res2");
+            if (i) TX(g, 306, y - 14, "↓ :2", "lb");
+            rows.push(g);
+          });
+          return function (k) {
+            rows.forEach(function (g, i) {
+              op(g, i <= first + k ? 1 : 0);
+            });
+          };
+        },
+      };
+    }
+
+    function hop(ds, j0, j1, fade, res, cnt, caps) {
+      return {
+        steps: caps,
+        build: function (s) {
+          var n = ds.length,
+            st = Math.min(30, 300 / n),
+            x0 = 170 - ((n - 1) * st) / 2,
+            T = [];
+          ds.forEach(function (d, i) {
+            var t = TILE(s, d, st - 4, 38, "d");
+            at(t, x0 + i * st, 80);
+            T.push(t);
+          });
+          var c = E("g", { class: "mv" }, s);
+          c.style.transition = "transform .13s linear";
+          E("circle", { r: 7, class: "comma" }, c);
+          TX(s, 170, 30, "żółta kropka = przecinek", "lb");
+          var tc = TX(s, 170, 152, "", "val"),
+            r = TX(s, 170, 200, res, "res");
+          var bx = function (j) {
+              return x0 + j * st + st / 2;
+            },
+            cur = j0,
+            last = 0,
+            d = j1 > j0 ? 1 : -1;
+          return function (k) {
+            if (k === 0) {
+              clearT();
+              cur = j0;
+              at(c, bx(j0), 112);
+              tc.textContent = "";
+            } else if (k === 1 && last === 0) {
+              (function stepH() {
+                TIM.push(
+                  setTimeout(function () {
+                    if (cur === j1) return;
+                    cur += d;
+                    at(c, bx(cur), 112);
+                    tc.textContent = cnt + ": " + Math.abs(cur - j0) + " razy";
+                    if (cur !== j1) stepH();
+                  }, 170),
+                );
+              })();
+            } else {
+              clearT();
+              cur = j1;
+              at(c, bx(j1), 112);
+              tc.textContent = cnt + ": " + Math.abs(j1 - j0) + " razy";
+            }
+            T.forEach(function (t, i) {
+              op(t, k >= 2 && fade.indexOf(i) >= 0 ? 0.18 : 1);
+            });
+            op(r, k >= 2 ? 1 : 0);
+            last = k;
+          };
+        },
+      };
+    }
+
+    /* liczba rozbita na n równych czynników */
+    function kaf(N, n, lab, stages, caps) {
+      return {
+        steps: caps,
+        build: function (s) {
+          var w = 60,
+            gap = w + 14,
+            x0 = 170 - ((n - 1) * gap) / 2,
+            i;
+          var big = TILE(s, N, Math.min(240, n * gap), 60);
+          var t = [],
+            d = [];
+          for (i = 0; i < n - 1; i++)
+            d.push(TX(s, x0 + i * gap + gap / 2, 84, "·", "big2"));
+          for (i = 0; i < n; i++) t.push(TILE(s, lab, w, w, "y"));
+          var R = stages.map(function (q) {
+            return PW(s, 170, 178, N, q[1], q[2], 28);
+          });
+          var L = TX(s, 170, 128, n + " równe czynniki", "lb");
+          return function (k) {
+            var st = stages[k - 2];
+            at(big, 170, 72, k ? 1.15 : 1, k ? 0 : 1);
+            t.forEach(function (q, i) {
+              at(
+                q,
+                k ? x0 + i * gap : 170,
+                72,
+                k ? 1 : 0.5,
+                k ? (st && i >= st[0] ? 0.25 : 1) : 0,
+              );
+            });
+            d.forEach(function (q) {
+              op(q, k ? 1 : 0);
+            });
+            op(L, k === 1 ? 1 : 0);
+            R.forEach(function (r, i) {
+              op(r, k - 2 === i ? 1 : 0);
+            });
+          };
+        },
+      };
+    }
+
+    /* obrazek z wierszami wzorów (HTML), kolejne wiersze odsłaniają się po kroku */
+    function rows(R, caps) {
+      return {
+        html: true,
+        steps: caps,
+        build: function (el) {
+          var D = R.map(function (t) {
+            var d = document.createElement("div");
+            d.innerHTML = typeof t === "function" ? t() : window.MT(t);
+            if (typeof t === "string" && t[0] !== "$") d.className = "t";
+            el.appendChild(d);
+            return d;
+          });
+          return function (k) {
+            D.forEach(function (d, i) {
+              d.style.opacity = i <= k ? 1 : 0;
+            });
+          };
+        },
+      };
+    }
+
+    var S = {};
+/* Obrazki do lekcji 1 z logarytmów (wklejane do modułu SC przez buduj_logarytmy.py w miejsce obrazków z potęg). */
+
+/* wiersz z tekstem i wzorem naraz: jeden element, żeby nie łamał się na kawałki */
+function MIX(t) {
+  return function () {
+    return '<span class="mix">' + window.MT(t) + "</span>";
+  };
+}
+
+/* zapis logarytmu w rysunku: log, podstawa niżej i mniejsza, potem liczba i reszta */
+function LG(p, x, y, base, num, tail, z) {
+  z = z || 28;
+  var t = E("text", { x: x, y: y, class: "tx", "text-anchor": "middle" }, p);
+  t.style.fontSize = z + "px";
+  var a = E("tspan", null, t);
+  a.textContent = "log";
+  var b = E("tspan", { dy: String(z * 0.3) }, t);
+  b.style.fontSize = z * 0.62 + "px";
+  b.textContent = base;
+  var c = E("tspan", { dy: String(-z * 0.3) }, t);
+  c.textContent = " " + num + (tail || "");
+  return t;
+}
+
+/* kolorowy zapis: podstawa niebieska, liczba żółta, wykładnik zielony */
+function KOL(html) {
+  return function () {
+    return '<span class="m kol">' + html + "</span>";
+  };
+}
+var kB = function (s) {
+    return '<span class="kb">' + s + "</span>";
+  },
+  kZ = function (s) {
+    return '<span class="kz">' + s + "</span>";
+  },
+  kG = function (s) {
+    return '<span class="kg">' + s + "</span>";
+  };
+
+/* logarytm to brakujący wykładnik: 2^3 = 8 czytane od końca */
+S.L1_pytanie = {
+  steps: [
+    [
+      "Z lekcji potęg znasz pytanie: ile to $2^{3}$? Mnożysz trzy dwójki i wychodzi 8.",
+      "Odwróć pytanie",
+    ],
+    [
+      "Teraz odwrotnie. Znasz podstawę 2 i wynik 8. Brakuje wykładnika: $2^{?} = 8$.",
+      "Szukaj",
+    ],
+    [
+      "Mnóż dwójki, aż wyjdzie 8: najpierw 2, potem $2 * 2 = 4$, potem $2 * 2 * 2 = 8$. Do 8 potrzebne są trzy dwójki.",
+      "Zapisz",
+    ],
+    [
+      "Brakujący wykładnik to 3. Ta liczba ma swoją nazwę: logarytm. Piszesz $log_{2} 8 = 3$ i czytasz: logarytm o podstawie 2 z 8 równa się 3.",
+    ],
+  ],
+  build: function (s) {
+    var g0 = PW(s, 170, 50, "2", "3", " = 8", 40),
+      g1 = PW(s, 170, 50, "2", "?", " = 8", 40),
+      xs = [100, 170, 240],
+      t = xs.map(function () {
+        return TILE(s, "2", 48, 48);
+      }),
+      d = [135, 205].map(function (x) {
+        return TX(s, x, 114, "·", "big2");
+      }),
+      w = ["2", "4", "8"].map(function (v, i) {
+        return TX(s, xs[i], 152, "= " + v, "val");
+      }),
+      br = E(
+        "path",
+        { d: "M72 162 L72 168 L268 168 L268 162", class: "brk" },
+        s,
+      ),
+      bl = TX(s, 170, 186, "3 dwójki", "lb"),
+      lg = LG(s, 170, 222, "2", "8", " = 3", 30);
+    lg.setAttribute("class", "res");
+    return function (k) {
+      op(g0, k === 0 ? 1 : 0);
+      op(g1, k >= 1 ? 1 : 0);
+      t.forEach(function (q, i) {
+        at(q, xs[i], 102, 1, k === 1 ? 0 : 1);
+      });
+      d.forEach(function (q) {
+        op(q, k === 1 ? 0 : 1);
+      });
+      w.forEach(function (q) {
+        op(q, k >= 2 ? 1 : 0);
+      });
+      op(br, k >= 2 ? 1 : 0);
+      op(bl, k >= 2 ? 1 : 0);
+      op(lg, k >= 3 ? 1 : 0);
+    };
+  },
+};
+
+/* gdzie co stoi: ta sama trójka liczb w dwóch zapisach */
+S.L1_mapa = rows(
+  [
+    KOL("log<sub>" + kB("2") + "</sub> " + kZ("8") + " = " + kG("3")),
+    KOL(kB("2") + "<sup>" + kG("3") + "</sup> = " + kZ("8")),
+    MIX("niebieska: podstawa, żółta: liczba logarytmowana, zielona: wykładnik"),
+    KOL(
+      "log<sub>" +
+        kB("a") +
+        "</sub> " +
+        kZ("b") +
+        " = " +
+        kG("x") +
+        '<span class="mix"> znaczy </span>' +
+        kB("a") +
+        "<sup>" +
+        kG("x") +
+        "</sup> = " +
+        kZ("b"),
+    ),
+  ],
+  [
+    [
+      "Jeden fakt, dwa zapisy. Zapis z logarytmem: $log_{2} 8 = 3$.",
+      "Przepisz na potęgę",
+    ],
+    [
+      "Ten sam fakt jako potęga: $2^{3} = 8$. Każda liczba ma swój kolor.",
+      "Co jest czym",
+    ],
+    [
+      "Niebieska 2 to podstawa: w obu zapisach stoi na dole. Żółta 8 to liczba logarytmowana, w potędze to wynik. Zielona 3 to wynik logarytmu, w potędze to wykładnik.",
+      "Zasada",
+    ],
+    ["Zasada: $log_{a} b = x$ znaczy $a^{x} = b$. Podstawa zostaje podstawą."],
+  ],
+);
+
+/* częsty błąd: zamiana podstawy z wykładnikiem */
+S.L1_zamiana = rows(
+  [
+    "$3^{4} = 81$",
+    function () {
+      return '<span class="mix">podstawa <span class="kb">3</span> idzie na dół logarytmu</span>';
+    },
+    KOL("log<sub>" + kB("3") + "</sub> " + kZ("81") + " = " + kG("4")),
+    MIX("nie $log_{4} 81 = 3$, bo to znaczy $4^{3} = 81$, a $4^{3} = 64$"),
+  ],
+  [
+    ["Zapisz $3^{4} = 81$ logarytmem.", "Podstawa"],
+    ["Podstawą potęgi jest 3. W logarytmie też stoi na dole.", "Zapisz"],
+    ["Wykładnik 4 to wynik logarytmu: $log_{3} 81 = 4$.", "Sprawdź błąd"],
+    [
+      "Częsty błąd to $log_{4} 81 = 3$. Przepisz go z powrotem na potęgę: wychodzi $4^{3} = 81$. To nieprawda, bo $4^{3} = 64$. Przy każdym zapisie możesz tak sprawdzić, czy podstawa stoi dobrze.",
+    ],
+  ],
+);
+
+/* liczenie logarytmu: wypisujesz potęgi podstawy, aż wyjdzie liczba */
+S.L1_tabela = rows(
+  [
+    "$log_{2} 32 = ?$   →   $2^{?} = 32$",
+    "$2^{1} = 2$",
+    "$2^{2} = 4$",
+    "$2^{3} = 8$",
+    "$2^{4} = 16$",
+    "$2^{5} = 32$",
+    "$log_{2} 32 = 5$",
+  ],
+  [
+    [
+      "Policz $log_{2} 32$. Najpierw przepisz na potęgę: $2^{?} = 32$.",
+      "Wypisuj potęgi",
+    ],
+    [
+      "Wypisuj kolejne potęgi dwójki. Wykładnik piszesz od razu przy dwójce.",
+      "Dalej",
+    ],
+    ["$2^{2} = 4$", "Dalej"],
+    ["$2^{3} = 8$", "Dalej"],
+    ["$2^{4} = 16$. Jeszcze nie 32.", "Dalej"],
+    ["$2^{5} = 32$. Doszedłeś do 32.", "Wynik"],
+    [
+      "$log_{2} 32 = 5$. Wynik odczytujesz z wykładnika w wierszu, w którym wyszło 32. Nie liczysz wierszy ani liczb na liście, tylko patrzysz na wykładnik.",
+    ],
+  ],
+);
+
+/* duża podstawa: liczysz potęgi tej podstawy, która stoi w logarytmie */
+S.L1_25 = rows(
+  [
+    "$log_{25} 625 = ?$",
+    "$25^{?} = 625$",
+    "$25^{1} = 25$",
+    "$25^{2} = 25 * 25 = 625$",
+    "$log_{25} 625 = 2$",
+    MIX("$625 = 5^{4}$, ale to wynik innego logarytmu: $log_{5} 625 = 4$"),
+  ],
+  [
+    ["Podstawa nie musi być mała. Policz $log_{25} 625$.", "Przepisz"],
+    ["Przepisz na potęgę: szukasz $25^{?} = 625$.", "Wypisuj potęgi"],
+    ["Wypisujesz potęgi liczby 25, bo to ona stoi na dole logarytmu.", "Dalej"],
+    ["$25 * 25 = 625$. Wykładnik w tym wierszu to 2.", "Wynik"],
+    ["Więc $log_{25} 625 = 2$.", "Uwaga"],
+    [
+      "625 to też $5^{4}$. To jednak odpowiedź na inne pytanie: $log_{5} 625 = 4$. Zawsze liczysz potęgi tej liczby, która stoi na dole logarytmu.",
+    ],
+  ],
+);
+
+/* logarytm z podstawy i z jedynki */
+S.L1_jeden_zero = rows(
+  [
+    "$log_{2} 2 = ?$   →   $2^{?} = 2$",
+    MIX("$2^{1} = 2$, więc $log_{2} 2 = 1$"),
+    "$log_{2} 1 = ?$   →   $2^{?} = 1$",
+    MIX("$2^{0} = 1$, więc $log_{2} 1 = 0$"),
+    MIX("$log_{a} a = 1$ oraz $log_{a} 1 = 0$"),
+  ],
+  [
+    [
+      "Policz $log_{2} 2$: do jakiej potęgi podnieść 2, żeby dostać 2?",
+      "Wynik",
+    ],
+    ["Wystarczy jedna dwójka: $2^{1} = 2$. Wynik to 1.", "Teraz jedynka"],
+    [
+      "Policz $log_{2} 1$: do jakiej potęgi podnieść 2, żeby dostać 1?",
+      "Wynik",
+    ],
+    [
+      "Z lekcji potęg: każda liczba różna od zera do potęgi 0 daje 1. $2^{0} = 1$, więc wynik to 0.",
+      "Zasada",
+    ],
+    [
+      "Tak jest przy każdej podstawie $a$. $a^{1} = a$, więc $log_{a} a = 1$. $a^{0} = 1$, więc $log_{a} 1 = 0$.",
+    ],
+  ],
+);
+
+/* logarytm dziesiętny: log bez liczby na dole */
+S.L1_dziesiec = rows(
+  [
+    MIX("log bez liczby na dole: podstawa to 10"),
+    "$log 1000 = log_{10} 1000$",
+    "$10^{1} = 10$",
+    "$10^{2} = 100$",
+    "$10^{3} = 1000$",
+    "$log 1000 = 3$",
+  ],
+  [
+    [
+      "W podręczniku zobaczysz zapis log bez małej liczby na dole. To logarytm o podstawie 10. Nazywa się logarytm dziesiętny.",
+      "Przykład",
+    ],
+    [
+      "$log 1000$ to więc $log_{10} 1000$. Szukasz $10^{?} = 1000$.",
+      "Wypisuj potęgi",
+    ],
+    [
+      "Wypisuj potęgi dziesiątki. Każde mnożenie przez 10 dopisuje jedno zero.",
+      "Dalej",
+    ],
+    ["$10^{2} = 100$, dwa zera.", "Dalej"],
+    ["$10^{3} = 1000$, trzy zera. Doszedłeś do 1000.", "Wynik"],
+    [
+      "$log 1000 = 3$. Gdy liczba to jedynka z samymi zerami, wynik to liczba zer.",
+    ],
+  ],
+);
+
+/* kiedy logarytm nie istnieje */
+S.L1_nie_ma = rows(
+  [
+    MIX("$log_{2} (-4)$: $2^{?} = -4$, nie ma takiego wykładnika"),
+    MIX("$log_{2} 0$: $2^{?} = 0$, nie ma takiego wykładnika"),
+    MIX("$log_{1} 5$: $1^{?} = 5$, nie ma takiego wykładnika"),
+    MIX("$log_{-2} 4$: podstawa ujemna jest wykluczona"),
+    MIX("$log_{a} b$ istnieje, gdy $a > 0$, $a ≠ 1$ i $b > 0$"),
+  ],
+  [
+    [
+      "Czy istnieje $log_{2} (-4)$? Szukasz $2^{?} = -4$. Każda potęga dwójki jest dodatnia, także z ujemnym wykładnikiem: $2^{3} = 8$, $2^{-3} = ~f{1}{8}$. Wyniku $-4$ nie dostaniesz.",
+      "Zero",
+    ],
+    [
+      "$log_{2} 0$: potęgi dwójki z ujemnym wykładnikiem są coraz mniejsze, $~f{1}{2}$, $~f{1}{4}$, $~f{1}{8}$, ale żadna nie jest zerem.",
+      "Jedynka na dole",
+    ],
+    [
+      "$log_{1} 5$: jedynka pomnożona przez siebie dowolną liczbę razy daje 1. Do 5 nie dojdziesz. Dlatego podstawa nie może być 1.",
+      "Minus na dole",
+    ],
+    [
+      "Podstawa ujemna też jest wykluczona. Już $(-2)^{~f{1}{2}}$ to $~r{}{-2}$, a pierwiastka kwadratowego z liczby ujemnej nie ma.",
+      "Zasada",
+    ],
+    [
+      "Logarytm $log_{a} b$ istnieje, gdy podstawa $a$ jest dodatnia i różna od 1, a liczba $b$ jest dodatnia.",
+    ],
+  ],
+);
+
+    window.LEKTOR = {};
+
+    S.clearT = clearT;
+    return S;
+  })();
+</script>
+
+<script>
+  /* Schematy do zadań z treścią: rysują zależność z zadania (kafelki, pasek, kratka, połówki), bez ozdób. */
+  window.RYS = (function () {
+    function e(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+    function t(x, y, s, cls, extra) {
+      return (
+        '<text x="' + x + '" y="' + y + '" class="' + (cls || "lb") +
+        '" text-anchor="' + ((extra && extra.anchor) || "middle") + '"' +
+        ((extra && extra.attr) || "") + ">" + e(s) + "</text>"
+      );
+    }
+    function rect(x, y, w, h, cls, rx) {
+      return (
+        '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h +
+        '" rx="' + (rx || 0) + '" class="' + cls + '"></rect>'
+      );
+    }
+    function line(x1, y1, x2, y2, cls) {
+      return (
+        '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 +
+        '" class="' + cls + '"></line>'
+      );
+    }
+    function tile(x, y, w, h, lab, kol) {
+      return (
+        '<g class="' + (kol || "") + '">' + rect(x - w / 2, y - h / 2, w, h, "tile", 6) +
+        t(x, y + h * 0.17, lab, "tl", {
+          attr: ' style="font-size:' + Math.round(h * 0.5) + 'px"',
+        }) + "</g>"
+      );
+    }
+    /* klamra pod odcinkiem (dol) albo nad nim (gora) */
+    function klamra(x1, x2, y, gora) {
+      var d = gora ? 6 : -6;
+      return (
+        '<path class="brk" d="M' + x1 + " " + (y + d) + " L" + x1 + " " + y +
+        " L" + x2 + " " + y + " L" + x2 + " " + (y + d) + '"></path>'
+      );
+    }
+    var R = {};
+
+    /* kafelki: każdy to jedno mnożenie, grupy podpisane klamrą */
+    R.grupy = function (r) {
+      var w = 30, g = 6, lw = r.lead ? 52 : 0, n = 0, h = "";
+      r.grupy.forEach(function (q) {
+        n += q.n;
+      });
+      var tot = (r.lead ? lw + 2 * g : 0) + n * w + (n - 1) * g + (r.grupy.length - 1) * 10;
+      var x = 170 - tot / 2;
+      if (r.gora) h += t(170, 22, r.gora, "lb");
+      if (r.lead) {
+        h += tile(x + lw / 2, 66, lw, 38, r.lead.lab, "y");
+        h += klamra(x, x + lw, 96) + t(x + lw / 2, 116, r.lead.pod, "lb");
+        x += lw + 2 * g;
+      }
+      r.grupy.forEach(function (q) {
+        var x0 = x;
+        for (var i = 0; i < q.n; i++) {
+          h += tile(x + w / 2, 66, w, 38, q.lab, q.kol);
+          x += w + g;
+        }
+        h += klamra(x0, x - g, 96) + t((x0 + x - g) / 2, 116, q.pod, "lb");
+        x += 10;
+      });
+      if (r.wynik) h += t(170, 156, r.wynik, "res2");
+      return [h, 170];
+    };
+
+    /* prostokąt albo kwadrat z podpisanymi bokami, opcjonalnie w kratkę */
+    R.prost = function (r) {
+      var W = r.w || 150, H = r.h || 150, x = 170 - W / 2 + 12, y = 38, h = "", i;
+      h += rect(x, y, W, H, "zone", 4);
+      for (i = 1; i < (r.kol || 0); i++)
+        h += line(x + (W * i) / r.kol, y, x + (W * i) / r.kol, y + H, "siat");
+      for (i = 1; i < (r.wier || 0); i++)
+        h += line(x, y + (H * i) / r.wier, x + W, y + (H * i) / r.wier, "siat");
+      h += rect(x, y, W, H, "ln", 4);
+      h += t(x + W / 2, y - 10, r.a, "valm");
+      h += t(x - 14, y + H / 2, r.b, "valm", {
+        attr: ' transform="rotate(-90 ' + (x - 12) + " " + (y + H / 2) + ')"',
+      });
+      if (r.srodek) {
+        h += rect(x + W / 2 - 62, y + H / 2 - 16, 124, 30, "srf", 6);
+        h += t(x + W / 2, y + H / 2 + 6, r.srodek, "valm");
+      }
+      return [h, y + H + 16];
+    };
+
+    /* sześcian z podpisaną krawędzią */
+    R.kostka = function (r) {
+      var s = 96, d = 40, x = 92, y = 62, h = "";
+      function pg(pts, cls) {
+        return '<polygon class="' + cls + '" points="' + pts.map(function (p) {
+          return p[0] + "," + p[1];
+        }).join(" ") + '"></polygon>';
+      }
+      var front = [[x, y], [x + s, y], [x + s, y + s], [x, y + s]],
+        top = [[x, y], [x + d, y - d], [x + s + d, y - d], [x + s, y]],
+        side = [[x + s, y], [x + s + d, y - d], [x + s + d, y + s - d], [x + s, y + s]];
+      [top, side, front].forEach(function (f, i) {
+        h += pg(f, i === 2 ? "zone" : "zone2") + pg(f, "ln");
+      });
+      h += t(x + s / 2, y + s + 22, r.a, "valm");
+      h += t(x + s + d + 30, y + s / 2 - d / 2 + 6, r.a, "valm");
+      h += t(x + s / 2 + d / 2, y - d - 8, r.a, "valm");
+      h += t(170, y + s + 56, r.srodek, "res2");
+      return [h, y + s + 70];
+    };
+
+    /* pasek-całość i kawałki: ile kawałków się mieści albo jaką częścią jest kawałek */
+    R.pasek = function (r) {
+      var X = 20, L = 300, y = 62, H = 36, u = L / r.ile, h = "", i, kaw = r.tryb === "kawalek";
+      h += klamra(X, X + L, 44, true) + t(170, 34, r.calosc, "valm");
+      h += rect(X, y, L, H, "zone", 4);
+      if (kaw) h += rect(X, y, u * r.pokaz, H, "hl", 4);
+      else {
+        for (i = 0; i < r.pokaz; i++) h += rect(X + i * u + 1.5, y + 2, u - 3, H - 4, "bar", 3);
+        h += t(X + r.pokaz * u + (L - r.pokaz * u) / 2, y + H / 2 + 7, "…", "val");
+      }
+      h += rect(X, y, L, H, "ln", 4);
+      var pw = kaw ? u * r.pokaz : u;
+      h += klamra(X, X + pw, y + H + 10) + t(X, y + H + 30, r.czesc, "valm", { anchor: "start" });
+      h += t(170, y + H + 70, r.pyt, "res2");
+      return [h, y + H + 84];
+    };
+
+    /* arkusz dzielony na pół n razy (formaty A) */
+    R.polowki = function (r) {
+      var x = 30, y = 34, W = 280, H = 198, h = "", cx = x, cy = y, cw = W, ch = H, P = [], i;
+      for (i = 0; i < r.n; i++) {
+        if (cw >= ch) {
+          P.push([cx, cy, cw / 2, ch]);
+          cx += cw / 2;
+          cw /= 2;
+        } else {
+          P.push([cx, cy, cw, ch / 2]);
+          cy += ch / 2;
+          ch /= 2;
+        }
+      }
+      P.forEach(function (p, i) {
+        h += rect(p[0], p[1], p[2], p[3], i === r.n - 1 ? "hl" : "zone", 0) + rect(p[0], p[1], p[2], p[3], "ln", 0);
+        h += t(p[0] + p[2] / 2, p[1] + p[3] / 2 + 6, r.lab[i], "val");
+      });
+      h += rect(cx, cy, cw, ch, "ln", 0);
+      if (r.gora) h += t(170, 22, r.gora, "lb");
+      if (r.dol) h += t(170, y + H + 30, r.dol, "res2");
+      return [h, y + H + 44];
+    };
+
+    /* słupki: każdy następny to połowa poprzedniego */
+    R.spadek = function (r) {
+      var n = r.wart.length, gap = 300 / n, bw = Math.min(34, gap - 10), base = 172, H = 112, h = "", i;
+      for (i = 0; i < n; i++) {
+        var cx = 20 + gap * i + gap / 2, hh = Math.max(H * Math.pow(0.5, i), 2), ost = i === n - 1;
+        h += rect(cx - bw / 2, base - hh, bw, hh, ost ? "hl" : "bar", 2);
+        h += t(cx, base - hh - 8, r.wart[i], "val");
+        h += t(cx, base + 18, r.czas[i], "lb");
+        if (i) h += t(cx - gap / 2, 22, "· ½", "lb2");
+      }
+      h += line(14, base, 326, base, "ln");
+      if (r.dol) h += t(170, base + 48, r.dol, "lb");
+      return [h, base + 60];
+    };
+
+    return function (r) {
+      var o = R[r.typ](r);
+      return (
+        '<svg class="viz rys" viewBox="0 0 340 ' + o[1] + '" role="img" aria-label="' +
+        e(r.opis || "Schemat do zadania") + '">' + o[0] + "</svg>"
+      );
+    };
+  })();
+</script>
+
+<script>
+  /* Schematy do lekcji 4 i 5: przecinek w kratkach, łańcuch przeliczeń, sześcian z zaznaczoną ścianą. W napisach ^{…} to wykładnik. */
+  window.RYS = (function (stary) {
+    function e(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+    function t(x, y, s, cls, anchor) {
+      return (
+        '<text x="' + x + '" y="' + y + '" class="' + (cls || "lb") +
+        '" text-anchor="' + (anchor || "middle") + '">' + e(s) + "</text>"
+      );
+    }
+    function rect(x, y, w, h, cls, rx, styl) {
+      return (
+        '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h +
+        '" rx="' + (rx || 0) + '" class="' + cls + '"' + (styl ? ' style="' + styl + '"' : "") + "></rect>"
+      );
+    }
+    /* grot strzałki w punkcie (x, y), skierowany w dół albo w prawo */
+    function grot(x, y, kier) {
+      var p = kier === "dol" ? [[x - 6, y - 10], [x + 6, y - 10], [x, y]] : [[x - 10, y - 6], [x - 10, y + 6], [x, y]];
+      return '<polygon style="fill:var(--pitch)" points="' + p.map(function (q) {
+        return q.join(",");
+      }).join(" ") + '"></polygon>';
+    }
+    var R = {};
+
+    /* cyfry w kratkach, żółty przecinek i strzałka jego skoków; od i do = za iloma cyframi stoi przecinek */
+    R.miejsca = function (r) {
+      var n = r.cyfry.length, w = Math.min(32, 300 / n), X = 170 - (n * w) / 2, y = 84, H = 40, h = "", i;
+      for (i = 0; i < n; i++) {
+        h += rect(X + i * w + 1, y, w - 2, H, "zone", 4);
+        h += t(X + i * w + w / 2, y + 27, r.cyfry[i], "valm");
+      }
+      var a = X + r.od * w, b = X + r.do * w, y0 = y - 4, luk = Math.min(44, Math.abs(b - a) / 2 + 12);
+      h += '<path class="arcp" d="M' + a + " " + y0 + " Q " + (a + b) / 2 + " " + (y0 - 2 * luk) + " " + b + " " + y0 + '"></path>';
+      h += grot(b, y0 + 2, "dol");
+      h += '<circle cx="' + b + '" cy="' + (y + H) + '" r="7" class="ln" style="stroke-dasharray:3 3"></circle>';
+      h += '<circle cx="' + a + '" cy="' + (y + H) + '" r="7" class="comma"></circle>';
+      h += t((a + b) / 2, y0 - luk - 10, r.skoki, "lb");
+      h += t(170, y + H + 26, "żółta kropka = przecinek", "lb");
+      h += t(170, y + H + 62, r.dol, "res2");
+      return [h, y + H + 76];
+    };
+
+    /* pola połączone strzałkami: każda strzałka to jedno mnożenie */
+    R.lancuch = function (r) {
+      var n = r.wezly.length, gap = n > 2 ? 46 : 90, W = (320 - gap * (n - 1)) / n, x = 10, y = 64, H = 58, h = "";
+      if (r.gora) h += t(170, 20, r.gora, "lb");
+      r.wezly.forEach(function (q, i) {
+        h += rect(x, y, W, H, "zone", 8);
+        h += rect(x, y, W, H, "ln", 8, q.hl ? "stroke:var(--yellow);stroke-width:4" : "");
+        h += t(x + W / 2, y + (q.d ? 26 : 36), q.g, "valm");
+        if (q.d) h += t(x + W / 2, y + 46, q.d, "lb");
+        if (i < n - 1) {
+          var x1 = x + W + 6, x2 = x + W + gap - 6;
+          h += '<line x1="' + x1 + '" y1="' + (y + H / 2) + '" x2="' + (x2 - 8) + '" y2="' + (y + H / 2) + '" class="ln"></line>';
+          h += grot(x2, y + H / 2, "prawo");
+          h += t((x1 + x2) / 2, y - 12, r.strzalki[i], "valm");
+        }
+        x += W + gap;
+      });
+      if (r.wynik) h += t(170, y + H + 42, r.wynik, "res2");
+      return [h, y + H + 56];
+    };
+
+    /* sześcian z podpisaną krawędzią, przednia ściana na żółto, pod spodem linijki opisu */
+    R.kostka2 = function (r) {
+      var s = 96, d = 40, x = 92, y = 62, h = "";
+      function pg(pts, cls) {
+        return '<polygon class="' + cls + '" points="' + pts.map(function (p) {
+          return p[0] + "," + p[1];
+        }).join(" ") + '"></polygon>';
+      }
+      var front = [[x, y], [x + s, y], [x + s, y + s], [x, y + s]],
+        top = [[x, y], [x + d, y - d], [x + s + d, y - d], [x + s, y]],
+        side = [[x + s, y], [x + s + d, y - d], [x + s + d, y + s - d], [x + s, y + s]];
+      h += pg(top, "zone2") + pg(top, "ln") + pg(side, "zone2") + pg(side, "ln");
+      h += pg(front, r.sciana ? "hl" : "zone") + pg(front, "ln");
+      h += t(x + s / 2, y + s + 22, r.a, "valm");
+      h += t(x + s + d + 30, y + s / 2 - d / 2 + 6, r.a, "valm");
+      var yy = y + s + 56;
+      (r.linie || []).forEach(function (l, i) {
+        h += t(170, yy + i * 30, l, i ? "res2" : "valm");
+      });
+      return [h, yy + (r.linie || []).length * 30 - 14];
+    };
+
+    /* wykładnik w napisie: 16^{−½} → mała liczba podniesiona do góry */
+    function wykl(svg) {
+      return svg.replace(/>([^<]*\^\{[^<]*)</g, function (_, s) {
+        return ">" + s.replace(/\^\{([^}]*)\}([^^]*)/g,
+          '<tspan font-size="70%" dy="-0.55em">$1</tspan><tspan dy="0.385em">$2</tspan>') + "<";
+      });
+    }
+
+    return function (r) {
+      if (!R[r.typ]) return wykl(stary(r));
+      var o = R[r.typ](r);
+      return wykl(
+        '<svg class="viz rys" viewBox="0 0 340 ' + o[1] + '" role="img" aria-label="' +
+        e(r.opis || "Schemat do zadania") + '">' + o[0] + "</svg>"
+      );
+    };
+  })(window.RYS);
+</script>
+
+
+
+<script>
+  (function () {
+    var D = JSON.parse(document.getElementById("dane").textContent);
+    var app = document.getElementById("app");
+    var KEY = "logarytmy-lekcje-v1"; // gitleaks:allow (nazwa zapisu postępu w przeglądarce, nie sekret)
+    var S = load(),
+      P = null,
+      clockT = null,
+      askReset = false;
+
+    function load() {
+      try {
+        var r = JSON.parse(localStorage.getItem(KEY) || "null");
+        if (r && r.done) return r;
+      } catch (e) {}
+      return { done: {}, best: {} };
+    }
+    function save() {
+      try {
+        localStorage.setItem(KEY, JSON.stringify(S));
+      } catch (e) {}
+    }
+    function esc(c) {
+      return c === "&"
+        ? "&amp;"
+        : c === "<"
+          ? "&lt;"
+          : c === ">"
+            ? "&gt;"
+            : c === '"'
+              ? "&quot;"
+              : c;
+    }
+
+    /* zapis matematyki: ^{..} potęga, ~f{a}{b} ułamek, ~r{n}{x} pierwiastek, ~p{..} duży nawias */
+    function M(s) {
+      var i = 0;
+      function grp() {
+        if (s[i] === "{") {
+          i++;
+          var o = seq("}");
+          i++;
+          return o;
+        }
+        var c = s[i++] || "";
+        return c === "-" ? "−" : esc(c);
+      }
+      function seq(end) {
+        var o = "";
+        while (i < s.length && !(end && s[i] === end)) {
+          var c = s[i];
+          if (c === "^") {
+            i++;
+            o += "<sup>" + grp() + "</sup>";
+          } else if (c === "_") {
+            i++;
+            o += "<sub>" + grp() + "</sub>";
+          } else if (c === "~" && "frp".indexOf(s[i + 1]) >= 0) {
+            var k = s[i + 1];
+            i += 2;
+            if (k === "f") {
+              var a = grp(),
+                b = grp();
+              o +=
+                '<span class="fr"><span>' +
+                a +
+                "</span><span>" +
+                b +
+                "</span></span>";
+            } else if (k === "r") {
+              var n = grp(),
+                x = grp();
+              o +=
+                '<span class="rt">' +
+                (n ? '<span class="ri">' + n + "</span>" : "") +
+                '<span class="rs">√</span><span class="rx">' +
+                x +
+                "</span></span>";
+            } else {
+              var y = grp();
+              o +=
+                '<span class="pa">(</span>' + y + '<span class="pa">)</span>';
+            }
+          } else if (c === "-") {
+            o += "−";
+            i++;
+          } else if (c === "*") {
+            o += "·";
+            i++;
+          } else {
+            o += esc(c);
+            i++;
+          }
+        }
+        return o;
+      }
+      return '<span class="m">' + seq(null) + "</span>";
+    }
+    function T(t) {
+      return String(t)
+        .split("$")
+        .map(function (p, j) {
+          return j % 2 ? M(p) : p.replace(/[&<>"]/g, esc);
+        })
+        .join("");
+    }
+    window.MT = T;
+    window.HOME = home;
+
+    function dec(s) {
+      var neg = s[0] === "-";
+      if (neg) s = s.slice(1);
+      var parts = s.split("."),
+        w = parts[0] || "0",
+        f = parts[1] || "";
+      var d = Math.pow(10, f.length);
+      return { n: (neg ? -1 : 1) * (Number(w) * d + Number(f || 0)), d: d };
+    }
+    function rat(str) {
+      str = String(str)
+        .trim()
+        .replace(/−/g, "-")
+        .replace(/,/g, ".")
+        .replace(/\s/g, "");
+      if (!/^-?\d+(\.\d+)?(\/-?\d+(\.\d+)?)?$/.test(str)) return null;
+      var p = str.split("/"),
+        x = dec(p[0]),
+        y = dec(p[1] || "1");
+      if (y.n === 0) return null;
+      return { n: x.n * y.d, d: x.d * y.n };
+    }
+    function eq(a, b) {
+      return !!(a && b) && a.n * b.d === b.n * a.d;
+    }
+    function fmtAns(a) {
+      if (a.indexOf("/") >= 0) {
+        var p = a.split("/"),
+          neg = p[0][0] === "-";
+        return M(
+          (neg ? "-" : "") + "~f{" + p[0].replace("-", "") + "}{" + p[1] + "}",
+        );
+      }
+      return M(a.replace(".", ","));
+    }
+    function showIn(v) {
+      return v ? M(v) : "";
+    }
+
+    function session(nr) {
+      for (var i = 0; i < D.sesje.length; i++)
+        if (D.sesje[i].nr === nr) return D.sesje[i];
+    }
+    function nextNr() {
+      for (var i = 0; i < D.sesje.length; i++)
+        if (D.sesje[i].poprawka && !S.done[D.sesje[i].nr]) return D.sesje[i].nr;
+      for (var j = 0; j < D.sesje.length; j++)
+        if (!D.sesje[j].poprawka && !S.done[D.sesje[j].nr]) return D.sesje[j].nr;
+      return null;
+    }
+
+    function home() {
+      P = null;
+      clearInterval(clockT);
+      SC.clearT();
+      lektorStop();
+      var nx = nextNr(),
+        total = D.sesje.filter(function (s) { return !s.poprawka; }).length,
+        done = D.sesje.filter(function (s) { return !s.poprawka && S.done[s.nr]; }).length;
+      var h =
+        '<header class="band"><div class="wrap">' +
+        '<div class="kicker">Matematyka · klasa 1 · sekcja 1.10</div>' +
+        "<h1>Logarytmy w 4 lekcjach</h1>" +
+        "<p>Najpierw widzisz, skąd bierze się zasada, potem ją ćwiczysz.</p>" +
+        '<div class="xpbar"><div><b>' +
+        done +
+        "/" +
+        total +
+        "</b> lekcji zrobione</div></div>" +
+        '</div></header><main class="wrap">';
+      D.sesje.filter(function (s) { return s.poprawka; }).forEach(function (s, i) {
+        if (!i)
+          h +=
+            '<section><h2>Poprawa sprawdzianu</h2><p class="note">Zacznij tutaj: tylko to, co na sprawdzianie poszło źle.</p><div class="table">';
+        h +=
+          '<button class="row' + (s.nr === nx ? " biezaca" : "") + '" data-go="' + s.nr + '"><span class="nr">' + (i + 1) + '</span><span class="tt"><b>' +
+          T(s.tytul) + "</b><small>" + T(s.opis) + "</small></span>" +
+          (S.done[s.nr]
+            ? '<span class="chip done">' + S.best[s.nr] + "/" + s.test.length + "</span>"
+            : s.nr === nx
+              ? '<span class="chip go">Zacznij</span>'
+              : '<span class="chip">Otwórz</span>') +
+          "</button>";
+      });
+      if (D.sesje.some(function (s) { return s.poprawka; })) h += "</div></section>";
+      h += '<section><h2>Lekcje</h2><div class="table">';
+      D.sesje.forEach(function (s) {
+        if (s.poprawka) return;
+        var d = S.done[s.nr],
+          b = S.best[s.nr],
+          isNext = s.nr === nx;
+        var chip = d
+          ? '<span class="chip done">' + b + "/" + s.test.length + "</span>"
+          : isNext
+            ? '<span class="chip go">Zacznij</span>'
+            : '<span class="chip">Otwórz</span>';
+        h +=
+          '<button class="row' +
+          (isNext ? " biezaca" : "") +
+          '" data-go="' +
+          s.nr +
+          '"><span class="nr">' +
+          s.nr +
+          '</span><span class="tt"><b>' +
+          T(s.tytul) +
+          "</b><small>Podręcznik, rozdz. " +
+          s.karty +
+          "</small></span>" +
+          chip +
+          "</button>";
+      });
+      h += "</div></section>";
+      h += window.SPR ? window.SPR.wejscie() : "";
+      h +=
+        '<section><h2>Jedna lekcja</h2><div class="flow"><span>Skąd to się bierze</span><i>→</i><span>Przykład</span><i>→</i><span>Ćwiczenia</span><i>→</i><span>Test</span></div>' +
+        '<p class="note">Przy złej odpowiedzi w ćwiczeniach dostajesz podpowiedź. Lekcje rób po kolei.</p></section>';
+      h += '<section><h2>Zakres z podręcznika</h2><div class="cards">';
+      D.karty.forEach(function (k) {
+        h +=
+          '<div class="topic"><b>' +
+          k.temat +
+          "</b><small>" +
+          k.strony +
+          " · lekcje " +
+          k.kolejki.join(", ") +
+          "</small></div>";
+      });
+      h += "</div></section>";
+      h +=
+        '<section><details class="sciaga"><summary>Ściąga: wszystkie zasady</summary><ul>' +
+        D.sciaga
+          .map(function (x) {
+            return "<li>" + T(x) + "</li>";
+          })
+          .join("") +
+        "</ul></details></section>";
+      h +=
+        '<div class="reset">' +
+        (askReset
+          ? 'Na pewno wyzerować postępy? <button class="linkbtn" id="rsYes">Tak, zeruj</button><button class="linkbtn" id="rsNo">Nie</button>'
+          : '<button class="linkbtn" id="rs">Wyzeruj postępy</button>') +
+        "</div>";
+      h += "</main>";
+      app.innerHTML = h;
+      app.querySelectorAll("[data-go]").forEach(function (b) {
+        b.onclick = function () {
+          start(+b.getAttribute("data-go"));
+        };
+      });
+      var r = document.getElementById("rs");
+      if (r)
+        r.onclick = function () {
+          askReset = true;
+          home();
+        };
+      var y = document.getElementById("rsYes");
+      if (y)
+        y.onclick = function () {
+          S = { done: {}, best: {} };
+          save();
+          askReset = false;
+          home();
+        };
+      var n = document.getElementById("rsNo");
+      if (n)
+        n.onclick = function () {
+          askReset = false;
+          home();
+        };
+    }
+
+    function start(nr) {
+      LK.on = false;
+      lektorStop();
+      var s = session(nr),
+        st = [];
+      (s.rozgrzewka || []).forEach(function (q, j, a) {
+        st.push({
+          type: "q",
+          stage: "Powtórka",
+          mode: "train",
+          q: q,
+          j: j,
+          n: a.length,
+        });
+      });
+      if (s.bloki)
+        s.bloki.forEach(function (b) {
+          st.push({ type: "sceny", stage: b.tytul, list: b.sceny });
+          b.pytania.forEach(function (q, j, a) {
+            st.push({
+              type: "q",
+              stage: "Sprawdź się",
+              mode: "train",
+              q: q,
+              j: j,
+              n: a.length,
+            });
+          });
+        });
+      else if (s.sceny)
+        st.push({
+          type: "sceny",
+          stage: s.final ? "Przypomnienie" : "Skąd to się bierze",
+          list: s.sceny,
+        });
+      if (s.przyklad)
+        st.push({ type: "kroki", stage: "Przykład krok po kroku" });
+      if (s.razem)
+        st.push({
+          type: "q",
+          stage: "Razem",
+          mode: "razem",
+          q: s.razem,
+          j: 0,
+          n: 1,
+        });
+      (s.trening || []).forEach(function (q, j, a) {
+        st.push({
+          type: "q",
+          stage: "Ćwiczenia",
+          mode: "train",
+          q: q,
+          j: j,
+          n: a.length,
+        });
+      });
+      s.test.forEach(function (q, j, a) {
+        st.push({
+          type: "q",
+          stage: s.final ? "Test końcowy" : "Test",
+          mode: "test",
+          q: q,
+          j: j,
+          n: a.length,
+        });
+      });
+      st.push({ type: "wynik", stage: "Wynik" });
+      P = {
+        s: s,
+        st: st,
+        i: 0,
+        ok: 0,
+        miss: [],
+        t0: Date.now(),
+        saved: false,
+        sc: 0,
+        ss: 0,
+      };
+      resetQ();
+      render();
+      clearInterval(clockT);
+      clockT = setInterval(tick, 1000);
+    }
+    function resetQ() {
+      if (P) {
+        P.tries = 0;
+        P.input = "";
+        P.done = false;
+        P.fb = "";
+        P.out = {};
+        P.shown = 1;
+      }
+    }
+    function tick() {
+      var el = document.getElementById("clock");
+      if (!el || !P) return;
+      var s = Math.floor((Date.now() - P.t0) / 1000);
+      el.textContent =
+        String(Math.floor(s / 60)).padStart(2, "0") +
+        ":" +
+        String(s % 60).padStart(2, "0");
+    }
+    function go() {
+      P.i++;
+      P.sc = 0;
+      P.ss = 0;
+      resetQ();
+      render();
+      window.scrollTo(0, 0);
+    }
+
+    function render() {
+      if (!P) {
+        home();
+        return;
+      }
+      SC.clearT();
+      lektorStop();
+      var st = P.st[P.i],
+        s = P.s;
+      var h =
+        '<div class="top"><div class="wrap"><span class="ttl">' +
+        (s.poprawka ? "Poprawa" : "Lekcja " + s.nr) +
+        " · " +
+        T(s.tytul) +
+        '</span><span class="clock" id="clock">00:00</span><button class="x" id="quit" aria-label="Wróć do listy lekcji">×</button></div><div class="prog"><i style="width:' +
+        Math.round((100 * P.i) / (P.st.length - 1)) +
+        '%"></i></div></div><main class="wrap">';
+      var label =
+        st.stage +
+        (st.type === "q" && st.n > 1 ? " · " + (st.j + 1) + "/" + st.n : "") +
+        (st.type === "sceny" ? " · " + (P.sc + 1) + "/" + st.list.length : "");
+      h += '<div class="stage">' + label + "</div>";
+      if (st.type === "sceny") h += scena(s);
+      else if (st.type === "kroki") h += kroki(s);
+      else if (st.type === "q") h += question(st);
+      else h += wynik(s);
+      h += "</main>";
+      app.innerHTML = h;
+      tick();
+      document.getElementById("quit").onclick = home;
+      bind(st);
+    }
+
+    function sLab() {
+      var s = P.s,
+        list = P.st[P.i].list,
+        nx = P.st[P.i + 1],
+        sc = SC[list[P.sc]],
+        step = sc.steps[P.ss];
+      if (step[1]) return step[1];
+      if (P.sc < list.length - 1) return "Dalej";
+      if (nx && nx.stage === "Sprawdź się") return "Sprawdź się";
+      if (nx && nx.type === "kroki") return "Do przykładu";
+      return s.final ? "Do testu" : "Dalej";
+    }
+    /* lektor: przycisk przy obrazku czyta krok; raz włączony gra przy każdym kolejnym kroku tej wizyty */
+    var LK = { on: false, a: null };
+    function lektorStop() {
+      if (LK.a) {
+        LK.a.pause();
+        LK.a = null;
+      }
+    }
+    function lektorBtn(key) {
+      return window.LEKTOR && LEKTOR[key]
+        ? '<button class="again lektor' + (LK.on ? " on" : "") + '" id="lek" aria-pressed="' + LK.on + '">' + (LK.on ? "■ Lektor" : "▶ Lektor") + "</button>"
+        : "";
+    }
+    function lektorGraj(key, k) {
+      lektorStop();
+      var f = window.LEKTOR && LEKTOR[key] && LEKTOR[key][k];
+      if (!LK.on || !f) return;
+      LK.a = new Audio(f);
+      LK.a.play().catch(function () {});
+    }
+    function scena(s) {
+      var list = P.st[P.i].list,
+        sc = SC[list[P.sc]];
+      var h =
+        '<div class="card scene"><div class="dots">' +
+        list
+          .map(function (_, i) {
+            return (
+              '<i class="' + (i < P.sc ? "d" : i === P.sc ? "c" : "") + '"></i>'
+            );
+          })
+          .join("") +
+        "</div>";
+      h += sc.html
+        ? '<div class="vizh" id="viz"></div>'
+        : '<svg class="viz" id="viz" viewBox="0 0 340 230" role="img" aria-label="Rysunek do zasady"></svg>';
+      h +=
+        '<div class="cap" id="cap" aria-live="polite">' +
+        T(sc.steps[P.ss][0]) +
+        "</div>";
+      return (
+        h +
+        '<div class="sbtns"><button class="again" id="replay" aria-label="Od początku">↺</button>' + lektorBtn(list[P.sc]) + '<button class="next" id="nx">' +
+        sLab() +
+        "</button></div></div>"
+      );
+    }
+    function setupScene() {
+      var s = P.s,
+        list = P.st[P.i].list,
+        sc = SC[list[P.sc]],
+        upd = sc.build(document.getElementById("viz"));
+      upd(P.ss);
+      lektorGraj(list[P.sc], P.ss);
+      var lb = document.getElementById("lek");
+      if (lb) lb.onclick = function () { LK.on = !LK.on; lb.className = "again lektor" + (LK.on ? " on" : ""); lb.setAttribute("aria-pressed", LK.on); lb.textContent = LK.on ? "■ Lektor" : "▶ Lektor"; if (LK.on) lektorGraj(list[P.sc], P.ss); else lektorStop(); };
+      document.getElementById("replay").onclick = function () {
+        P.ss = 0;
+        render();
+      };
+      document.getElementById("nx").onclick = function () {
+        if (P.ss < sc.steps.length - 1) {
+          P.ss++;
+          upd(P.ss);
+          lektorGraj(list[P.sc], P.ss);
+          document.getElementById("cap").innerHTML = T(sc.steps[P.ss][0]);
+          this.textContent = sLab();
+        } else if (P.sc < list.length - 1) {
+          P.sc++;
+          P.ss = 0;
+          render();
+        } else go();
+      };
+    }
+    function kroki(s) {
+      var p = s.przyklad,
+        h =
+          '<div class="card"><div class="prompt">' +
+          T(p.t) +
+          '</div><ol class="steps">';
+      for (var k = 0; k < P.shown; k++)
+        h +=
+          '<li><span class="n">' +
+          (k + 1) +
+          "</span><div>" +
+          T(p.kroki[k]) +
+          "</div></li>";
+      h += "</ol>";
+      h +=
+        P.shown < p.kroki.length
+          ? '<button class="next ghost" id="more">Pokaż krok ' +
+            (P.shown + 1) +
+            "</button>"
+          : '<button class="next" id="nx">Dalej: twoja kolej</button>';
+      return h + "</div>";
+    }
+    function question(st) {
+      var q = st.q,
+        h = '<div class="card"><div class="prompt">' + T(q.t) + "</div>";
+      if (q.rys) h += window.RYS(q.rys);
+      if (st.mode === "razem")
+        h += '<div class="hintbox"><b>Podpowiedź:</b> ' + T(q.hint) + "</div>";
+      if (q.opts) {
+        h +=
+          '<div class="opts">' +
+          q.opts
+            .map(function (o, k) {
+              var c = P.out[k] || "";
+              return (
+                '<button data-opt="' +
+                k +
+                '" class="' +
+                c +
+                '"' +
+                (P.done || c === "wrong" ? " disabled" : "") +
+                ">" +
+                T(o) +
+                "</button>"
+              );
+            })
+            .join("") +
+          "</div>";
+      } else {
+        h +=
+          '<div class="ans' +
+          (P.done ? (P.right ? " ok" : " bad") : "") +
+          '" id="ans" aria-live="polite">' +
+          showIn(P.input) +
+          "</div>";
+        if (!P.done) {
+          var keys = [
+            "7",
+            "8",
+            "9",
+            "⌫",
+            "4",
+            "5",
+            "6",
+            "/",
+            "1",
+            "2",
+            "3",
+            ",",
+            "−",
+            "0",
+            "C",
+            "OK",
+          ];
+          h +=
+            '<div class="pad">' +
+            keys
+              .map(function (k) {
+                var cls =
+                  k === "OK" ? "go" : k === "⌫" || k === "C" ? "fn" : "";
+                var lab =
+                  k === "OK"
+                    ? "Sprawdź"
+                    : k === "C"
+                      ? "Wyczyść"
+                      : k === "/"
+                        ? "ułamek"
+                        : k;
+                return (
+                  '<button class="' +
+                  cls +
+                  '" data-k="' +
+                  k +
+                  '" aria-label="' +
+                  lab +
+                  '">' +
+                  (k === "OK" ? "Sprawdź" : k) +
+                  "</button>"
+                );
+              })
+              .join("") +
+            "</div>";
+          h +=
+            '<div class="padnote">Ułamek wpisz jak 3/4, liczbę dziesiętną z przecinkiem.</div>';
+        }
+      }
+      if (P.fb) h += P.fb;
+      if (P.done) h += '<button class="next" id="nx">Dalej</button>';
+      return h + "</div>";
+    }
+    function wynik(s) {
+      if (!P.saved) {
+        P.saved = true;
+        S.done[s.nr] = true;
+        S.best[s.nr] = Math.max(S.best[s.nr] || 0, P.ok);
+        save();
+        clearInterval(clockT);
+      }
+      var n = s.test.length,
+        bad = n - P.ok,
+        h = '<div class="card" style="text-align:center">';
+      h += "<h3>" + (s.poprawka ? "Poprawa" : "Lekcja " + s.nr) + " zrobiona</h3>";
+      h +=
+        '<div class="score"><div><b>' +
+        P.ok +
+        '</b><small>dobrze</small></div><span class="colon">:</span><div><b>' +
+        bad +
+        "</b><small>źle</small></div></div>";
+      var msg =
+        bad === 0
+          ? "Wszystko dobrze. Ten temat masz opanowany."
+          : P.ok >= n - 1
+            ? "Prawie wszystko. Przejrzyj jeszcze rozwiązanie zadania z błędem."
+            : "Jutro zrób tę lekcję jeszcze raz, zanim przejdziesz dalej.";
+      if (s.final && bad > 0) {
+        var ks = [];
+        P.miss.forEach(function (k) {
+          if (ks.indexOf(k) < 0) ks.push(k);
+        });
+        ks.sort();
+        msg =
+          "Powtórz: " +
+          ks
+            .map(function (k) {
+              return "lekcja " + k + " (" + session(k).tytul + ")";
+            })
+            .join(", ") +
+          ". Potem zrób test jeszcze raz.";
+      }
+      if (s.final && bad === 0)
+        msg = "Komplet. Cały materiał o logarytmach opanowany.";
+      h += "<p>" + msg + "</p>";
+      h +=
+        '<button class="next" id="home">Wróć do listy lekcji</button><button class="next ghost" id="again">Zrób tę lekcję jeszcze raz</button></div>';
+      return h;
+    }
+
+    function bind(st) {
+      var nx = document.getElementById("nx");
+      if (nx) nx.onclick = go;
+      var more = document.getElementById("more");
+      if (more)
+        more.onclick = function () {
+          P.shown++;
+          render();
+        };
+      var hm = document.getElementById("home");
+      if (hm) hm.onclick = home;
+      var ag = document.getElementById("again");
+      if (ag)
+        ag.onclick = function () {
+          start(P.s.nr);
+        };
+      app.querySelectorAll("[data-opt]").forEach(function (b) {
+        b.onclick = function () {
+          check(+b.getAttribute("data-opt"));
+        };
+      });
+      app.querySelectorAll("[data-k]").forEach(function (b) {
+        b.onclick = function () {
+          key(b.getAttribute("data-k"));
+        };
+      });
+      if (st.type === "sceny") setupScene();
+    }
+    function key(k) {
+      if (!P || P.done) return;
+      if (k === "OK") {
+        check();
+        return;
+      }
+      if (k === "⌫") P.input = P.input.slice(0, -1);
+      else if (k === "C") P.input = "";
+      else if (k === "−") {
+        P.input += "-";
+      } else if (P.input.length < 14) P.input += k;
+      var a = document.getElementById("ans");
+      if (a) a.innerHTML = showIn(P.input);
+    }
+    function check(choice) {
+      var st = P.st[P.i],
+        q = st.q,
+        right;
+      if (P.done) return;
+      if (q.opts) right = choice === q.ok;
+      else {
+        var r = rat(P.input);
+        if (!r) {
+          P.fb =
+            '<div class="fb warn">Wpisz liczbę: całą, ułamek jak 3/4 albo dziesiętną z przecinkiem, np. 0,6.</div>';
+          render();
+          return;
+        }
+        right = eq(r, rat(q.a));
+      }
+      P.tries++;
+      if (right) {
+        P.done = true;
+        P.right = true;
+        if (q.opts) P.out[choice] = "right";
+        if (st.mode === "test") P.ok++;
+        P.fb = '<div class="fb ok"><b>Dobrze.</b> ' + T(q.sol || "") + "</div>";
+      } else if (st.mode !== "test" && P.tries < 2) {
+        if (q.opts) P.out[choice] = "wrong";
+        P.fb =
+          '<div class="fb warn"><b>Jeszcze nie.</b> ' +
+          T(q.hint || "Sprawdź jeszcze raz znak i wykładnik.") +
+          " Spróbuj jeszcze raz.</div>";
+      } else {
+        P.done = true;
+        P.right = false;
+        if (q.opts) {
+          P.out[choice] = "wrong";
+          P.out[q.ok] = "right";
+        }
+        if (st.mode === "test" && q.k) P.miss.push(q.k);
+        P.fb =
+          '<div class="fb bad"><b>Źle.</b> Poprawnie: ' +
+          (q.opts ? T(q.opts[q.ok]) : fmtAns(q.a)) +
+          ". " +
+          T(q.sol || "") +
+          "</div>";
+      }
+      render();
+    }
+    document.addEventListener("keydown", function (e) {
+      if (!P) return;
+      var st = P.st[P.i];
+      if (e.key === "Enter") {
+        var nx =
+          document.getElementById("nx") || document.getElementById("more");
+        if (nx && (st.type !== "q" || P.done)) {
+          e.preventDefault();
+          nx.click();
+          return;
+        }
+      }
+      if (st.type !== "q" || st.q.opts || P.done) return;
+      if (/^[0-9]$/.test(e.key)) key(e.key);
+      else if (e.key === "," || e.key === ".") key(",");
+      else if (e.key === "/") key("/");
+      else if (e.key === "-") key("−");
+      else if (e.key === "Backspace") key("⌫");
+      else if (e.key === "Enter") key("OK");
+      else return;
+      e.preventDefault();
+    });
+    home();
+  })();
+</script>
