@@ -889,7 +889,8 @@
       "kolejki": [
         1,
         2,
-        3
+        3,
+        4
       ]
     }
   ],
@@ -906,7 +907,11 @@
     "Podstawa ułamkowa: minus odwraca ułamek. $~p{~f{1}{3}}^{-3} = 27$, więc $log_{~f{1}{3}} 27 = -3$.",
     "Podstawa $~r{}{2}$: para $~r{}{2} * ~r{}{2} = 2$. $log_{~r{}{2}} 4 = 4$.",
     "Szukasz $b$: liczysz potęgę. $log_{2} b = 5$, więc $b = 2^{5} = 32$.",
-    "Szukasz $a$: $log_{a} 16 = 4$, więc $a^{4} = 16$ i $a = 2$ (podstawa dodatnia)."
+    "Szukasz $a$: $log_{a} 16 = 4$, więc $a^{4} = 16$ i $a = 2$ (podstawa dodatnia).",
+    "Iloczyn: $log_{a} (b * c) = log_{a} b + log_{a} c$. Tylko mnożenie: $log_{a} (b + c)$ tak się nie rozkłada.",
+    "Iloraz: $log_{a} ~f{b}{c} = log_{a} b - log_{a} c$, licznik minus mianownik.",
+    "Potęga: $log_{a} b^{p} = p * log_{a} b$.",
+    "Wzory działają przy tej samej podstawie. Różne podstawy: licz każdy logarytm osobno."
   ],
   "sesje": [
     {
@@ -1735,6 +1740,295 @@
           "a": "1/4",
           "py": "4**-1",
           "sol": "$a^{-1} = ~f{1}{a} = 4$, więc $a = ~f{1}{4}$."
+        }
+      ]
+    },
+    {
+      "nr": 4,
+      "tytul": "Trzy wzory: iloczyn, iloraz, potęga",
+      "karty": "1.10, Twierdzenie, Ćw. 5–7, Zad. 5–8",
+      "rozgrzewka": [
+        {
+          "t": "Powtórka z lekcji 2: oblicz $log_{2} ~r{}{8}$.",
+          "a": "3/2",
+          "py": "math.log(math.sqrt(8), 2)",
+          "hint": "$8 = 2^{3}$, a pierwiastek kwadratowy daje 2 w mianowniku.",
+          "sol": "$~r{}{8} = 2^{~f{3}{2}}$, więc wynik to $~f{3}{2}$."
+        },
+        {
+          "t": "Powtórka z lekcji 3: oblicz $log_{~f{1}{2}} 4$.",
+          "a": "-2",
+          "py": "math.log(4, 0.5)",
+          "hint": "Minus odwraca ułamek: $~p{~f{1}{2}}^{-2} = 2^{2}$.",
+          "sol": "$~p{~f{1}{2}}^{-2} = 4$, więc wynik to $-2$."
+        }
+      ],
+      "bloki": [
+        {
+          "tytul": "Logarytm iloczynu",
+          "sceny": [
+            "L4_iloczyn",
+            "L4_pulapka"
+          ],
+          "pytania": [
+            {
+              "t": "$log_{a} (b * c) = ?$",
+              "opts": [
+                "$log_{a} b * log_{a} c$",
+                "$log_{a} b + log_{a} c$",
+                "$log_{a} (b + c)$"
+              ],
+              "ok": 1,
+              "py": "abs(math.log(8*4, 2) - (math.log(8, 2) + math.log(4, 2))) < 1e-9",
+              "hint": "Na obrazku z kafelkami wykładniki się dodały: $3 + 2$.",
+              "sol": "$log_{a} (b * c) = log_{a} b + log_{a} c$."
+            },
+            {
+              "t": "Oblicz $log_{2} (64 * 256)$.",
+              "a": "14",
+              "py": "math.log(64*256, 2)",
+              "hint": "$log_{2} 64 = 6$ i $log_{2} 256 = 8$. Dodaj.",
+              "sol": "$6 + 8 = 14$."
+            },
+            {
+              "t": "Oblicz $log_{3} (9 * 27)$.",
+              "a": "5",
+              "py": "math.log(9*27, 3)",
+              "hint": "$log_{3} 9 = 2$, $log_{3} 27 = 3$.",
+              "sol": "$2 + 3 = 5$."
+            },
+            {
+              "t": "Oblicz $log_{2} 16~r{}{2}$.",
+              "a": "9/2",
+              "py": "math.log(16*math.sqrt(2), 2)",
+              "hint": "$16~r{}{2}$ to $16 * ~r{}{2}$. $log_{2} 16 = 4$, a $log_{2} ~r{}{2} = ~f{1}{2}$ (lekcja 2).",
+              "sol": "$4 + ~f{1}{2} = ~f{9}{2}$."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm ilorazu",
+          "sceny": [
+            "L4_iloraz"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{3} ~f{243}{9}$.",
+              "a": "3",
+              "py": "math.log(243/9, 3)",
+              "hint": "$log_{3} 243 = 5$, $log_{3} 9 = 2$. Odejmij.",
+              "sol": "$5 - 2 = 3$."
+            },
+            {
+              "t": "Oblicz $log_{2} ~f{0,5}{64}$.",
+              "a": "-7",
+              "py": "math.log(0.5/64, 2)",
+              "hint": "$log_{2} 0,5 = log_{2} ~f{1}{2} = -1$, a $log_{2} 64 = 6$.",
+              "sol": "$-1 - 6 = -7$."
+            },
+            {
+              "t": "Oblicz $log_{2} ~f{~r{}{2}}{8}$.",
+              "a": "-5/2",
+              "py": "math.log(math.sqrt(2)/8, 2)",
+              "hint": "Licznik: $log_{2} ~r{}{2} = ~f{1}{2}$. Mianownik: $log_{2} 8 = 3$. Licznik minus mianownik.",
+              "sol": "$~f{1}{2} - 3 = -~f{5}{2}$."
+            }
+          ]
+        },
+        {
+          "tytul": "Logarytm potęgi",
+          "sceny": [
+            "L4_potega"
+          ],
+          "pytania": [
+            {
+              "t": "$log_{a} b^{p} = ?$",
+              "opts": [
+                "$(log_{a} b)^{p}$",
+                "$log_{a} b + p$",
+                "$p * log_{a} b$"
+              ],
+              "ok": 2,
+              "py": "abs(math.log(8**4, 2) - 4*math.log(8, 2)) < 1e-9",
+              "hint": "Na obrazku: $log_{2} 8^{4} = 4 * 3$.",
+              "sol": "$log_{a} b^{p} = p * log_{a} b$."
+            },
+            {
+              "t": "Oblicz $log_{2} 4^{10}$.",
+              "a": "20",
+              "py": "math.log(4**10, 2)",
+              "hint": "$10 * log_{2} 4$, a $log_{2} 4 = 2$.",
+              "sol": "$10 * 2 = 20$."
+            },
+            {
+              "t": "Oblicz $log_{3} 81^{-4}$.",
+              "a": "-16",
+              "py": "math.log(81.0**-4, 3)",
+              "hint": "Wykładnik $-4$ wychodzi przed logarytm: $-4 * log_{3} 81$.",
+              "sol": "$-4 * 4 = -16$."
+            }
+          ]
+        },
+        {
+          "tytul": "Gdy liczb nie policzysz osobno",
+          "sceny": [
+            "L4_razem"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log 8 + log 125$.",
+              "a": "3",
+              "py": "math.log10(8) + math.log10(125)",
+              "hint": "Połącz w jeden logarytm: $8 * 125 = ?$",
+              "sol": "$log (8 * 125) = log 1000 = 3$."
+            },
+            {
+              "t": "Oblicz $log 250 + log ~f{2}{5}$.",
+              "a": "2",
+              "py": "math.log10(250) + math.log10(2/5)",
+              "hint": "$250 * ~f{2}{5} = ~f{500}{5}$.",
+              "sol": "$log 100 = 2$."
+            },
+            {
+              "t": "Oblicz $log 1250 - log ~f{5}{4}$.",
+              "a": "3",
+              "py": "math.log10(1250) - math.log10(5/4)",
+              "hint": "Wzór na iloraz: $1250 : ~f{5}{4} = 1250 * ~f{4}{5}$.",
+              "sol": "$log 1000 = 3$."
+            }
+          ]
+        },
+        {
+          "tytul": "Różne podstawy",
+          "sceny": [
+            "L4_rozne"
+          ],
+          "pytania": [
+            {
+              "t": "Oblicz $log_{4} 4 - log_{4} 64$.",
+              "a": "-2",
+              "py": "math.log(4, 4) - math.log(64, 4)",
+              "hint": "$log_{4} 4 = 1$ (lekcja 1), $log_{4} 64 = 3$.",
+              "sol": "$1 - 3 = -2$."
+            },
+            {
+              "t": "Oblicz $log_{5} 125 - log_{5} ~f{1}{5}$.",
+              "a": "4",
+              "py": "math.log(125, 5) - math.log(0.2, 5)",
+              "hint": "$log_{5} ~f{1}{5} = -1$. Minus przed liczbą ujemną daje plus.",
+              "sol": "$3 - (-1) = 4$."
+            },
+            {
+              "t": "Oblicz $log_{3} ~f{1}{9} - log_{~f{1}{3}} 3$.",
+              "a": "-1",
+              "py": "math.log(1/9, 3) - math.log(3, 1/3)",
+              "hint": "Podstawy są różne, więc licz osobno: $log_{3} ~f{1}{9} = -2$, $log_{~f{1}{3}} 3 = -1$.",
+              "sol": "$-2 - (-1) = -1$."
+            }
+          ]
+        }
+      ],
+      "trening": [
+        {
+          "t": "Oblicz $log_{5} (125 * 625)$.",
+          "a": "7",
+          "py": "math.log(125*625, 5)",
+          "hint": "$3 + 4$.",
+          "sol": "$log_{5} 125 + log_{5} 625 = 3 + 4 = 7$."
+        },
+        {
+          "t": "Oblicz $log_{3} ~f{81}{~r{}{3}}$.",
+          "a": "7/2",
+          "py": "math.log(81/math.sqrt(3), 3)",
+          "hint": "$4 - ~f{1}{2}$.",
+          "sol": "$log_{3} 81 - log_{3} ~r{}{3} = 4 - ~f{1}{2} = ~f{7}{2}$."
+        },
+        {
+          "t": "Oblicz $log_{3} 9^{6}$.",
+          "a": "12",
+          "py": "math.log(9**6, 3)",
+          "hint": "$6 * log_{3} 9$.",
+          "sol": "$6 * 2 = 12$."
+        },
+        {
+          "t": "Oblicz $log 2 + log 50$.",
+          "a": "2",
+          "py": "math.log10(2) + math.log10(50)",
+          "hint": "$2 * 50 = ?$",
+          "sol": "$log 100 = 2$."
+        },
+        {
+          "t": "Oblicz $log_{2} 1 + ~f{1}{2} log_{2} 16$.",
+          "a": "2",
+          "py": "math.log(1, 2) + 0.5*math.log(16, 2)",
+          "hint": "$log_{2} 1 = 0$ (lekcja 1), $log_{2} 16 = 4$.",
+          "sol": "$0 + ~f{1}{2} * 4 = 2$."
+        },
+        {
+          "t": "Czy to prawda? $log_{3} (9 + 9) = log_{3} 9 + log_{3} 9$",
+          "opts": [
+            "Prawda",
+            "Fałsz"
+          ],
+          "ok": 1,
+          "py": "abs(math.log(18, 3) - 4) > 0.1",
+          "hint": "Wzór działa tylko dla mnożenia. Po prawej wychodzi $2 + 2 = 4$, a $3^{4} = 81$, nie 18.",
+          "sol": "Fałsz: w nawiasie jest dodawanie, a wzór działa dla mnożenia."
+        }
+      ],
+      "test": [
+        {
+          "t": "Oblicz $log_{2} (32 * 128)$.",
+          "a": "12",
+          "py": "math.log(32*128, 2)",
+          "sol": "$5 + 7 = 12$."
+        },
+        {
+          "t": "Oblicz $log_{5} 5~r{}{5}$ wzorem na iloczyn.",
+          "a": "3/2",
+          "py": "math.log(5*math.sqrt(5), 5)",
+          "sol": "$1 + ~f{1}{2} = ~f{3}{2}$."
+        },
+        {
+          "t": "Oblicz $log_{2} ~f{1024}{0,125}$.",
+          "a": "13",
+          "py": "math.log(1024/0.125, 2)",
+          "sol": "$log_{2} 1024 = 10$, $log_{2} 0,125 = log_{2} ~f{1}{8} = -3$, więc $10 - (-3) = 13$."
+        },
+        {
+          "t": "Oblicz $log_{2} 32^{4}$.",
+          "a": "20",
+          "py": "math.log(32**4, 2)",
+          "sol": "$4 * 5 = 20$."
+        },
+        {
+          "t": "Oblicz $log 20 + log 5$.",
+          "a": "2",
+          "py": "math.log10(20) + math.log10(5)",
+          "sol": "$log 100 = 2$."
+        },
+        {
+          "t": "Oblicz $log ~f{1}{3} - log 3~f{1}{3}$.",
+          "a": "-1",
+          "py": "math.log10(1/3) - math.log10(10/3)",
+          "sol": "$3~f{1}{3} = ~f{10}{3}$, a $~f{1}{3} : ~f{10}{3} = ~f{1}{10}$. $log ~f{1}{10} = -1$."
+        },
+        {
+          "t": "Oblicz $log_{8} 2 + log_{27} 3$.",
+          "a": "2/3",
+          "py": "math.log(2, 8) + math.log(3, 27)",
+          "sol": "Różne podstawy, więc osobno: $~f{1}{3} + ~f{1}{3} = ~f{2}{3}$."
+        },
+        {
+          "t": "$log_{a} (b * c)$ to:",
+          "opts": [
+            "$log_{a} b + log_{a} c$",
+            "$log_{a} (b + c)$",
+            "$log_{a} b * log_{a} c$"
+          ],
+          "ok": 0,
+          "py": "True",
+          "sol": "Suma logarytmów."
         }
       ]
     }
@@ -2794,6 +3088,183 @@ S.L3_a_minus = rows(
       "Sprawdź",
     ],
     ["Sprawdzenie: $~p{~f{1}{16}}^{-1} = 16$. Zgadza się."],
+  ],
+);
+
+/* Obrazki do lekcji 4 z logarytmów: wzory na logarytm iloczynu, ilorazu i potęgi (korzysta z MIX i LG z sceny_log_1.js). */
+
+/* iloczyn: dwójki z 8 i z 4 stają w jednym mnożeniu, więc wykładniki się dodają */
+S.L4_iloczyn = {
+  steps: [
+    [
+      "Policz $log_{2} (8 * 4)$. Najpierw zapisz obie liczby jako potęgi dwójki.",
+      "Rozpisz",
+    ],
+    [
+      "$8 = 2^{3}$, trzy żółte dwójki, więc $log_{2} 8 = 3$. $4 = 2^{2}$, dwie niebieskie dwójki, więc $log_{2} 4 = 2$.",
+      "Pomnóż",
+    ],
+    [
+      "Mnożysz 8 przez 4, więc wszystkie dwójki stają w jednym mnożeniu. Razem $3 + 2 = 5$ dwójek: $8 * 4 = 2^{5} = 32$.",
+      "Wynik",
+    ],
+    [
+      "$log_{2} 32 = 5$, czyli $3 + 2$. Logarytm iloczynu to suma logarytmów: $log_{a} (b * c) = log_{a} b + log_{a} c$.",
+    ],
+  ],
+  build: function (s) {
+    var q = LG(s, 170, 40, "2", "(8 · 4)", " = ?", 30),
+      x0 = [36, 84, 132, 224, 272],
+      x1 = [74, 122, 170, 218, 266],
+      t = x0.map(function (_, i) {
+        return TILE(s, "2", 42, 42, i < 3 ? "y" : "b");
+      }),
+      kr = TX(s, 178, 108, "·", "big2"),
+      l8 = TX(s, 84, 150, "8 = 2³", "val"),
+      l4 = TX(s, 248, 150, "4 = 2²", "val"),
+      br = E(
+        "path",
+        { d: "M50 128 L50 136 L290 136 L290 128", class: "brk" },
+        s,
+      ),
+      l5 = TX(s, 170, 160, "5 dwójek: 2⁵ = 32", "val"),
+      r = LG(s, 170, 212, "2", "32", " = 3 + 2 = 5", 26);
+    r.setAttribute("class", "res");
+    return function (k) {
+      t.forEach(function (x, i) {
+        at(x, k >= 2 ? x1[i] : x0[i], 100, 1, k >= 1 ? 1 : 0);
+      });
+      op(kr, k === 1 ? 1 : 0);
+      op(l8, k === 1 ? 1 : 0);
+      op(l4, k === 1 ? 1 : 0);
+      op(br, k >= 2 ? 1 : 0);
+      op(l5, k >= 2 ? 1 : 0);
+      op(r, k >= 3 ? 1 : 0);
+      op(q, 1);
+    };
+  },
+};
+
+/* pułapka: wzór działa dla mnożenia, nie dla dodawania */
+S.L4_pulapka = rows(
+  [
+    "$log_{2} (4 + 4) = log_{2} 8 = 3$",
+    "$log_{2} 4 + log_{2} 4 = 2 + 2 = 4$",
+    MIX("3 to nie 4: logarytm sumy to nie suma logarytmów"),
+    MIX("$log_{a} b * log_{a} c$ to też co innego: wzór daje plus, nie razy"),
+  ],
+  [
+    [
+      "Częsty błąd: wzór stosowany do dodawania. Sprawdź na $log_{2} (4 + 4)$. W nawiasie jest $4 + 4 = 8$, więc wynik to 3.",
+      "Gdyby wzór działał",
+    ],
+    [
+      "Gdyby wzór działał dla dodawania, wyszłoby $log_{2} 4 + log_{2} 4 = 4$.",
+      "Porównaj",
+    ],
+    [
+      "Wychodzi 3, a nie 4. Wzór z poprzedniego obrazka działa tylko wtedy, gdy w nawiasie stoi mnożenie.",
+      "Drugi błąd",
+    ],
+    [
+      "Drugi błąd to mnożenie logarytmów. Z obrazka z kafelkami: wykładniki się dodają, więc logarytmy też się dodają. $log_{a} (b * c) = log_{a} b + log_{a} c$.",
+    ],
+  ],
+);
+
+/* iloraz: dwójki z dołu skracają się z dwójkami z góry, więc wykładniki się odejmują */
+S.L4_iloraz = rows(
+  [
+    "$log_{2} ~f{32}{4} = ?$",
+    "$~f{32}{4} = ~f{2^{5}}{2^{2}} = 2^{5 - 2} = 2^{3}$",
+    "$log_{2} ~f{32}{4} = 3 = 5 - 2$",
+    MIX("$log_{a} ~f{b}{c} = log_{a} b - log_{a} c$"),
+  ],
+  [
+    ["Policz $log_{2} ~f{32}{4}$.", "Rozpisz"],
+    [
+      "$32 = 2^{5}$ i $4 = 2^{2}$. Z lekcji potęg: dwie dwójki z dołu skracają się z dwiema z góry. Zostają trzy: $2^{5 - 2} = 2^{3}$.",
+      "Wynik",
+    ],
+    [
+      "$log_{2} ~f{32}{4} = 3$. To $5 - 2$, czyli $log_{2} 32 - log_{2} 4$.",
+      "Zasada",
+    ],
+    [
+      "Logarytm ilorazu to różnica logarytmów: logarytm licznika minus logarytm mianownika. Kolejność ma znaczenie: odejmujesz to, co na dole.",
+    ],
+  ],
+);
+
+/* potęga: potęga potęgi mnoży wykładniki */
+S.L4_potega = rows(
+  [
+    "$log_{2} 8^{4} = ?$",
+    "$8^{4} = (2^{3})^{4} = 2^{3 * 4} = 2^{12}$",
+    "$log_{2} 8^{4} = 12 = 4 * 3$",
+    MIX("$log_{a} b^{p} = p * log_{a} b$"),
+  ],
+  [
+    ["Policz $log_{2} 8^{4}$.", "Rozpisz"],
+    [
+      "$8 = 2^{3}$. Z lekcji potęg: potęga potęgi mnoży wykładniki, $(2^{3})^{4} = 2^{12}$. Cztery razy po trzy dwójki to 12 dwójek.",
+      "Wynik",
+    ],
+    ["$log_{2} 8^{4} = 12$. To $4 * 3$, czyli $4 * log_{2} 8$.", "Zasada"],
+    [
+      "Logarytm potęgi: wykładnik wychodzi przed logarytm i mnoży go. $log_{a} b^{p} = p * log_{a} b$. Mnożysz logarytm przez wykładnik, nie potęgujesz logarytmu.",
+    ],
+  ],
+);
+
+/* wzór czytany od końca: dwa logarytmy, których nie policzysz osobno */
+S.L4_razem = rows(
+  [
+    MIX("$log 2$ i $log 5$ osobno: bez kalkulatora nie policzysz"),
+    "$log 2 + log 5 = log (2 * 5)$",
+    "$log (2 * 5) = log 10 = 1$",
+    "$log 150 - log 15 = log ~f{150}{15}$",
+    "$log ~f{150}{15} = log 10 = 1$",
+  ],
+  [
+    [
+      "Zadanie $log 2 + log 5$. 2 i 5 to nie są potęgi dziesiątki, więc każdego logarytmu osobno nie policzysz.",
+      "Połącz",
+    ],
+    [
+      "Wzór na iloczyn czytany od końca: suma logarytmów to logarytm iloczynu.",
+      "Policz",
+    ],
+    ["$2 * 5 = 10$, a $log 10 = 1$.", "Odejmowanie"],
+    [
+      "Z odejmowaniem tak samo, wzorem na iloraz czytanym od końca: różnica logarytmów to logarytm ilorazu.",
+      "Policz",
+    ],
+    [
+      "$150 : 15 = 10$, więc wynik to 1. Gdy liczby są niewygodne, połącz je w jeden logarytm.",
+    ],
+  ],
+);
+
+/* różne podstawy: wzór nie działa, liczysz każdy logarytm osobno */
+S.L4_rozne = rows(
+  [
+    "$log_{4} 2 + log_{9} 3$",
+    MIX("$4^{~f{1}{2}} = 2$, więc $log_{4} 2 = ~f{1}{2}$"),
+    MIX("$9^{~f{1}{2}} = 3$, więc $log_{9} 3 = ~f{1}{2}$"),
+    "$~f{1}{2} + ~f{1}{2} = 1$",
+  ],
+  [
+    [
+      "Tu podstawy są różne: 4 i 9. Wzory z tej lekcji działają tylko przy tej samej podstawie, więc liczysz każdy logarytm osobno.",
+      "Pierwszy",
+    ],
+    [
+      "$log_{4} 2$: $4^{?} = 2$. Pierwiastek z 4 to 2, czyli $4^{~f{1}{2}} = 2$.",
+      "Drugi",
+    ],
+    ["$log_{9} 3$: pierwiastek z 9 to 3, czyli $9^{~f{1}{2}} = 3$.", "Dodaj"],
+    ["Na końcu dodajesz zwykłe liczby: $~f{1}{2} + ~f{1}{2} = 1$."],
   ],
 );
 
