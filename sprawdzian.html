@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sprawdzian z logarytmów</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --tx: #1d1d1f;
+        --mut: #666;
+        --card: #fff;
+        --line: #e4e1da;
+        --acc: #2f6fdb;
+        --sel: #e7efff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #161618;
+          --tx: #ececec;
+          --mut: #a0a0a0;
+          --card: #202023;
+          --line: #34343a;
+          --acc: #6b9cff;
+          --sel: #22314f;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          17px/1.5 -apple-system,
+          system-ui,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+      }
+      main {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      h1 {
+        font-size: 1.45rem;
+        margin: 0.3em 0 0.2em;
+      }
+      .lead {
+        color: var(--mut);
+        margin: 0 0 1em;
+      }
+      .part {
+        font-weight: 700;
+        margin: 22px 0 8px;
+        color: var(--acc);
+      }
+      .zad {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        margin: 0 0 12px;
+      }
+      .zad .hd {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .zad .pk {
+        color: var(--mut);
+        font-weight: 400;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+      .opts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .opts.wide {
+        grid-template-columns: 1fr;
+      }
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-align: left;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 10px;
+        background: var(--bg);
+        color: var(--tx);
+        font-size: 1rem;
+        min-height: 44px;
+        min-width: 0;
+      }
+      .opt b {
+        flex: 0 0 auto;
+      }
+      .opt.on {
+        border-color: var(--acc);
+        background: var(--sel);
+      }
+      .pf {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        align-items: center;
+        border-top: 1px dashed var(--line);
+        padding-top: 8px;
+        margin-top: 8px;
+      }
+      .pf .btns {
+        display: flex;
+        gap: 6px;
+      }
+      .pf .opt {
+        justify-content: center;
+        min-width: 48px;
+      }
+      .sub {
+        font-size: 0.9rem;
+        color: var(--mut);
+        margin: 10px 0 4px;
+      }
+      input.txt,
+      textarea {
+        width: 100%;
+        font-size: 1rem;
+        padding: 9px 10px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--tx);
+        font-family: inherit;
+      }
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .bar {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg);
+        border-top: 1px solid var(--line);
+        padding: 10px 0;
+        margin-top: 16px;
+      }
+      .bar button {
+        width: 100%;
+        font-size: 1.05rem;
+        padding: 12px;
+        border: 0;
+        border-radius: 12px;
+        background: var(--acc);
+        color: #fff;
+        font-weight: 700;
+      }
+      .cnt {
+        color: var(--mut);
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 6px;
+      }
+      #wynik {
+        display: none;
+        margin-top: 12px;
+      }
+      #wynik textarea {
+        min-height: 220px;
+        font-size: 0.85rem;
+      }
+      .ok {
+        color: #1d8a4a;
+        font-weight: 600;
+      }
+    .opt .katex{white-space:nowrap}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Sprawdzian: logarytmy</h1>
+      <p class="lead">
+        Rozdział 1.10 „Logarytm i jego własności”. 27 zadań, razem 39 punktów,
+        około 80–90 minut. Zadania są takie jak w teście „Przed obowiązkową
+        maturą” w Twoim podręczniku. Możesz zrobić je w dwóch podejściach, bo
+        odpowiedzi zostają w telefonie. Strona nie mówi, co jest dobrze. Na
+        końcu wyślij odpowiedzi tacie.
+      </p>
+      <div id="lista"></div>
+      <div class="bar">
+        <button type="button" id="gotowe">
+          Gotowe: skopiuj odpowiedzi dla taty
+        </button>
+        <div class="cnt" id="cnt"></div>
+        <div id="wynik">
+          <p class="ok" id="info"></p>
+          <textarea id="tekst" readonly></textarea>
+        </div>
+      </div>
+    </main>
+    <script>
+      /* Sprawdzian z logarytmów w układzie testu Nowej Ery: zbiera odpowiedzi i składa tekst dla taty, klucz leży poza stroną. */
+      const Z = [
+        {
+          nr: 1,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log 0{,}001$ jest równa",
+          o: ["$-3$", "$3$", "$-2$", "$\\tfrac13$"],
+        },
+        {
+          nr: 2,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_2 \\tfrac{1}{32}$ jest równa",
+          o: ["$5$", "$-5$", "$\\tfrac15$", "$-\\tfrac15$"],
+        },
+        {
+          nr: 3,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_6 \\sqrt6$ jest równa",
+          o: ["$2$", "$-\\tfrac12$", "$\\tfrac12$", "$3$"],
+        },
+        {
+          nr: 4,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_3 \\sqrt[4]{3}$ jest równa",
+          o: ["$4$", "$\\tfrac14$", "$-4$", "$\\tfrac34$"],
+        },
+        {
+          nr: 5,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_{\\frac12} 8$ jest równa",
+          o: ["$3$", "$\\tfrac13$", "$-3$", "$-\\tfrac13$"],
+        },
+        {
+          nr: 6,
+          typ: "abcd",
+          pkt: 1,
+          t: "Równość $\\log_a 81 = 4$ jest prawdziwa dla",
+          o: ["$a=3$", "$a=9$", "$a=\\tfrac13$", "$a=4$"],
+        },
+        {
+          nr: 7,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_2 (16\\cdot 64)$ jest równa",
+          o: ["$24$", "$80$", "$1024$", "$10$"],
+        },
+        {
+          nr: 8,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_3 27^{4}$ jest równa",
+          o: ["$7$", "$12$", "$81$", "$108$"],
+        },
+        {
+          nr: 9,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log 20 + \\log 50$ jest równa",
+          o: ["$70$", "$3$", "$2$", "$1000$"],
+        },
+        {
+          nr: 10,
+          typ: "abcd",
+          pkt: 1,
+          t: "Jeśli $\\log_5 b = -2$, to",
+          o: ["$b=-25$", "$b=25$", "$b=-10$", "$b=\\tfrac{1}{25}$"],
+        },
+        {
+          nr: 11,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_2 4\\sqrt2$ jest równa",
+          o: ["$2$", "$\\tfrac52$", "$3$", "$\\tfrac92$"],
+        },
+        {
+          nr: 12,
+          typ: "abcd",
+          pkt: 1,
+          t: "Liczba $\\log_9 27$ jest równa",
+          o: ["$3$", "$\\tfrac23$", "$\\tfrac32$", "$\\tfrac13$"],
+        },
+        {
+          nr: 13,
+          typ: "pf",
+          pkt: 1,
+          t: "Oceń prawdziwość stwierdzeń. Wybierz P, jeśli stwierdzenie jest prawdziwe, albo F, jeśli jest fałszywe.",
+          s: ["$\\log_7 1 = 0$", "$\\log_5 5 = 0$"],
+        },
+        {
+          nr: 14,
+          typ: "pf",
+          pkt: 1,
+          t: "Oceń prawdziwość stwierdzeń. Wybierz P, jeśli stwierdzenie jest prawdziwe, albo F, jeśli jest fałszywe.",
+          s: [
+            "$\\log_2 8 + \\log_2 4 = \\log_2 12$",
+            "$\\log_3 81 - \\log_3 3 = 3$",
+          ],
+        },
+        {
+          nr: 15,
+          typ: "dwie",
+          pkt: 2,
+          t: "Dokończ zdanie. Wybierz dwie odpowiedzi, tak aby dla każdej z nich zdanie było prawdziwe.<br>Wartość $3$ przyjmuje wyrażenie",
+          o: [
+            "$\\log_2 4 + \\log_2 2$",
+            "$\\log_2 16 - \\log_2 4$",
+            "$\\log_3 9 + \\log_3 9$",
+            "$\\log 2000 - \\log 2$",
+            "$\\log_4 4 + \\log_4 2$",
+            "$\\log_2 6 - \\log_2 3$",
+            "$\\log_5 125 - \\log_5 \\tfrac15$",
+            "$2\\log_3 3$",
+          ],
+        },
+        {
+          nr: 16,
+          typ: "dwie",
+          pkt: 2,
+          t: "Dokończ zdanie. Wybierz dwie odpowiedzi, tak aby dla każdej z nich zdanie było prawdziwe.<br>Liczbą ujemną jest",
+          o: [
+            "$\\log_2 \\tfrac14$",
+            "$\\log_3 1$",
+            "$\\log_{\\frac12} \\tfrac18$",
+            "$\\log 0{,}01$",
+            "$\\log_5 \\sqrt5$",
+            "$\\log_{\\frac13} \\tfrac19$",
+            "$\\log_2 8$",
+            "$\\log_4 2$",
+          ],
+        },
+        {
+          nr: 17,
+          typ: "uzupelnij",
+          pkt: 1,
+          t: "Uzupełnij zdanie tak, aby było prawdziwe.<br>Jeśli $\\log_4 b = \\tfrac32$, to $b$ jest równe ?.",
+        },
+        {
+          nr: 18,
+          typ: "uzupelnij",
+          pkt: 1,
+          t: "Uzupełnij zdanie tak, aby było prawdziwe.<br>Jeśli $\\log_{\\sqrt2} b = -4$, to $b$ jest równe ?.",
+        },
+        {
+          nr: 19,
+          typ: "abc_uzas",
+          pkt: 1,
+          t: "Dokończ zdanie tak, aby było prawdziwe. Wybierz odpowiedź oraz jej uzasadnienie.<br>Liczba $\\log_2 0{,}5$ jest",
+          l: ["dodatnia", "równa zero", "ujemna"],
+          u: ["$2^{-1} = 0{,}5$", "$0{,}5\\cdot 2 = 1$", "$2^{1} = 2$"],
+        },
+        {
+          nr: 20,
+          typ: "abc_uzas",
+          pkt: 1,
+          t: "Dokończ zdanie tak, aby było prawdziwe. Wybierz odpowiedź oraz jej uzasadnienie.<br>Równość $\\log_3 (9\\cdot 27) = \\log_3 9 \\cdot \\log_3 27$ jest",
+          l: ["prawdziwa", "fałszywa"],
+          u: [
+            "logarytm iloczynu jest równy iloczynowi logarytmów",
+            "lewa strona jest równa 5, a prawa 6",
+            "obie strony są równe 6",
+          ],
+        },
+        {
+          nr: 21,
+          typ: "otwarte",
+          pkt: 2,
+          t: "Oblicz: a) $\\log_3 9\\sqrt3$, b) $\\log_2 \\dfrac{1}{\\sqrt8}$.",
+        },
+        {
+          nr: 22,
+          typ: "otwarte",
+          pkt: 2,
+          t: "Oblicz, korzystając ze wzoru na logarytm ilorazu: a) $\\log_2 \\dfrac{\\sqrt2}{16}$, b) $\\log_3 \\dfrac{243}{\\sqrt3}$.",
+        },
+        {
+          nr: 23,
+          typ: "otwarte",
+          pkt: 2,
+          t: "Dla jakiej podstawy logarytmu $a$ podana równość jest prawdziwa? a) $\\log_a 25 = 2$, b) $\\log_a 8 = -1$.",
+        },
+        {
+          nr: 24,
+          typ: "otwarte",
+          pkt: 3,
+          t: "Sprawdź prawdziwość równości $\\log_2 x + \\log_2 y = \\log_2 xy$ dla $x = \\sqrt2$ i $y = 4\\sqrt2$.",
+        },
+        {
+          nr: 25,
+          typ: "otwarte",
+          pkt: 2,
+          t: "Oblicz: a) $\\log_3 \\tfrac{1}{27} - \\log_{\\frac13} 9$, b) $\\log_4 2 + \\log_9 3$.",
+        },
+        {
+          nr: 26,
+          typ: "otwarte",
+          pkt: 4,
+          t: "Uzasadnij, że podana liczba jest wymierna: a) $\\log_2 12 - \\log_2 0{,}75$, b) $\\log_6 4 + \\log_6 9$.",
+        },
+        {
+          nr: 27,
+          typ: "otwarte",
+          pkt: 2,
+          t: "Uporządkuj liczby w kolejności rosnącej: $a = \\log_2 2\\sqrt2$, $b = \\log_3 \\tfrac19$, $c = \\log_4 32$, $d = \\log 0{,}1$.",
+        },
+      ];
+      const LIT = "ABCDEFGH",
+        KLUCZ = "logarytmy-sprawdzian-ne-v1";
+      let A = {};
+      try {
+        A = JSON.parse(localStorage.getItem(KLUCZ) || "{}") || {};
+      } catch (e) {
+        A = {};
+      }
+      const zapisz = () => {
+        try {
+          localStorage.setItem(KLUCZ, JSON.stringify(A));
+        } catch (e) {}
+        licz();
+      };
+      const CZESCI = {
+        1: "Zadania 1–12. Wybierz właściwą odpowiedź.",
+        13: "Zadania 13–14. Prawda czy fałsz.",
+        15: "Zadania 15–16. Wybierz dwie odpowiedzi.",
+        17: "Zadania 17–18. Uzupełnij.",
+        19: "Zadania 19–20. Odpowiedź z uzasadnieniem.",
+        21: "Zadania 21–27. Zadania otwarte. Zapisz obliczenia i wynik (możesz liczyć na kartce, a tu przepisać najważniejsze kroki).",
+      };
+      function pk(n) {
+        return n === 1 ? "(0–1)" : `(0–${n})`;
+      }
+      function rysuj() {
+        const L = document.getElementById("lista");
+        L.innerHTML = Z.map((z) => {
+          let h =
+            (CZESCI[z.nr] ? `<div class="part">${CZESCI[z.nr]}</div>` : "") +
+            `<div class="zad" data-nr="${z.nr}"><div class="hd"><span>Zadanie ${z.nr}</span><span class="pk">${pk(z.pkt)}</span></div><div>${z.t}</div>`;
+          if (z.typ === "abcd")
+            h += `<div class="opts">${z.o.map((o, i) => `<button type="button" class="opt" data-k="${LIT[i]}"><b>${LIT[i]}.</b><span>${o}</span></button>`).join("")}</div>`;
+          if (z.typ === "dwie")
+            h += `<div class="opts wide">${z.o.map((o, i) => `<button type="button" class="opt" data-k="${LIT[i]}"><b>${LIT[i]}.</b><span>${o}</span></button>`).join("")}</div>`;
+          if (z.typ === "pf")
+            h += z.s
+              .map(
+                (s, i) =>
+                  `<div class="pf" data-i="${i}"><span>${s}</span><span class="btns"><button type="button" class="opt" data-k="P">P</button><button type="button" class="opt" data-k="F">F</button></span></div>`,
+              )
+              .join("");
+          if (z.typ === "uzupelnij")
+            h += `<div class="sub">W miejsce znaku zapytania wpisz:</div><input class="txt" autocomplete="off">`;
+          if (z.typ === "abc_uzas")
+            h += `<div class="sub">Odpowiedź:</div><div class="opts wide lit">${z.l.map((o, i) => `<button type="button" class="opt" data-k="${LIT[i]}"><b>${LIT[i]}.</b><span>${o}</span></button>`).join("")}</div><div class="sub">ponieważ</div><div class="opts wide uz">${z.u.map((o, i) => `<button type="button" class="opt" data-k="${i + 1}"><b>${i + 1}.</b><span>${o}</span></button>`).join("")}</div>`;
+          if (z.typ === "otwarte")
+            h += `<div class="sub">Obliczenia i wynik:</div><textarea></textarea>`;
+          return h + "</div>";
+        }).join("");
+        Z.forEach((z) => {
+          const el = L.querySelector(`.zad[data-nr="${z.nr}"]`),
+            a = A[z.nr];
+          if (z.typ === "abcd") {
+            el.querySelectorAll(".opt").forEach((b) => {
+              b.classList.toggle("on", a === b.dataset.k);
+              b.onclick = () => {
+                A[z.nr] = b.dataset.k;
+                el.querySelectorAll(".opt").forEach((x) =>
+                  x.classList.toggle("on", x === b),
+                );
+                zapisz();
+              };
+            });
+          }
+          if (z.typ === "dwie") {
+            const wyb = new Set(a || []);
+            el.querySelectorAll(".opt").forEach((b) => {
+              b.classList.toggle("on", wyb.has(b.dataset.k));
+              b.onclick = () => {
+                const k = b.dataset.k;
+                if (wyb.has(k)) wyb.delete(k);
+                else {
+                  if (wyb.size >= 2) return;
+                  wyb.add(k);
+                }
+                b.classList.toggle("on", wyb.has(k));
+                A[z.nr] = [...wyb].sort();
+                zapisz();
+              };
+            });
+          }
+          if (z.typ === "pf") {
+            const t = a || [null, null];
+            el.querySelectorAll(".pf").forEach((r) => {
+              const i = +r.dataset.i;
+              r.querySelectorAll(".opt").forEach((b) => {
+                b.classList.toggle("on", t[i] === b.dataset.k);
+                b.onclick = () => {
+                  t[i] = b.dataset.k;
+                  A[z.nr] = t.slice();
+                  r.querySelectorAll(".opt").forEach((x) =>
+                    x.classList.toggle("on", x === b),
+                  );
+                  zapisz();
+                };
+              });
+            });
+          }
+          if (z.typ === "abc_uzas") {
+            const t = a || { l: null, u: null };
+            [
+              ["lit", "l"],
+              ["uz", "u"],
+            ].forEach(([c, p]) => {
+              el.querySelectorAll(`.${c} .opt`).forEach((b) => {
+                b.classList.toggle("on", t[p] === b.dataset.k);
+                b.onclick = () => {
+                  t[p] = b.dataset.k;
+                  A[z.nr] = { ...t };
+                  el.querySelectorAll(`.${c} .opt`).forEach((x) =>
+                    x.classList.toggle("on", x === b),
+                  );
+                  zapisz();
+                };
+              });
+            });
+          }
+          if (z.typ === "uzupelnij" || z.typ === "otwarte") {
+            const i = el.querySelector("input,textarea");
+            i.value = a || "";
+            i.oninput = () => {
+              A[z.nr] = i.value;
+              zapisz();
+            };
+          }
+        });
+        licz();
+      }
+      function pelne(z) {
+        const a = A[z.nr];
+        if (a == null) return false;
+        if (z.typ === "dwie") return a.length === 2;
+        if (z.typ === "pf") return a[0] && a[1];
+        if (z.typ === "abc_uzas") return a.l && a.u;
+        if (typeof a === "string") return a.trim() !== "";
+        return true;
+      }
+      function licz() {
+        const n = Z.filter(pelne).length;
+        document.getElementById("cnt").textContent =
+          `Odpowiedzi: ${n} z ${Z.length}`;
+      }
+      function tekst() {
+        const d = new Date().toLocaleString("pl-PL");
+        const r = [
+          `SPRAWDZIAN LOGARYTMY 1.10 (Nowa Era), ${d}`,
+          `Odpowiedzi: ${Z.filter(pelne).length} z ${Z.length}`,
+          "",
+        ];
+        Z.forEach((z) => {
+          const a = A[z.nr];
+          let s;
+          if (a == null || a === "" || (Array.isArray(a) && !a.length))
+            s = "(brak)";
+          else if (z.typ === "dwie") s = a.join(", ");
+          else if (z.typ === "pf")
+            s = a.map((x, i) => `${i + 1}) ${x || "?"}`).join(", ");
+          else if (z.typ === "abc_uzas") s = `${a.l || "?"}${a.u || "?"}`;
+          else s = String(a).trim();
+          r.push(
+            z.typ === "otwarte" ? `Zad ${z.nr}:\n${s}\n` : `Zad ${z.nr}: ${s}`,
+          );
+        });
+        return r.join("\n");
+      }
+      document.getElementById("gotowe").onclick = async () => {
+        const t = tekst(),
+          w = document.getElementById("wynik"),
+          ta = document.getElementById("tekst"),
+          info = document.getElementById("info");
+        ta.value = t;
+        w.style.display = "block";
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(t);
+          ok = true;
+        } catch (e) {}
+        info.textContent = ok
+          ? "Skopiowane. Wklej tacie w wiadomości."
+          : "Zaznacz tekst poniżej, skopiuj i wklej tacie.";
+        if (navigator.share) {
+          try {
+            await navigator.share({ text: t });
+          } catch (e) {}
+        }
+      };
+      const OPT = {
+        delimiters: [{ left: "$", right: "$", display: false }],
+        throwOnError: false,
+      };
+      window.addEventListener("DOMContentLoaded", () => {
+        rysuj();
+        const r = () => {
+          if (window.renderMathInElement)
+            renderMathInElement(document.getElementById("lista"), OPT);
+          else setTimeout(r, 50);
+        };
+        r();
+      });
+    </script>
+  </body>
+</html>
