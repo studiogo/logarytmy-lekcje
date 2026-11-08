@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schody potęg</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --tx: #1d1d1f;
+        --mut: #666;
+        --card: #fff;
+        --line: #e4e1da;
+        --acc: #2f6fdb;
+        --half: #e8890c;
+        --neg: #7b4fd0;
+        --ok: #1d8a4a;
+        --bad: #c62f2f;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #161618;
+          --tx: #ececec;
+          --mut: #a0a0a0;
+          --card: #202023;
+          --line: #34343a;
+          --acc: #6b9cff;
+          --half: #ffaa3b;
+          --neg: #a98bff;
+          --ok: #4cc27e;
+          --bad: #ff6b6b;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          17px/1.55 -apple-system,
+          system-ui,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+      }
+      main {
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin: 0.4em 0 0.2em;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 0 0 0.5em;
+      }
+      .lead {
+        color: var(--mut);
+        margin: 0 0 1.2em;
+      }
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 0 0 18px;
+      }
+      .nr {
+        display: inline-block;
+        background: var(--acc);
+        color: #fff;
+        border-radius: 99px;
+        padding: 0 10px;
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+      }
+      .box {
+        border-left: 4px solid var(--acc);
+        padding: 6px 12px;
+        margin: 12px 0;
+        background: color-mix(in srgb, var(--acc) 8%, transparent);
+        border-radius: 0 8px 8px 0;
+      }
+      .ladder {
+        margin: 14px 0 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        align-items: center;
+        gap: 8px;
+      }
+      .st {
+        text-align: right;
+        font-weight: 700;
+        color: var(--mut);
+        font-size: 0.95rem;
+      }
+      .bar {
+        background: color-mix(in srgb, var(--acc) 16%, transparent);
+        border: 2px solid var(--acc);
+        border-radius: 8px;
+        padding: 5px 8px;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+      }
+      .bar .ap {
+        color: var(--mut);
+        font-size: 0.82rem;
+      }
+      .row.half .bar {
+        border-color: var(--half);
+        background: color-mix(in srgb, var(--half) 16%, transparent);
+        border-style: dashed;
+      }
+      .row.half .st {
+        color: var(--half);
+      }
+      .row.neg .bar {
+        border-color: var(--neg);
+        background: color-mix(in srgb, var(--neg) 14%, transparent);
+      }
+      .row.neg .st {
+        color: var(--neg);
+      }
+      .row.hl .bar {
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--half) 45%, transparent);
+      }
+      .cap {
+        font-size: 0.85rem;
+        color: var(--mut);
+        margin: 2px 0 0;
+      }
+      .q {
+        border-top: 1px dashed var(--line);
+        padding-top: 12px;
+        margin-top: 12px;
+      }
+      .q .t {
+        margin-bottom: 8px;
+      }
+      .q .in {
+        display: flex;
+        gap: 8px;
+      }
+      .q input {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 1.05rem;
+        padding: 9px 10px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--tx);
+      }
+      .q button {
+        flex: 0 0 auto;
+        font-size: 1rem;
+        padding: 9px 16px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--acc);
+        color: #fff;
+        font-weight: 600;
+      }
+      .q .fb {
+        margin-top: 8px;
+        display: none;
+      }
+      .q .fb.ok {
+        display: block;
+        color: var(--ok);
+      }
+      .q .fb.bad {
+        display: block;
+        color: var(--bad);
+      }
+      .q .fb .why {
+        color: var(--tx);
+        display: block;
+        margin-top: 4px;
+      }
+      .score {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 12px;
+      }
+    .tb{width:100%;border-collapse:collapse;font-size:.88rem;margin:8px 0}
+      .tb th,.tb td{border:1px solid var(--line);padding:5px 4px;text-align:center;vertical-align:middle}
+      .tb th{font-size:.78rem;color:var(--mut);font-weight:600}
+      h3{font-size:1.02rem;margin:18px 0 6px}
+    .board-wrap{margin:10px 0}
+      .board{background:#24382c;border:9px solid #7a5230;border-radius:10px;color:#f3f1e6;font-family:"Chalkboard SE","Chalkboard","Comic Sans MS",cursive;padding:12px 10px;min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px;text-align:center;font-size:1.3rem}
+      .board .ctx{opacity:.55;font-size:.85rem}
+      .board .ln.nowa{opacity:1;animation:poj .6s ease}
+      @keyframes poj{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+      .board .katex{font-size:1.15em}
+      .b{color:#8fd3ff}.r{color:#ff9fb0}.y{color:#ffe27a}
+      .lab{display:inline-block;font-size:.8rem;border:1px solid currentColor;border-radius:6px;padding:0 6px;margin:2px}
+      .tile{display:inline-block;border:2px solid #8fd3ff;color:#8fd3ff;border-radius:6px;min-width:34px;padding:1px 6px;margin:2px}
+      .tile.h{border-style:dashed}
+      .pile{display:inline-block;border:2px dotted #ffe27a;border-radius:8px;padding:3px;margin:3px}
+      .small{font-size:.85rem}
+      .say{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px}
+      .nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+      .nav button{font-size:1rem;padding:9px 16px;border:0;border-radius:10px;background:var(--acc);color:#fff;font-weight:600}
+      .nav button:disabled{opacity:.35}
+      .nav .ile{color:var(--mut);font-size:.9rem}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Schody potęg</h1>
+      <p class="lead">
+        Logarytmy z pierwiastkami na jednym obrazku. Około 15 minut. Wynik
+        ułamkowy wpisuj jak <b>3/2</b>, ujemny jak <b>-1/2</b>.
+      </p>
+
+      <section>
+        <span class="nr">Tablica 1</span>
+        <h2>Skąd się bierze 2 w $\log_2$</h2>
+        <div class="board" data-b="A"></div>
+        <h3>Teraz ty</h3>
+        <div class="qs" data-q="0a"></div>
+      </section>
+
+      <section>
+        <span class="nr">Tablica 2</span>
+        <h2>Jak policzyć $\log_2 \sqrt8$</h2>
+        <div class="board" data-b="B"></div>
+        <h3>Teraz ty</h3>
+        <div class="qs" data-q="0b"></div>
+        <div class="qs" data-q="0c"></div>
+        <p class="cap">Niżej to samo na obrazku schodów i trudniejsze przypadki: liczba przed pierwiastkiem, pierwiastek trzeciego stopnia, ułamki.</p>
+      </section>
+
+      <section>
+        <span class="nr">1</span>
+        <h2>Schody trójki</h2>
+        <p>
+          Stoisz na dole schodów, na liczbie 1. Każdy stopień w górę to
+          <b>razy 3</b>.
+        </p>
+        <div id="L1"></div>
+        <div class="box">
+          Logarytm pyta tylko o jedno: <b>na którym stopniu stoi liczba?</b
+          ><br />$\log_3 27$ czytasz: „na którym stopniu schodów trójki stoi
+          27?”. Na trzecim, więc $\log_3 27 = 3$.
+        </div>
+        <p>
+          Mała liczba na dole logarytmu mówi, które to schody. Liczba obok mówi,
+          czego szukasz. Wynik to numer stopnia.
+        </p>
+        <div class="qs" data-q="1"></div>
+      </section>
+
+      <section>
+        <span class="nr">2</span>
+        <h2>Pół stopnia</h2>
+        <p>
+          Z 1 na 3 da się wejść dwoma <b>takimi samymi</b> pół-krokami. Każdy
+          pół-krok to mnożenie przez tę samą liczbę. Jaka to liczba?
+        </p>
+        <p>
+          Taka, która razy ona sama daje 3. To dokładnie $\sqrt{3}$, bo
+          $\sqrt{3}\cdot\sqrt{3} = 3$.
+        </p>
+        <div id="L2"></div>
+        <p class="cap">
+          $\sqrt{3}\approx 1{,}73$ leży między 1 a 3, w połowie drogi na
+          pierwszy stopień.
+        </p>
+        <div class="box">
+          $\sqrt{3}$ stoi na stopniu $\tfrac12$. Dlatego $\log_3 \sqrt{3} =
+          \tfrac12$.<br />To samo znasz z potęg: $\sqrt{3} = 3^{\frac12}$.
+          Wykładnik to numer stopnia.
+        </div>
+        <div class="qs" data-q="2"></div>
+      </section>
+
+      <section>
+        <span class="nr">3</span>
+        <h2>Pół stopnia nad dowolnym stopniem</h2>
+        <p>
+          Pół-krok w górę z każdego miejsca to znowu razy $\sqrt{3}$. Z 3
+          (stopień 1) robisz pół-krok i stoisz na $3\sqrt{3}$, czyli na stopniu
+          $1\tfrac12 = \tfrac32$.
+        </p>
+        <div id="L3"></div>
+        <div class="box">
+          Liczba przed pierwiastkiem mówi, z którego stopnia ruszasz.
+          Pierwiastek dokłada pół stopnia.<br />$3\sqrt{3}$: 3 to stopień 1,
+          plus pół, razem $\tfrac32$. Więc $\log_3 3\sqrt3 = \tfrac32$.<br />$9\sqrt{3}$:
+          9 to stopień 2, plus pół, razem $\tfrac52$.
+        </div>
+        <p class="cap">
+          Tak samo na schodach dwójki: $4\sqrt2$ to stopień 2 plus pół, czyli
+          $\tfrac52$.
+        </p>
+        <div class="qs" data-q="3"></div>
+      </section>
+
+      <section>
+        <span class="nr">4</span>
+        <h2>Pierwiastek z dużej liczby</h2>
+        <p>
+          $\sqrt{27}$ to liczba, która razy ona sama daje 27. Na schodach: dwa
+          <b>takie same</b> skoki z 1 mają doprowadzić na stopień 3. Każdy skok
+          to połowa z 3, czyli $\tfrac32$ stopnia.
+        </p>
+        <div id="L4"></div>
+        <div class="box">
+          Pierwiastek kwadratowy <b>dzieli numer stopnia na pół</b>.<br />27
+          stoi na stopniu 3, więc $\sqrt{27}$ stoi na stopniu $\tfrac32$.<br />81
+          stoi na stopniu 4, więc $\sqrt{81}$ stoi na stopniu 2. Sprawdzenie:
+          $\sqrt{81} = 9$, a 9 rzeczywiście stoi na stopniu 2.
+        </div>
+        <p class="cap">
+          $\sqrt{27}$ i $3\sqrt3$ stoją na tym samym stopniu $\tfrac32$. To ta
+          sama liczba, około 5,2.
+        </p>
+        <p>
+          Przepis: najpierw znajdź stopień liczby pod pierwiastkiem, potem
+          podziel go na pół.
+        </p>
+        <div class="qs" data-q="4"></div>
+      </section>
+
+      <section>
+        <span class="nr">5</span>
+        <h2>Trzecia część stopnia</h2>
+        <p>
+          $\sqrt[3]{2}$ to liczba, która trzy razy przez siebie pomnożona daje
+          2. Na schodach dwójki: <b>trzy</b> takie same skoki z 1 prowadzą na
+          stopień 1. Jeden skok to $\tfrac13$ stopnia.
+        </p>
+        <div class="box">
+          Pierwiastek trzeciego stopnia
+          <b>dzieli numer stopnia przez 3</b>.<br />$\log_2 \sqrt[3]{2} =
+          \tfrac13$.<br />$\sqrt[3]{4}$: 4 stoi na stopniu 2, dzielisz przez 3,
+          więc $\log_2 \sqrt[3]{4} = \tfrac23$.
+        </div>
+        <p class="cap">
+          Mała liczba przy pierwiastku mówi, na ile części dzielisz numer
+          stopnia.
+        </p>
+        <div class="qs" data-q="5"></div>
+      </section>
+
+      <section>
+        <span class="nr">6</span>
+        <h2>Schody w dół</h2>
+        <p>
+          Stopień w dół to <b>podzielić przez 3</b>. Pod jedynką są ułamki i
+          numery ujemne.
+        </p>
+        <div id="L6"></div>
+        <div class="box">
+          „Jedynka przez liczbę” stoi tyle stopni <b>pod</b> jedynką, ile ta
+          liczba stoi nad nią.<br />$\sqrt{3}$ stoi na $\tfrac12$, więc
+          $\tfrac{1}{\sqrt3}$ stoi na $-\tfrac12$.<br />$\sqrt{27}$ stoi na
+          $\tfrac32$, więc $\tfrac{1}{\sqrt{27}}$ stoi na $-\tfrac32$.
+        </div>
+        <p>Przepis: znajdź stopień mianownika i dopisz minus.</p>
+        <div class="qs" data-q="6"></div>
+      </section>
+
+      <section>
+        <span class="nr">7</span>
+        <h2>Sprawdzian schodów</h2>
+        <p>
+          Bez podpowiedzi. Przy każdym zadaniu trzy pytania: które schody? na
+          którym stopniu stoi liczba bez pierwiastka? co robi pierwiastek, minus
+          albo liczba z przodu?
+        </p>
+        <div class="qs" data-q="7"></div>
+        <div class="score" id="score"></div>
+      </section>
+    </main>
+
+    <script>
+      /* Lekcja „Schody potęg”: logarytm z pierwiastkiem jako numer stopnia na schodach potęg. */
+      const LAD = {
+        L1: [
+          ["4", "81", "", ""],
+          ["3", "27", "", ""],
+          ["2", "9", "", ""],
+          ["1", "3", "", ""],
+          ["0", "1", "", ""],
+        ],
+        L2: [
+          ["2", "9", "", ""],
+          ["1", "3", "", ""],
+          ["\\tfrac12", "\\sqrt3", "≈ 1,73", "half hl"],
+          ["0", "1", "", ""],
+        ],
+        L3: [
+          ["3", "27", "", ""],
+          ["\\tfrac52", "9\\sqrt3", "≈ 15,6", "half hl"],
+          ["2", "9", "", ""],
+          ["\\tfrac32", "3\\sqrt3", "≈ 5,20", "half hl"],
+          ["1", "3", "", ""],
+          ["\\tfrac12", "\\sqrt3", "≈ 1,73", "half"],
+          ["0", "1", "", ""],
+        ],
+        L4: [
+          ["4", "81", "", ""],
+          ["3", "27", "", ""],
+          ["2", "9 = \\sqrt{81}", "", "hl"],
+          ["\\tfrac32", "\\sqrt{27} = 3\\sqrt3", "", "half hl"],
+          ["1", "3", "", ""],
+          ["0", "1", "", ""],
+        ],
+        L6: [
+          ["1", "3", "", ""],
+          ["\\tfrac12", "\\sqrt3", "≈ 1,73", "half"],
+          ["0", "1", "", ""],
+          ["-\\tfrac12", "\\tfrac{1}{\\sqrt3}", "≈ 0,58", "neg hl"],
+          ["-1", "\\tfrac13", "", "neg"],
+          ["-\\tfrac32", "\\tfrac{1}{\\sqrt{27}}", "≈ 0,19", "neg hl"],
+          ["-2", "\\tfrac19", "", "neg"],
+        ],
+      };
+
+      /* tablice: każdy krok to linie na tablicy (ostatnia jest nowa) i komentarz nauczyciela */
+      const B_ = (x) => `\\textcolor{#8fd3ff}{${x}}`, R_ = (x) => `\\textcolor{#ff9fb0}{${x}}`, Y_ = (x) => `\\textcolor{#ffe27a}{${x}}`;
+      const T = (x) => `<span class="tile">${x}</span>`, TH = (x) => `<span class="tile h">${x}</span>`;
+      const BOARDS = {
+        A: [
+          { add: `$${B_(2)}\\cdot${B_(2)}\\cdot${B_(2)} = ${Y_(8)}$`,
+            say: "Mnożę dwójkę trzy razy. Wychodzi 8." },
+          { add: `$${B_(2)}^{${R_(3)}} = ${Y_(8)}$<br><span class="lab b">co mnożę</span><span class="lab r">ile razy</span><span class="lab y">wynik</span>`,
+            say: "To samo, krócej. Każdy kolor ma swoją rolę." },
+          { ctx: `$${B_(2)}^{${R_(3)}} = ${Y_(8)}$`, add: `$${B_(2)}^{${R_(3)}} = ${Y_("?")}$<br><span class="small">potęga</span>`,
+            say: "Zakrywam wynik. Pytanie: ile wyjdzie? To zwykła potęga." },
+          { ctx: `$${B_(2)}^{${R_(3)}} = ${Y_(8)}$`, add: `$${B_("?")}^{${R_(3)}} = ${Y_(8)}$<br><span class="small">pierwiastek</span>`,
+            say: "Zakrywam to, co mnożę. Pytanie: co mnożę? To pierwiastek." },
+          { ctx: `$${B_(2)}^{${R_(3)}} = ${Y_(8)}$`, add: `$${B_(2)}^{${R_("?")}} = ${Y_(8)}$<br><span class="small">logarytm</span>`,
+            say: "Zakrywam, ile razy. Pytanie: ile razy mnożę? To jest logarytm." },
+          { add: `$${B_(2)}^{${R_("?")}} = ${Y_(8)}$<br>↓<br>$\\log_{${B_(2)}} ${Y_(8)} = ${R_("?")}$`,
+            say: "Tak się zapisuje to pytanie. Dwójka na dole to ta sama dwójka, którą mnożę." },
+          { add: `$\\log_{${B_(2)}} ${Y_(8)} = ${R_(3)}$<br><span class="small">bo</span> $${B_(2)}\\cdot${B_(2)}\\cdot${B_(2)} = ${Y_(8)}$`,
+            say: "Trzy dwójki dają 8. Więc log₂ 8 = 3." },
+          { add: `$\\log_{${B_(3)}} ${Y_(81)} = ${R_(4)}$<br><span class="small">bo</span> $${B_(3)}\\cdot${B_(3)}\\cdot${B_(3)}\\cdot${B_(3)} = ${Y_(81)}$`,
+            say: "Na dole 3, więc mnożę trójki. Cztery trójki dają 81." }
+        ],
+        B: [
+          { add: `$\\log_{${B_(2)}} ${Y_("\\sqrt8")} = ${R_("?")}$<br><span class="small">czyli</span><br>$${B_(2)}^{${R_("?")}} = ${Y_("\\sqrt8")}$`,
+            say: "Pytanie: ile razy mnożę dwójkę, żeby wyszło √8?" },
+          { add: `$\\sqrt8\\cdot\\sqrt8 = 8$`,
+            say: "√8 to liczba, która razy ona sama daje 8." },
+          { ctx: `Najpierw łatwiejsze: $\\sqrt{16}$`, add: `$16 =$ ${T(2)}${T(2)}${T(2)}${T(2)}`,
+            say: "16 to cztery dwójki." },
+          { ctx: `$\\sqrt{16}\\cdot\\sqrt{16} = 16$`, add: `<span class="pile">${T(2)}${T(2)}</span> <span class="pile">${T(2)}${T(2)}</span><br>$\\sqrt{16} = 2\\cdot2 = 4$ ✓`,
+            say: "Dzielę dwójki na dwie równe kupki. W każdej 2 · 2 = 4. Zgadza się: √16 = 4." },
+          { add: `Pierwiastek ma<br><b>połowę dwójek</b>`,
+            say: "Wniosek: w pierwiastku jest połowa dwójek." },
+          { ctx: `Teraz $\\sqrt8$`, add: `$8 =$ ${T(2)}${T(2)}${T(2)}`,
+            say: "8 to trzy dwójki. Trzech nie podzielę równo na dwie kupki." },
+          { add: `${T(2)} $=$ ${TH("√2")}${TH("√2")}<br><span class="small">bo</span> $\\sqrt2\\cdot\\sqrt2 = 2$`,
+            say: "Tnę jedną dwójkę na dwie równe części. Taka połowa to √2, około 1,41." },
+          { ctx: `$\\sqrt8\\cdot\\sqrt8 = 8$`, add: `<span class="pile">${T(2)}${TH("√2")}</span> <span class="pile">${T(2)}${TH("√2")}</span>`,
+            say: "Teraz kupki są równe. W każdej: cała dwójka i pół dwójki." },
+          { add: `$\\log_{${B_(2)}} ${Y_("\\sqrt8")} = ${R_("\\tfrac32")}$`,
+            say: "Półtorej dwójki. Więc log₂ √8 = 3/2." },
+          { ctx: `Sprawdzenie na kalkulatorze`, add: `$2\\cdot1{,}41 = 2{,}83$<br>$\\sqrt8 = 2{,}83$ ✓`,
+            say: "Cała dwójka razy pół dwójki daje tyle samo co √8." }
+        ]
+      };
+      function drawBoard(el) {
+        const steps = BOARDS[el.dataset.b];
+        const wrap = document.createElement("div");
+        wrap.className = "board-wrap";
+        el.replaceWith(wrap);
+        wrap.innerHTML = `<div class="board"></div><div class="say"></div><div class="nav"><button type="button" class="wst">Wstecz</button><span class="ile"></span><button type="button" class="dal">Dalej</button></div>`;
+        const bd = wrap.querySelector(".board"), say = wrap.querySelector(".say"), ile = wrap.querySelector(".ile");
+        const wst = wrap.querySelector(".wst"), dal = wrap.querySelector(".dal");
+        let n = 0;
+        const pokaz = () => {
+          bd.innerHTML = (steps[n].ctx ? `<div class="ctx">${steps[n].ctx}</div>` : "") + `<div class="ln nowa">${steps[n].add}</div>`;
+          say.textContent = steps[n].say;
+          ile.textContent = `Krok ${n + 1} z ${steps.length}`;
+          wst.disabled = n === 0; dal.disabled = n === steps.length - 1;
+          if (window.renderMathInElement) renderMathInElement(bd, OPT);
+        };
+        wst.onclick = () => { if (n > 0) { n--; pokaz(); } };
+        dal.onclick = () => { if (n < steps.length - 1) { n++; pokaz(); } };
+        wrap.pokaz = pokaz;
+        pokaz();
+      }
+      /* pytania: [tekst, odpowiedź, wyjaśnienie, wyrażenie do sprawdzenia w Pythonie] */
+      const Q = {
+        "0a": [
+          [
+            "$\\log_2 16$",
+            "4",
+            "$2 \\cdot 2 \\cdot 2 \\cdot 2 = 16$, cztery dwójki.",
+            "math.log(16,2)",
+          ],
+          ["$\\log_2 2$", "1", "Jedna dwójka to już 2.", "math.log(2,2)"],
+        ],
+        "0b": [
+          [
+            "$\\log_2 \\sqrt{256}$",
+            "4",
+            "256 to 8 dwójek, pierwiastek ma połowę: 4. Sprawdzenie: $\\sqrt{256} = 16 = 2 \\cdot 2 \\cdot 2 \\cdot 2$.",
+            "math.log(math.sqrt(256),2)",
+          ],
+          [
+            "$\\log_3 \\sqrt{81}$",
+            "2",
+            "Tu liczysz trójki: $81 = 3 \\cdot 3 \\cdot 3 \\cdot 3$, cztery trójki, połowa to 2. Sprawdzenie: $\\sqrt{81} = 9 = 3 \\cdot 3$.",
+            "math.log(math.sqrt(81),3)",
+          ],
+        ],
+        "0c": [
+          [
+            "$\\log_2 \\sqrt{32}$",
+            "5/2",
+            "32 to 5 dwójek, połowa z 5 to $\\tfrac52$.",
+            "math.log(math.sqrt(32),2)",
+          ],
+          [
+            "$\\log_3 \\sqrt{27}$",
+            "3/2",
+            "27 to 3 trójki, połowa to $\\tfrac32$.",
+            "math.log(math.sqrt(27),3)",
+          ],
+          [
+            "$\\log_2 \\sqrt2$",
+            "1/2",
+            "2 to jedna dwójka, połowa to $\\tfrac12$.",
+            "math.log(math.sqrt(2),2)",
+          ],
+        ],
+        1: [
+          [
+            "$\\log_3 9$",
+            "2",
+            "9 stoi na stopniu 2: $1 \\to 3 \\to 9$, dwa razy razy 3.",
+            "math.log(9,3)",
+          ],
+          ["$\\log_3 81$", "4", "81 stoi na stopniu 4.", "math.log(81,3)"],
+          [
+            "$\\log_3 1$",
+            "0",
+            "1 stoi na samym dole, na stopniu 0.",
+            "math.log(1,3)",
+          ],
+        ],
+        2: [
+          [
+            "$\\log_3 \\sqrt3$",
+            "1/2",
+            "$\\sqrt3$ to pół stopnia: $\\sqrt3\\cdot\\sqrt3 = 3$.",
+            "math.log(math.sqrt(3),3)",
+          ],
+          [
+            "$\\log_2 \\sqrt2$",
+            "1/2",
+            "Schody dwójki, a $\\sqrt2\\cdot\\sqrt2 = 2$, więc pół stopnia.",
+            "math.log(math.sqrt(2),2)",
+          ],
+          [
+            "$\\log_5 \\sqrt5$",
+            "1/2",
+            "Schody piątki, $\\sqrt5$ to pół stopnia.",
+            "math.log(math.sqrt(5),5)",
+          ],
+        ],
+        3: [
+          [
+            "$\\log_3 9\\sqrt3$",
+            "5/2",
+            "9 to stopień 2, pierwiastek dokłada pół: $2 + \\tfrac12 = \\tfrac52$.",
+            "math.log(9*math.sqrt(3),3)",
+          ],
+          [
+            "$\\log_2 2\\sqrt2$",
+            "3/2",
+            "2 to stopień 1, plus pół: $\\tfrac32$.",
+            "math.log(2*math.sqrt(2),2)",
+          ],
+          [
+            "$\\log_2 8\\sqrt2$",
+            "7/2",
+            "8 to stopień 3 ($2\\cdot2\\cdot2$), plus pół: $\\tfrac72$.",
+            "math.log(8*math.sqrt(2),2)",
+          ],
+        ],
+        4: [
+          [
+            "$\\log_2 \\sqrt8$",
+            "3/2",
+            "8 stoi na stopniu 3, pierwiastek dzieli na pół: $\\tfrac32$.",
+            "math.log(math.sqrt(8),2)",
+          ],
+          [
+            "$\\log_2 \\sqrt{16}$",
+            "2",
+            "16 stoi na stopniu 4, połowa to 2. Sprawdzenie: $\\sqrt{16} = 4$, a 4 stoi na stopniu 2.",
+            "math.log(math.sqrt(16),2)",
+          ],
+          [
+            "$\\log_2 \\sqrt{32}$",
+            "5/2",
+            "32 stoi na stopniu 5, połowa to $\\tfrac52$.",
+            "math.log(math.sqrt(32),2)",
+          ],
+        ],
+        5: [
+          [
+            "$\\log_3 \\sqrt[3]{3}$",
+            "1/3",
+            "3 stoi na stopniu 1, dzielisz przez 3: $\\tfrac13$.",
+            "math.log(3**(1/3),3)",
+          ],
+          [
+            "$\\log_3 \\sqrt[3]{9}$",
+            "2/3",
+            "9 stoi na stopniu 2, dzielisz przez 3: $\\tfrac23$.",
+            "math.log(9**(1/3),3)",
+          ],
+          [
+            "$\\log_2 \\sqrt[3]{16}$",
+            "4/3",
+            "16 stoi na stopniu 4, dzielisz przez 3: $\\tfrac43$.",
+            "math.log(16**(1/3),2)",
+          ],
+        ],
+        6: [
+          [
+            "$\\log_3 \\tfrac13$",
+            "-1",
+            "3 stoi na stopniu 1, więc $\\tfrac13$ na $-1$.",
+            "math.log(1/3,3)",
+          ],
+          [
+            "$\\log_2 \\tfrac{1}{\\sqrt2}$",
+            "-1/2",
+            "$\\sqrt2$ stoi na $\\tfrac12$, dopisujesz minus: $-\\tfrac12$.",
+            "math.log(1/math.sqrt(2),2)",
+          ],
+          [
+            "$\\log_2 \\tfrac{1}{\\sqrt8}$",
+            "-3/2",
+            "8 na stopniu 3, $\\sqrt8$ na $\\tfrac32$, minus: $-\\tfrac32$.",
+            "math.log(1/math.sqrt(8),2)",
+          ],
+        ],
+        7: [
+          [
+            "$\\log_7 \\sqrt7$",
+            "1/2",
+            "Pół stopnia.",
+            "math.log(math.sqrt(7),7)",
+          ],
+          [
+            "$\\log_5 5\\sqrt5$",
+            "3/2",
+            "5 to stopień 1, plus pół.",
+            "math.log(5*math.sqrt(5),5)",
+          ],
+          [
+            "$\\log_3 \\sqrt{81}$",
+            "2",
+            "81 na stopniu 4, połowa to 2.",
+            "math.log(math.sqrt(81),3)",
+          ],
+          [
+            "$\\log_2 16\\sqrt2$",
+            "9/2",
+            "16 to stopień 4, plus pół: $\\tfrac92$.",
+            "math.log(16*math.sqrt(2),2)",
+          ],
+          [
+            "$\\log_2 \\sqrt[3]{4}$",
+            "2/3",
+            "4 na stopniu 2, dzielisz przez 3.",
+            "math.log(4**(1/3),2)",
+          ],
+          [
+            "$\\log_3 \\tfrac{1}{\\sqrt3}$",
+            "-1/2",
+            "$\\sqrt3$ na $\\tfrac12$, minus.",
+            "math.log(1/math.sqrt(3),3)",
+          ],
+          [
+            "$\\log_5 \\tfrac{1}{\\sqrt{125}}$",
+            "-3/2",
+            "125 na stopniu 3, pierwiastek: $\\tfrac32$, minus: $-\\tfrac32$.",
+            "math.log(1/math.sqrt(125),5)",
+          ],
+          [
+            "$\\log \\sqrt{10}$",
+            "1/2",
+            "Bez małej liczby na dole to schody dziesiątki. $\\sqrt{10}$ to pół stopnia.",
+            "math.log10(math.sqrt(10))",
+          ],
+        ],
+      };
+      function tex(s) {
+        return "$" + s + "$";
+      }
+      function drawLadder(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rows = LAD[id],
+          n = rows.length;
+        el.className = "ladder";
+        el.innerHTML =
+          rows
+            .map((r, i) => {
+              const w = 45 + Math.round((55 * (n - 1 - i)) / (n - 1 || 1));
+              return `<div class="row ${r[3]}"><div class="st">${tex(r[0])}</div><div class="bar" style="width:${w}%"><span>${tex(r[1])}</span><span class="ap">${r[2]}</span></div></div>`;
+            })
+            .join("") +
+          `<p class="cap">Po lewej numer stopnia, na pasku liczba, która na nim stoi.</p>`;
+      }
+      function val(s) {
+        s = String(s)
+          .trim()
+          .replace(/\s+/g, "")
+          .replace(/,/g, ".")
+          .replace(/[−–]/g, "-");
+        const m = s.match(/^(-?)(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/);
+        if (m) {
+          const d = parseFloat(m[3]);
+          if (!d) return NaN;
+          return ((m[1] ? -1 : 1) * parseFloat(m[2])) / d;
+        }
+        if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+        return NaN;
+      }
+      const done = {};
+      const OPT = {
+        delimiters: [{ left: "$", right: "$", display: false }],
+        throwOnError: false,
+      };
+      function drawQs() {
+        document.querySelectorAll(".qs").forEach((box) => {
+          const k = box.dataset.q;
+          box.innerHTML = Q[k]
+            .map(
+              (q, i) => `<div class="q" data-k="${k}" data-i="${i}">
+      <div class="t">Oblicz ${q[0]}</div>
+      <div class="in"><input autocomplete="off" placeholder="np. 3/2"><button type="button">Sprawdź</button></div>
+      <div class="fb"></div></div>`,
+            )
+            .join("");
+        });
+        document.querySelectorAll(".q").forEach((qe) => {
+          const k = qe.dataset.k,
+            i = +qe.dataset.i,
+            q = Q[k][i];
+          const inp = qe.querySelector("input"),
+            fb = qe.querySelector(".fb");
+          const go = () => {
+            const v = val(inp.value);
+            if (isNaN(v)) {
+              fb.className = "fb bad";
+              fb.textContent = "Wpisz liczbę, np. 2, 3/2 albo -1/2.";
+              return;
+            }
+            const ok = Math.abs(v - val(q[1])) < 1e-9;
+            if (k === "7" && !qe.dataset.done) {
+              qe.dataset.done = "1";
+              done[i] = ok;
+              score();
+            }
+            fb.className = "fb " + (ok ? "ok" : "bad");
+            fb.innerHTML =
+              (ok ? "Dobrze." : "Jeszcze nie. Wynik to " + q[1] + ".") +
+              `<span class="why">${q[2]}</span>`;
+            if (window.renderMathInElement) renderMathInElement(fb, OPT);
+          };
+          qe.querySelector("button").onclick = go;
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") go();
+          });
+        });
+      }
+      function score() {
+        const n = Object.keys(done).length,
+          ok = Object.values(done).filter(Boolean).length;
+        document.getElementById("score").textContent =
+          `Sprawdzian: ${ok} z ${n} dobrze (liczy się pierwsza próba)` +
+          (n === Q[7].length ? ". Koniec." : "");
+      }
+      window.addEventListener("DOMContentLoaded", () => {
+        ["L1", "L2", "L3", "L4", "L6"].forEach(drawLadder);
+        document.querySelectorAll(".board[data-b]").forEach(drawBoard);
+        drawQs();
+        const tryRender = () => {
+          if (window.renderMathInElement) {
+            renderMathInElement(document.body, OPT);
+          } else setTimeout(tryRender, 50);
+        };
+        tryRender();
+      });
+    </script>
+  </body>
+</html>
