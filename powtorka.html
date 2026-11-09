@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Powtórka po sprawdzianie</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --tx: #1d1d1f;
+        --mut: #666;
+        --card: #fff;
+        --line: #e4e1da;
+        --acc: #2f6fdb;
+        --half: #e8890c;
+        --neg: #7b4fd0;
+        --ok: #1d8a4a;
+        --bad: #c62f2f;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #161618;
+          --tx: #ececec;
+          --mut: #a0a0a0;
+          --card: #202023;
+          --line: #34343a;
+          --acc: #6b9cff;
+          --half: #ffaa3b;
+          --neg: #a98bff;
+          --ok: #4cc27e;
+          --bad: #ff6b6b;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          17px/1.55 -apple-system,
+          system-ui,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+      }
+      main {
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin: 0.4em 0 0.2em;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 0 0 0.5em;
+      }
+      .lead {
+        color: var(--mut);
+        margin: 0 0 1.2em;
+      }
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 0 0 18px;
+      }
+      .nr {
+        display: inline-block;
+        background: var(--acc);
+        color: #fff;
+        border-radius: 99px;
+        padding: 0 10px;
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+      }
+      .box {
+        border-left: 4px solid var(--acc);
+        padding: 6px 12px;
+        margin: 12px 0;
+        background: color-mix(in srgb, var(--acc) 8%, transparent);
+        border-radius: 0 8px 8px 0;
+      }
+      .ladder {
+        margin: 14px 0 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        align-items: center;
+        gap: 8px;
+      }
+      .st {
+        text-align: right;
+        font-weight: 700;
+        color: var(--mut);
+        font-size: 0.95rem;
+      }
+      .bar {
+        background: color-mix(in srgb, var(--acc) 16%, transparent);
+        border: 2px solid var(--acc);
+        border-radius: 8px;
+        padding: 5px 8px;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+      }
+      .bar .ap {
+        color: var(--mut);
+        font-size: 0.82rem;
+      }
+      .row.half .bar {
+        border-color: var(--half);
+        background: color-mix(in srgb, var(--half) 16%, transparent);
+        border-style: dashed;
+      }
+      .row.half .st {
+        color: var(--half);
+      }
+      .row.neg .bar {
+        border-color: var(--neg);
+        background: color-mix(in srgb, var(--neg) 14%, transparent);
+      }
+      .row.neg .st {
+        color: var(--neg);
+      }
+      .row.hl .bar {
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--half) 45%, transparent);
+      }
+      .cap {
+        font-size: 0.85rem;
+        color: var(--mut);
+        margin: 2px 0 0;
+      }
+      .q {
+        border-top: 1px dashed var(--line);
+        padding-top: 12px;
+        margin-top: 12px;
+      }
+      .q .t {
+        margin-bottom: 8px;
+      }
+      .q .in {
+        display: flex;
+        gap: 8px;
+      }
+      .q input {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 1.05rem;
+        padding: 9px 10px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--tx);
+      }
+      .q button {
+        flex: 0 0 auto;
+        font-size: 1rem;
+        padding: 9px 16px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--acc);
+        color: #fff;
+        font-weight: 600;
+      }
+      .q .fb {
+        margin-top: 8px;
+        display: none;
+      }
+      .q .fb.ok {
+        display: block;
+        color: var(--ok);
+      }
+      .q .fb.bad {
+        display: block;
+        color: var(--bad);
+      }
+      .q .fb .why {
+        color: var(--tx);
+        display: block;
+        margin-top: 4px;
+      }
+      .score {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 12px;
+      }
+    .tb{width:100%;border-collapse:collapse;font-size:.88rem;margin:8px 0}
+      .tb th,.tb td{border:1px solid var(--line);padding:5px 4px;text-align:center;vertical-align:middle}
+      .tb th{font-size:.78rem;color:var(--mut);font-weight:600}
+      h3{font-size:1.02rem;margin:18px 0 6px}
+    .board-wrap{margin:10px 0}
+      .board{background:#24382c;border:9px solid #7a5230;border-radius:10px;color:#f3f1e6;font-family:"Chalkboard SE","Chalkboard","Comic Sans MS",cursive;padding:12px 10px;min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px;text-align:center;font-size:1.3rem}
+      .board .ctx{opacity:.55;font-size:.85rem}
+      .board .ln.nowa{opacity:1;animation:poj .6s ease}
+      @keyframes poj{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+      .board .katex{font-size:1.15em}
+      .b{color:#8fd3ff}.r{color:#ff9fb0}.y{color:#ffe27a}
+      .lab{display:inline-block;font-size:.8rem;border:1px solid currentColor;border-radius:6px;padding:0 6px;margin:2px}
+      .tile{display:inline-block;border:2px solid #8fd3ff;color:#8fd3ff;border-radius:6px;min-width:34px;padding:1px 6px;margin:2px}
+      .tile.h{border-style:dashed}
+      .pile{display:inline-block;border:2px dotted #ffe27a;border-radius:8px;padding:3px;margin:3px}
+      .small{font-size:.85rem}
+      .say{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px}
+      .nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+      .nav button{font-size:1rem;padding:9px 16px;border:0;border-radius:10px;background:var(--acc);color:#fff;font-weight:600}
+      .nav button:disabled{opacity:.35}
+      .nav .ile{color:var(--mut);font-size:.9rem}
+      .q .hbtn{background:transparent;color:var(--acc);border:2px solid var(--acc);margin:0 0 8px;padding:6px 14px}
+      .hint{display:none;border-left:4px solid var(--half);padding:6px 12px;margin:0 0 8px;background:color-mix(in srgb,var(--half) 10%,transparent);border-radius:0 8px 8px 0}
+      .hint.on{display:block}
+      .board .tile,.board .pile{max-width:100%}
+      .part-cap{margin:0 0 8px}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Powtórka po sprawdzianie</h1>
+      <p class="lead">Zadania, które na sprawdzianie z 8.11 poszły źle albo zostały puste. Cztery części, każda na około 15 minut, możesz robić jedną dziennie. Tablice przeklikujesz przyciskiem Dalej. Wynik ułamkowy wpisuj jak <b>3/2</b>, ujemny jak <b>-1/2</b>.</p>
+      <div id="czesci"></div>
+    </main>
+    <script>
+/* Treść powtórki po sprawdzianie z logarytmów z 8.11.2026: cztery części, tablice krok po kroku, zadanie z podpowiedzią i zadania sprawdzające. */
+/* Źródło błędów: ocena_sprawdzian_ne_2026-11-08.md. Silnik tablic i pytań: schody.html. */
+
+/* pomocnicze: kolory na tablicy i kafelki (te same co w schody.html) */
+const B_ = (x) => `\\textcolor{#8fd3ff}{${x}}`,
+  R_ = (x) => `\\textcolor{#ff9fb0}{${x}}`,
+  Y_ = (x) => `\\textcolor{#ffe27a}{${x}}`;
+const T = (x) => `<span class="tile">${x}</span>`;
+const TH = (x) => `<span class="tile h">${x}</span>`;
+const TN = (n, x = 2) => Array(n).fill(T(x)).join("");
+const PILE = (s) => `<span class="pile">${s}</span>`;
+
+/* części strony: kolejność, tytuł, wstęp, tablice, klucz zadania z podpowiedzią i zadań sprawdzających */
+const CZESCI = [
+  {
+    nr: 1,
+    tytul: "Liczba przed pierwiastkiem i pierwiastek czwartego stopnia",
+    zadania: "zadania 4, 11 i 21a",
+    wstep:
+      "W zadaniach 4 i 11 wpisałeś do wyniku samą liczbę. Logarytm liczy kafelki, z których liczba się składa.",
+    tablice: [
+      ["P1", "Ile dwójek ma $4\\sqrt2$"],
+      ["P2", "Kafelek pocięty na cztery"],
+    ],
+    podpowiedz: "1p",
+    sprawdz: "1s",
+  },
+  {
+    nr: 2,
+    tytul: "Wzory: iloczyn, iloraz, potęga",
+    zadania: "zadania 7, 8, 9, 14, 15, 20, 22, 24 i 26",
+    wstep:
+      "Tu uciekło najwięcej punktów. Każdy wzór bierze się z liczenia kafelków.",
+    tablice: [
+      ["P3", "Mnożenie liczb to dodawanie kafelków"],
+      ["P4", "Plus między logarytmami to mnożenie liczb"],
+      ["P5", "Minus między logarytmami to dzielenie liczb"],
+      ["P6", "Potęga to kilka takich samych paczek"],
+      ["P7", "Jak zapisać zadanie otwarte"],
+    ],
+    podpowiedz: "2p",
+    sprawdz: "2s",
+  },
+  {
+    nr: 3,
+    tytul: "Logarytm bez podstawy i minusy",
+    zadania: "zadania 1, 16, 21b i 23b",
+    wstep:
+      "Trzy miejsca, w których minus albo ułamek trafił w złe miejsce wyniku.",
+    tablice: [
+      ["P8", "„log” bez małej liczby liczy dziesiątki"],
+      ["P9", "Minus w wykładniku to nie liczba ujemna"],
+      ["P10", "Schody połówki"],
+    ],
+    podpowiedz: "3p",
+    sprawdz: "3s",
+  },
+  {
+    nr: 4,
+    tytul: "Różne podstawy i szukanie liczby",
+    zadania: "zadania 12, 17, 18, 25 i 27",
+    wstep:
+      "Gdy podstawa i liczba są różne, rozkładasz obie na te same kafelki.",
+    tablice: [
+      ["P11", "$\\log_9 27$: liczysz trójki"],
+      ["P12", "Szukanie liczby: budujesz ją z kafelków"],
+    ],
+    podpowiedz: "4p",
+    sprawdz: "4s",
+  },
+];
+
+/* tablice: każdy krok to linia kontekstu (ctx, wyblakła), nowa linia (add) i komentarz pod tablicą (say) */
+const BOARDS = {
+  P1: [
+    {
+      add: `$\\log_{${B_(2)}} 4\\sqrt2 = ${R_("?")}$`,
+      say: "Zadanie 11. Logarytm o podstawie 2 pyta: ile dwójek trzeba pomnożyć, żeby wyszło 4√2?",
+    },
+    {
+      add: `$4\\sqrt2 = 4 \\cdot \\sqrt2$`,
+      say: "4√2 to dwie liczby pomnożone przez siebie: 4 i √2. Liczę dwójki w każdej osobno.",
+    },
+    {
+      ctx: `$4\\sqrt2 = 4 \\cdot \\sqrt2$`,
+      add: `$4 =$ ${TN(2)}`,
+      say: "4 to dwie dwójki, bo 2 · 2 = 4. Nie cztery.",
+    },
+    {
+      ctx: `$4\\sqrt2 = 4 \\cdot \\sqrt2$`,
+      add: `$\\sqrt2 =$ ${TH("√2")}<br><span class="small">pół dwójki</span>`,
+      say: "√2 to pół dwójki, bo √2 · √2 = 2.",
+    },
+    {
+      add: `$4\\sqrt2 =$ ${TN(2)}${TH("√2")}<br>$2 + \\tfrac12 = ${R_("\\tfrac52")}$`,
+      say: "Razem dwie całe dwójki i pół. Wynik 5/2.",
+    },
+    {
+      ctx: `Twój wybór: $\\tfrac92$`,
+      add: `$\\tfrac92 = 4 + \\tfrac12$<br>${TN(4)}${TH("√2")} $= 16\\sqrt2$`,
+      say: "9/2 wychodzi, gdy liczbę 4 liczysz jako cztery dwójki. Ale cztery dwójki to 16. Więc 9/2 to log₂ 16√2, inna liczba.",
+    },
+    {
+      add: `Liczba przed pierwiastkiem:<br><b>najpierw rozłóż ją na kafelki</b>`,
+      say: "Zasada: liczby przed pierwiastkiem nie przepisujesz do wyniku. Zamieniasz ją na kafelki podstawy.",
+    },
+    {
+      ctx: `Sprawdzenie na kalkulatorze`,
+      add: `$4\\sqrt2 \\approx 4 \\cdot 1{,}414 \\approx 5{,}66$<br>$2^{\\frac52} \\approx 5{,}66$ ✓`,
+      say: "Kalkulator pokazuje to samo: 2 do potęgi 5/2 to około 5,66.",
+    },
+  ],
+  P2: [
+    {
+      add: `$\\log_{${B_(3)}} \\sqrt[4]{3} = ${R_("?")}$`,
+      say: "Zadanie 4. Podstawa 3, więc liczę trójki.",
+    },
+    {
+      add: `<span class="small">$\\sqrt[4]{3}\\cdot\\sqrt[4]{3}\\cdot\\sqrt[4]{3}\\cdot\\sqrt[4]{3} = 3$</span>`,
+      say: "∜3 to liczba, która cztery razy przez siebie pomnożona daje 3.",
+    },
+    {
+      add: `${T(3)} $=$ ${TH("∜3")}${TH("∜3")}${TH("∜3")}${TH("∜3")}`,
+      say: "Jedną trójkę tnę na cztery równe kawałki. Jeden kawałek to ∜3.",
+    },
+    {
+      add: `${TH("∜3")}<br>$\\log_{${B_(3)}} \\sqrt[4]{3} = ${R_("\\tfrac14")}$`,
+      say: "∜3 to jeden kawałek z czterech, czyli ćwierć trójki. Wynik 1/4.",
+    },
+    {
+      ctx: `Twój wybór: $\\tfrac34$`,
+      add: `${TH("∜3")}${TH("∜3")}${TH("∜3")} $= \\sqrt[4]{27}$`,
+      say: "3/4 to trzy takie kawałki, czyli ∜27. Ty przepisałeś liczbę 3 do licznika. Ale 3 to jedna trójka, jeden kafelek.",
+    },
+    {
+      add: `Pod pierwiastkiem: <b>ile kafelków</b><br>Stopień pierwiastka: <b>na ile części</b>`,
+      say: "Zasada: najpierw policz kafelki liczby pod pierwiastkiem. Potem podziel przez stopień pierwiastka.",
+    },
+    {
+      ctx: `Przykład`,
+      add: `$\\log_{${B_(3)}} \\sqrt[4]{9}$<br>$9 =$ ${TN(2, 3)}<br>$\\tfrac24 = ${R_("\\tfrac12")}$`,
+      say: "Pod pierwiastkiem 9, czyli dwie trójki. Dzielę przez 4: 2/4 to 1/2.",
+    },
+  ],
+  P3: [
+    {
+      add: `$\\log_{${B_(2)}} (16 \\cdot 64) = ${R_("?")}$`,
+      say: "Zadanie 7. Pytanie: ile dwójek ma liczba 16 · 64?",
+    },
+    {
+      add: `$16 =$ ${TN(4)}<br>$64 =$ ${TN(6)}`,
+      say: "16 to cztery dwójki. 64 to sześć dwójek.",
+    },
+    {
+      add: `${PILE(TN(4))}${PILE(TN(6))}<br>$16 \\cdot 64$`,
+      say: "Mnożę 16 przez 64, czyli kładę wszystkie dwójki obok siebie.",
+    },
+    {
+      add: `$4 + 6 = 10$<br>$\\log_{${B_(2)}} (16 \\cdot 64) = ${R_(10)}$`,
+      say: "Liczę kafelki: 4 i 6, razem 10. Przy mnożeniu liczb kafelki się dodaje.",
+    },
+    {
+      ctx: `Twój wybór: 24`,
+      add: `$4 \\cdot 6 = 24$ ✗<br>$2^{24} = 16\\,777\\,216$<br>$16 \\cdot 64 = 1024 = 2^{10}$`,
+      say: "24 wychodzi, gdy mnożysz 4 przez 6. Ale 2 do potęgi 24 to prawie 17 milionów, a 16 · 64 to tylko 1024.",
+    },
+    {
+      add: `$\\log_a (b \\cdot c) = \\log_a b + \\log_a c$<br><span class="small">mnożę liczby → dodaję logarytmy</span>`,
+      say: "To jest wzór z podręcznika, strona 46. Mnożysz liczby, więc dodajesz logarytmy.",
+    },
+    {
+      ctx: `Zadanie 20`,
+      add: `$\\log_3 (9 \\cdot 27)$<br>${TN(2, 3)} + ${TN(3, 3)} $= 5$<br>$\\log_3 9 \\cdot \\log_3 27 = 2 \\cdot 3 = 6$`,
+      say: "Zadanie 20. Lewa strona: 2 trójki i 3 trójki, razem 5. Prawa: 2 razy 3, czyli 6. Równość jest fałszywa, odpowiedź B2.",
+    },
+  ],
+  P4: [
+    {
+      add: `$\\log_{${B_(2)}} 8 + \\log_{${B_(2)}} 4$`,
+      say: "Zadanie 14, pierwsze zdanie. Dwa logarytmy z plusem między nimi.",
+    },
+    {
+      add: `${TN(3)} + ${TN(2)} $= 5$`,
+      say: "8 to trzy dwójki, 4 to dwie. Razem pięć dwójek.",
+    },
+    {
+      add: `5 dwójek $= 32 = 8 \\cdot 4$<br>$\\log_2 8 + \\log_2 4 = \\log_2 32$`,
+      say: "Pięć dwójek to 32, czyli 8 razy 4. Plus między logarytmami to mnożenie liczb.",
+    },
+    {
+      ctx: `Twoja odpowiedź: P`,
+      add: `$\\log_2 12$ ✗<br>$12 = 2 \\cdot 2 \\cdot 3$`,
+      say: "Uznałeś, że wyjdzie log₂ 12, czyli 8 plus 4. Ale 12 nie składa się z samych dwójek. Zdanie jest fałszywe.",
+    },
+    {
+      ctx: `Zadanie 9`,
+      add: `$\\log 20 + \\log 50$<br>$= \\log (20 \\cdot 50)$`,
+      say: "Zadanie 9. Ten sam wzór: plus to mnożenie liczb. „log” bez małej liczby na dole liczy dziesiątki.",
+    },
+    {
+      add: `$20 \\cdot 50 = 1000 =$ ${TN(3, 10)}<br>$\\log 1000 = ${R_(3)}$`,
+      say: "20 razy 50 to 1000. Tysiąc to trzy dziesiątki. Wynik 3.",
+    },
+    {
+      ctx: `Twój wybór: 70`,
+      add: `$20 + 50 = 70$ ✗`,
+      say: "70 to suma samych liczb. Plus między logarytmami nie dodaje liczb, tylko je mnoży.",
+    },
+  ],
+  P5: [
+    {
+      add: `$\\log_{${B_(3)}} 81 - \\log_{${B_(3)}} 3 = 3$ ?`,
+      say: "Zadanie 14, drugie zdanie. Czy to prawda?",
+    },
+    {
+      add: `${TN(4, 3)} $-$ ${T(3)}<br>$=$ ${TN(3, 3)}`,
+      say: "81 to cztery trójki. Zabieram jedną trójkę. Zostają trzy.",
+    },
+    {
+      add: `$4 - 1 = 3$ → <b>P</b>`,
+      say: "Wynik 3, więc zdanie jest prawdziwe. Ty zaznaczyłeś F.",
+    },
+    {
+      add: `Zabieram trójkę = dzielę przez 3<br>$81 : 3 = 27 =$ ${TN(3, 3)}`,
+      say: "Zabrać jeden kafelek to podzielić liczbę przez 3. Zostaje 27, czyli trzy trójki.",
+    },
+    {
+      add: `$\\log_a \\tfrac{b}{c} = \\log_a b - \\log_a c$<br><span class="small">dzielę liczby → odejmuję logarytmy</span>`,
+      say: "Wzór z podręcznika: minus między logarytmami to dzielenie liczb.",
+    },
+    {
+      ctx: `Zadanie 15, twój wybór F`,
+      add: `$\\log_2 6 - \\log_2 3$<br>$= \\log_2 (6 : 3) = \\log_2 2 = 1$<br>$6 - 3 = 3$ ✗`,
+      say: "Tu też dzielisz: 6 przez 3 to 2, a log₂ 2 = 1. Odejmowanie samych liczb, 6 − 3, daje zły wynik.",
+    },
+    {
+      ctx: `Zadanie 15, odpowiedź D`,
+      add: `$\\log 2000 - \\log 2$<br>$= \\log 1000 = 3$`,
+      say: "Tę odpowiedź pominąłeś. 2000 przez 2 to 1000, a tysiąc to trzy dziesiątki. Dobre odpowiedzi: A i D.",
+    },
+    {
+      ctx: `Zadanie 22a`,
+      add: `$\\log_2 \\dfrac{\\sqrt2}{16} = \\tfrac12 - 4 = -\\tfrac72$`,
+      say: "Licznik √2 to pół dwójki. Mianownik 16 to cztery dwójki. Pół minus cztery to minus 7/2.",
+    },
+  ],
+  P6: [
+    {
+      add: `$\\log_{${B_(3)}} 27^{4} = ${R_("?")}$`,
+      say: "Zadanie 8.",
+    },
+    {
+      add: `$27^{4} = 27 \\cdot 27 \\cdot 27 \\cdot 27$`,
+      say: "Do potęgi 4 znaczy: cztery liczby 27 pomnożone przez siebie.",
+    },
+    {
+      add: `$27 =$ ${TN(3, 3)}`,
+      say: "Jedna 27 to trzy trójki.",
+    },
+    {
+      add: `${PILE(TN(3, 3))}${PILE(TN(3, 3))}<br>${PILE(TN(3, 3))}${PILE(TN(3, 3))}<br>$4 \\cdot 3 = ${R_(12)}$`,
+      say: "Cztery paczki po trzy trójki. Razem 12 trójek. Wynik 12.",
+    },
+    {
+      ctx: `Twój wybór: 81`,
+      add: `$3^{4} = 81$ ✗`,
+      say: "81 wychodzi, gdy wynik 3 podnosisz do potęgi 4. A trzeba policzyć kafelki w czterech paczkach: 4 razy 3.",
+    },
+    {
+      add: `$\\log_a b^{p} = p \\cdot \\log_a b$<br><span class="small">wykładnik staje przed logarytmem</span>`,
+      say: "Wzór z podręcznika: wykładnik staje przed logarytmem i mnoży wynik.",
+    },
+  ],
+  P7: [
+    {
+      add: `<span class="small">Zadanie 26a. Uzasadnij, że liczba jest wymierna:</span><br>$\\log_2 12 - \\log_2 0{,}75$`,
+      say: "Zadanie otwarte. Za sam wynik jest połowa punktów. Pełne punkty dają zapisane kroki.",
+    },
+    {
+      add: `$= \\log_2 (12 : 0{,}75)$<br><span class="small">wzór na iloraz: 1 pkt</span>`,
+      say: "Krok 1: minus między logarytmami to dzielenie liczb. Za ten zapis jest punkt.",
+    },
+    {
+      add: `$12 : 0{,}75 = 12 : \\tfrac34$<br>$= 12 \\cdot \\tfrac43 = 16$`,
+      say: "Krok 2: liczę dzielenie. 0,75 to trzy czwarte. Dzielenie przez ułamek to mnożenie przez odwrócony ułamek.",
+    },
+    {
+      add: `$\\log_2 16 = 4$<br><span class="small">4 to liczba całkowita, więc wymierna: 1 pkt</span>`,
+      say: "Krok 3: wynik i zdanie z wnioskiem. To drugi punkt.",
+    },
+    {
+      ctx: `Zadanie 24: $x = \\sqrt2$, $y = 4\\sqrt2$`,
+      add: `lewa: $\\tfrac12 + \\tfrac52 = 3$<br>prawa: $\\log_2 (\\sqrt2 \\cdot 4\\sqrt2) = \\log_2 8 = 3$<br>$3 = 3$, równość prawdziwa`,
+      say: "Zadanie 24: liczysz osobno lewą i prawą stronę, potem porównujesz. Trzy linijki, trzy punkty.",
+    },
+  ],
+  P8: [
+    {
+      add: `$\\log 1000$<br><span class="small">brak małej liczby na dole → podstawa 10</span>`,
+      say: "Gdy na dole nie ma małej liczby, logarytm liczy dziesiątki. Tak jest w całym podręczniku, strona 45.",
+    },
+    {
+      add: `$1000 =$ ${TN(3, 10)}<br>$\\log 1000 = 3$`,
+      say: "Tysiąc to trzy dziesiątki.",
+    },
+    {
+      ctx: `Zadanie 1: $\\log 0{,}001$`,
+      add: `$0{,}001 = \\tfrac{1}{1000}$`,
+      say: "Zadanie 1. Zamieniam przecinek na ułamek: jedna tysięczna.",
+    },
+    {
+      add: `$\\tfrac{1}{1000}$ stoi 3 stopnie <b>pod</b> jedynką<br>$\\log 0{,}001 = ${R_("-3")}$`,
+      say: "Jedynka przez liczbę stoi tyle stopni pod jedynką, ile ta liczba nad nią. Tysiąc stoi na stopniu 3, więc jedna tysięczna na minus 3.",
+    },
+    {
+      ctx: `Twój wybór: $\\tfrac13$`,
+      add: `$10^{\\frac13} = \\sqrt[3]{10} \\approx 2{,}15$ ✗`,
+      say: "1/3 to trzecia część dziesiątki, około 2,15. Daleko od 0,001.",
+    },
+    {
+      add: `Zadanie 2 zrobiłeś dobrze:<br>$\\log_2 \\tfrac{1}{32} = -5$`,
+      say: "W zadaniu 2 zrobiłeś to samo dobrze. Jedynka przez liczbę daje minus w wyniku, nie ułamek.",
+    },
+    {
+      ctx: `Zadanie 16, odpowiedź D`,
+      add: `$\\log 0{,}01 = \\log \\tfrac{1}{100} = -2$<br>liczba ujemna`,
+      say: "Jedna setna stoi dwa stopnie pod jedynką. Wynik minus 2, więc to liczba ujemna.",
+    },
+  ],
+  P9: [
+    {
+      add: `$\\log_{${B_("a")}} 8 = -1$<br>czyli $a^{-1} = 8$`,
+      say: "Zadanie 23b. Szukam podstawy a.",
+    },
+    {
+      add: `$a^{-1} = \\tfrac{1}{a}$<br><span class="small">tak jak $2^{-3} = \\tfrac18$</span>`,
+      say: "Minus w wykładniku znaczy: jedynka przez tę liczbę.",
+    },
+    {
+      add: `$\\tfrac{1}{a} = 8$ → $a = ${R_("\\tfrac18")}$`,
+      say: "Jedynka przez a ma dać 8. Więc a to 1/8, bo 1 przez 1/8 to 8.",
+    },
+    {
+      ctx: `Twoja odpowiedź: $-\\tfrac18$`,
+      add: `$\\left(-\\tfrac18\\right)^{-1} = -8$ ✗`,
+      say: "Sprawdzam twoją odpowiedź: wychodzi minus 8, a nie 8. Minus w wykładniku nie robi z liczby liczby ujemnej.",
+    },
+    {
+      add: `Podstawa logarytmu jest zawsze<br><b>dodatnia i różna od 1</b>`,
+      say: "Tak mówi definicja z podręcznika. Podstawa z minusem jest od razu zła.",
+    },
+  ],
+  P10: [
+    {
+      add: `$\\log_{${B_("\\frac12")}} \\tfrac18 = ${R_("?")}$<br>czyli $\\left(\\tfrac12\\right)^{?} = \\tfrac18$`,
+      say: "Zadanie 16, odpowiedź C. Teraz kafelek to jedna druga.",
+    },
+    {
+      add: `${TN(3, "½")} $= \\tfrac18$`,
+      say: "Mnożę jedną drugą trzy razy: ½ · ½ · ½ = 1/8.",
+    },
+    {
+      add: `$\\log_{\\frac12} \\tfrac18 = ${R_(3)}$<br>liczba dodatnia`,
+      say: "Trzy kafelki, wynik 3. Liczba dodatnia.",
+    },
+    {
+      ctx: `Twoja odpowiedź: ujemna`,
+      add: `Ułamek daje minus tylko wtedy,<br>gdy podstawa jest większa od 1:<br>$\\log_2 \\tfrac18 = -3$`,
+      say: "Przy podstawie 2 ułamek daje minus. Przy podstawie 1/2 jest odwrotnie.",
+    },
+    {
+      add: `Zadanie 5 zrobiłeś dobrze:<br>$\\log_{\\frac12} 8 = -3$`,
+      say: "W zadaniu 5 to zadziałało: 8 przy podstawie 1/2 daje minus 3.",
+    },
+  ],
+  P11: [
+    {
+      add: `$\\log_{${B_(9)}} 27 = ${R_("?")}$<br>czyli $9^{?} = 27$`,
+      say: "Zadanie 12. Ile dziewiątek trzeba pomnożyć, żeby wyszło 27?",
+    },
+    {
+      add: `$9 =$ ${TN(2, 3)}<br>$27 =$ ${TN(3, 3)}`,
+      say: "Od razu tego nie widać. Składam obie liczby z trójek: 9 to dwie trójki, 27 to trzy.",
+    },
+    {
+      add: `$9 =$ ${PILE(TN(2, 3))}<br>$27 =$ ${PILE(TN(2, 3))}${T(3)}`,
+      say: "Jedna dziewiątka to paczka dwóch trójek. W 27 mieści się cała paczka i jeszcze pół paczki.",
+    },
+    {
+      add: `$\\log_9 27 = ${R_("\\tfrac32")}$<br><span class="small">3 trójki : 2 trójki</span>`,
+      say: "Półtorej paczki. Wynik 3/2.",
+    },
+    {
+      ctx: `Twój wybór: $\\tfrac13$`,
+      add: `$9 : 27 = \\tfrac13$ ✗`,
+      say: "1/3 wychodzi z dzielenia samych liczb 9 i 27. Dzielisz kafelki, nie liczby: 3 przez 2.",
+    },
+    {
+      add: `Rozłóż podstawę i liczbę<br>na <b>te same kafelki</b>.<br>Kafelki liczby : kafelki podstawy`,
+      say: "Przepis: kafelki liczby dzielisz przez kafelki podstawy.",
+    },
+    {
+      ctx: `Zadanie 25b`,
+      add: `$\\log_4 2 + \\log_9 3$<br>$= \\tfrac12 + \\tfrac12 = 1$`,
+      say: "4 to dwie dwójki, a 2 to jedna: 1 przez 2. Tak samo 9 i 3. Razem 1.",
+    },
+    {
+      ctx: `Zadanie 25a`,
+      add: `$\\log_3 \\tfrac{1}{27} = -3$<br>$\\log_{\\frac13} 9 = -2$<br>$-3 - (-2) = -1$`,
+      say: "Każdy logarytm liczysz osobno. Potem odejmujesz: minus 3 minus minus 2 to minus 1.",
+    },
+  ],
+  P12: [
+    {
+      add: `$\\log_{${B_(4)}} ${Y_("b")} = ${R_("\\tfrac32")}$<br>czyli $${Y_("b")} = 4^{\\frac32}$`,
+      say: "Zadanie 17. Szukam liczby b. Wynik logarytmu mówi, ile kafelków 4 wziąć.",
+    },
+    {
+      add: `$\\tfrac32$ = jeden kafelek i pół<br>${T(4)}${TH("√4")}`,
+      say: "Trzy drugie to półtorej czwórki.",
+    },
+    {
+      add: `$\\sqrt4 = 2$<br>$b = 4 \\cdot 2 = ${Y_(8)}$`,
+      say: "Pół czwórki to √4, czyli 2. Mnożę: 4 razy 2 to 8.",
+    },
+    {
+      ctx: `Zadanie 18`,
+      add: `$\\log_{\\sqrt2} b = -4$<br>$b = (\\sqrt2)^{-4}$`,
+      say: "Zadanie 18. Kafelek to √2, a wykładnik to minus cztery.",
+    },
+    {
+      add: `${TN(4, "√2")}<br>$\\sqrt2\\cdot\\sqrt2\\cdot\\sqrt2\\cdot\\sqrt2 = 4$`,
+      say: "Najpierw bez minusa. Dwa kafelki √2 dają 2, cztery dają 4.",
+    },
+    {
+      add: `minus → jedynka przez<br>$b = \\tfrac14$`,
+      say: "Minus w wykładniku to jedynka przez liczbę. b = 1/4.",
+    },
+    {
+      ctx: `Zadanie 27`,
+      add: `$a = \\tfrac32$, $b = -2$<br>$c = \\tfrac52$, $d = -1$<br>kolejność: $b, d, a, c$`,
+      say: "Zadanie 27: najpierw policz każdą liczbę osobno, potem ułóż od najmniejszej.",
+    },
+  ],
+};
+
+/* zadania: t = treść, a = odpowiedź do wpisania, why = wyjaśnienie po odpowiedzi, py = wyrażenie do przeliczenia w Pythonie, hint = podpowiedź (tylko zadanie z podpowiedzią) */
+const Q = {
+  "1p": [
+    {
+      t: "Oblicz $\\log_3 9\\sqrt3$.",
+      a: "5/2",
+      hint: "Ile trójek ma 9? Ile dokłada $\\sqrt3$?",
+      why: "9 to dwie trójki, pierwiastek dokłada pół: $2 + \\tfrac12 = \\tfrac52$. To zadanie 21a ze sprawdzianu.",
+      py: "math.log(9*math.sqrt(3),3)",
+    },
+  ],
+  "1s": [
+    {
+      t: "Oblicz $\\log_2 8\\sqrt2$.",
+      a: "7/2",
+      why: "8 to trzy dwójki, pierwiastek dokłada pół: $\\tfrac72$.",
+      py: "math.log(8*math.sqrt(2),2)",
+    },
+    {
+      t: "Oblicz $\\log_2 \\sqrt[4]{8}$.",
+      a: "3/4",
+      why: "8 to trzy dwójki, pierwiastek czwartego stopnia dzieli przez 4: $\\tfrac34$.",
+      py: "math.log(8**0.25,2)",
+    },
+    {
+      t: "Oblicz $\\log_5 25\\sqrt5$.",
+      a: "5/2",
+      why: "25 to dwie piątki, plus pół: $\\tfrac52$.",
+      py: "math.log(25*math.sqrt(5),5)",
+    },
+  ],
+  "2p": [
+    {
+      t: "Oblicz $\\log_6 4 + \\log_6 9$.",
+      a: "2",
+      hint: "Plus między logarytmami to mnożenie liczb. Ile to $4 \\cdot 9$?",
+      why: "$4 \\cdot 9 = 36 = 6 \\cdot 6$, dwie szóstki. To zadanie 26b ze sprawdzianu.",
+      py: "math.log(4,6)+math.log(9,6)",
+    },
+  ],
+  "2s": [
+    {
+      t: "Oblicz $\\log_3 (9 \\cdot 81)$.",
+      a: "6",
+      why: "Dwie trójki i cztery trójki, razem sześć.",
+      py: "math.log(9*81,3)",
+    },
+    {
+      t: "Oblicz $\\log 4 + \\log 25$.",
+      a: "2",
+      why: "$4 \\cdot 25 = 100$, dwie dziesiątki.",
+      py: "math.log10(4)+math.log10(25)",
+    },
+    {
+      t: "Oblicz $\\log_2 48 - \\log_2 3$.",
+      a: "4",
+      why: "$48 : 3 = 16$, cztery dwójki.",
+      py: "math.log(48,2)-math.log(3,2)",
+    },
+    {
+      t: "Oblicz $\\log_5 25^{3}$.",
+      a: "6",
+      why: "25 to dwie piątki. Trzy paczki: $3 \\cdot 2 = 6$.",
+      py: "math.log(25**3,5)",
+    },
+  ],
+  "3p": [
+    {
+      t: "Oblicz $\\log_2 \\dfrac{1}{\\sqrt8}$.",
+      a: "-3/2",
+      hint: "Ile dwójek ma $\\sqrt8$? Jedynka przez liczbę dopisuje minus.",
+      why: "8 to trzy dwójki, $\\sqrt8$ to połowa: $\\tfrac32$. Jedynka przez: $-\\tfrac32$. To zadanie 21b ze sprawdzianu.",
+      py: "math.log(1/math.sqrt(8),2)",
+    },
+  ],
+  "3s": [
+    {
+      t: "Oblicz $\\log 0{,}1$.",
+      a: "-1",
+      why: "Jedna dziesiąta stoi jeden stopień pod jedynką.",
+      py: "math.log10(0.1)",
+    },
+    {
+      t: "Oblicz $\\log 0{,}00001$.",
+      a: "-5",
+      why: "$0{,}00001 = \\tfrac{1}{100\\,000}$, pięć stopni pod jedynką.",
+      py: "math.log10(0.00001)",
+    },
+    {
+      t: "Jeśli $\\log_a 9 = -1$, to $a = ?$",
+      a: "1/9",
+      why: "$a^{-1} = \\tfrac1a = 9$, więc $a = \\tfrac19$. Bez minusa.",
+      py: "next(a for a in [1/9] if abs(a**-1 - 9) < 1e-9)",
+    },
+    {
+      t: "Oblicz $\\log_{\\frac13} \\tfrac19$.",
+      a: "2",
+      why: "$\\tfrac13 \\cdot \\tfrac13 = \\tfrac19$, dwa kafelki. Wynik dodatni.",
+      py: "math.log(1/9,1/3)",
+    },
+  ],
+  "4p": [
+    {
+      t: "Jeśli $\\log_{27} b = \\tfrac23$, to $b = ?$",
+      a: "9",
+      hint: "27 to trzy trójki. Ile trójek to $\\tfrac23$ z nich?",
+      why: "$\\tfrac23$ z trzech trójek to dwie trójki: $3 \\cdot 3 = 9$.",
+      py: "27**(2/3)",
+    },
+  ],
+  "4s": [
+    {
+      t: "Oblicz $\\log_4 8$.",
+      a: "3/2",
+      why: "8 to trzy dwójki, 4 to dwie: $\\tfrac32$.",
+      py: "math.log(8,4)",
+    },
+    {
+      t: "Jeśli $\\log_9 b = \\tfrac32$, to $b = ?$",
+      a: "27",
+      why: "Półtorej dziewiątki: $9 \\cdot \\sqrt9 = 9 \\cdot 3 = 27$.",
+      py: "9**1.5",
+    },
+    {
+      t: "Jeśli $\\log_{\\sqrt3} b = -2$, to $b = ?$",
+      a: "1/3",
+      why: "Dwa kafelki $\\sqrt3$ dają 3, minus to jedynka przez: $\\tfrac13$.",
+      py: "math.sqrt(3)**-2",
+    },
+  ],
+};
+    </script>
+    <script>
+      /* Powtórka po sprawdzianie z logarytmów: tablice krok po kroku, zadanie z podpowiedzią i zadania sprawdzające; silnik z schody.html. */
+      const OPT = {
+        delimiters: [{ left: "$", right: "$", display: false }],
+        throwOnError: false,
+      };
+      function val(s) {
+        s = String(s)
+          .trim()
+          .replace(/\s+/g, "")
+          .replace(/,/g, ".")
+          .replace(/[−–]/g, "-");
+        const m = s.match(/^(-?)(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/);
+        if (m) {
+          const d = parseFloat(m[3]);
+          if (!d) return NaN;
+          return ((m[1] ? -1 : 1) * parseFloat(m[2])) / d;
+        }
+        if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+        return NaN;
+      }
+      function drawBoard(el) {
+        const steps = BOARDS[el.dataset.b];
+        const wrap = document.createElement("div");
+        wrap.className = "board-wrap";
+        wrap.dataset.b = el.dataset.b;
+        el.replaceWith(wrap);
+        wrap.innerHTML = `<div class="board"></div><div class="say"></div><div class="nav"><button type="button" class="wst">Wstecz</button><span class="ile"></span><button type="button" class="dal">Dalej</button></div>`;
+        const bd = wrap.querySelector(".board"), say = wrap.querySelector(".say"), ile = wrap.querySelector(".ile");
+        const wst = wrap.querySelector(".wst"), dal = wrap.querySelector(".dal");
+        let n = 0;
+        const pokaz = () => {
+          bd.innerHTML = (steps[n].ctx ? `<div class="ctx">${steps[n].ctx}</div>` : "") + `<div class="ln nowa">${steps[n].add}</div>`;
+          say.textContent = steps[n].say;
+          ile.textContent = `Krok ${n + 1} z ${steps.length}`;
+          wst.disabled = n === 0; dal.disabled = n === steps.length - 1;
+          if (window.renderMathInElement) renderMathInElement(bd, OPT);
+        };
+        wst.onclick = () => { if (n > 0) { n--; pokaz(); } };
+        dal.onclick = () => { if (n < steps.length - 1) { n++; pokaz(); } };
+        pokaz();
+      }
+      const wyniki = {};
+      function drawQs(box, key, partNr, liczy) {
+        const qs = Q[key];
+        box.innerHTML = qs.map((q, i) => `<div class="q" data-k="${key}" data-i="${i}">
+      <div class="t">${q.t}</div>
+      ${q.hint ? `<button type="button" class="hbtn">Podpowiedź</button><div class="hint">${q.hint}</div>` : ""}
+      <div class="in"><input autocomplete="off" placeholder="np. 3/2"><button type="button" class="sprawdz">Sprawdź</button></div>
+      <div class="fb"></div></div>`).join("");
+        box.querySelectorAll(".q").forEach((qe) => {
+          const i = +qe.dataset.i, q = qs[i];
+          const inp = qe.querySelector("input"), fb = qe.querySelector(".fb");
+          const hb = qe.querySelector(".hbtn");
+          if (hb) hb.onclick = () => {
+            const h = qe.querySelector(".hint");
+            h.classList.add("on");
+            if (window.renderMathInElement) renderMathInElement(h, OPT);
+          };
+          const go = () => {
+            const v = val(inp.value);
+            if (isNaN(v)) {
+              fb.className = "fb bad";
+              fb.textContent = "Wpisz liczbę, np. 2, 3/2 albo -1/2.";
+              return;
+            }
+            const ok = Math.abs(v - val(q.a)) < 1e-9;
+            if (liczy && !qe.dataset.done) {
+              qe.dataset.done = "1";
+              wyniki[partNr][i] = ok;
+              score(partNr, qs.length);
+            }
+            fb.className = "fb " + (ok ? "ok" : "bad");
+            fb.innerHTML = (ok ? "Dobrze." : "Jeszcze nie. Wynik to " + q.a + ".") + `<span class="why">${q.why}</span>`;
+            if (window.renderMathInElement) renderMathInElement(fb, OPT);
+          };
+          qe.querySelector(".sprawdz").onclick = go;
+          inp.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
+        });
+      }
+      function score(nr, n) {
+        const ok = Object.values(wyniki[nr]).filter(Boolean).length;
+        document.getElementById("score" + nr).textContent = `Sprawdź się: ${ok} z ${n} dobrze (liczy się pierwsza próba)`;
+      }
+      function drawPart(c) {
+        wyniki[c.nr] = {};
+        const sec = document.createElement("section");
+        sec.dataset.nr = c.nr;
+        sec.innerHTML = `<span class="nr">Część ${c.nr}</span><h2>${c.tytul}</h2><p class="cap part-cap">Ze sprawdzianu: ${c.zadania}</p><p>${c.wstep}</p>` +
+          c.tablice.map(([id, tyt]) => `<h3>${tyt}</h3><div class="board" data-b="${id}"></div>`).join("") +
+          `<h3>Zadanie z podpowiedzią</h3><div class="qs p"></div><h3>Sprawdź się</h3><div class="qs s"></div><div class="score" id="score${c.nr}"></div>`;
+        document.getElementById("czesci").appendChild(sec);
+        sec.querySelectorAll(".board[data-b]").forEach(drawBoard);
+        drawQs(sec.querySelector(".qs.p"), c.podpowiedz, c.nr, false);
+        drawQs(sec.querySelector(".qs.s"), c.sprawdz, c.nr, true);
+        score(c.nr, Q[c.sprawdz].length);
+      }
+      window.addEventListener("DOMContentLoaded", () => {
+        CZESCI.forEach(drawPart);
+        const tryRender = () => {
+          if (window.renderMathInElement) {
+            renderMathInElement(document.body, OPT);
+          } else setTimeout(tryRender, 50);
+        };
+        tryRender();
+      });
+    </script>
+  </body>
+</html>
